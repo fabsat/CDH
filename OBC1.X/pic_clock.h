@@ -21,4 +21,7 @@
 #define _XTAL_FREQ 20000000
 #endif
 
+typedef unsigned char uint8_t;
+typedef unsigned int uint16_t;
+
 #endif	/* PIC_CLOCK_H */
