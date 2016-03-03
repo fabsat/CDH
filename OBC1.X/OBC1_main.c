@@ -57,9 +57,9 @@ int main(void) {
     
     
     
-    ///ad_con_init();            // AD変換の初期設定
-    //spi_master_init();
-    //__delay_ms(3000);
+    ad_con_init();            // AD変換の初期設定
+    spi_master_init();
+    __delay_ms(3000);
     
     /*
     union{
