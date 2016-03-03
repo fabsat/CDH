@@ -1,25 +1,43 @@
-/************************************************
+/******************************************************************************************
  * AD_value.c
+ * ver2.00
  * Tetsuya Kaku
- * =============================================
+ *=========================================================================================
  * AD変換ソースファイル
- * =============================================
- * ・ver1.00 一版 2016/01/14 Tetsuya Kaku
- * AD変換する
- * =============================================
+ *
+ *=========================================================================================
+ * ・ver1.00 || 2016/01/14 || Tetsuya Kaku
+ *   初版
+ * ・ver2.00 || 2016/03/04 || Hirofumi Hamada
+ *   bit_shift()のアルゴリズム変更
+ *=========================================================================================
  * PIC16F877A
  * MPLAB X IDE(v3.10/Win)
  * XC8 (v1.35/Win)
-************************************************/
+ *=========================================================================================
+ * Created by fabsat Project(Tokai university Satellite Project[TSP])
+ *****************************************************************************************/
 #include <xc.h>
 #include <pic16f877a.h>
-#include <math.h>
 #include "pic_clock.h"
 #include "AD_value.h"
 
 
+
+/* A/Dコン値受信用構造体 */
+typedef struct
+{
+    uint8_t my_adres_h;
+    uint8_t my_adres_l;
+} adres_t;
+
+
+/* static関数のプロトタイプ宣言 */
+static void bit_shift(uint16_t *p_ad_value, adres_t *p_adres);
+
+
 /*=====================================================
- * @breif
+ * @brief
  *     ADコンバータ設定関数
  * @param
  *     なし
@@ -28,7 +46,8 @@
  * @note
  *     ADコンバータするピンを要確認
  *===================================================*/
-void ad_con_init(void){
+void ad_con_init(void)
+{
     
     PORTAbits.RA0 = 0;
     PORTAbits.RA3 = 0;
@@ -39,54 +58,28 @@ void ad_con_init(void){
 
 
 /*-----------------------------------------------------
- * @breif
- *     bitshiftの関数
+ * @brief
+ *     ADRESHとADRESLのデータを結合する
  * @param
- *     my_adres_h:上位アドレス(ADRESH)
- *     my_adres_l:下位アドレス(ADRESL)
+ *     p_ad_value:変換値を格納する2Byteの変数へのポインタ
+ *     p_adres   :A/D変換のrowデータへのポインタ
  * @return
- *     AD変換後の値
+ *     void
  * @note
  *     AD_value.c内で使用する関数なのでstatic関数
  *---------------------------------------------------*/
-static int bit_shift(char my_adres_h, char my_adres_l){
-    
-    int i, j;
-    int ad_value;
-    
-    char buf      = 0x00;
-    char bit_mask = 0b10000000;
+static void bit_shift(uint16_t *p_ad_value, adres_t *p_adres)
+{
+    const uint8_t bit_mask_for_l = 0b00000011;
 
-    /* get value from ADRESH */
-    for(i = 0; i < 8; i++)
-    {
-        buf = my_adres_h & bit_mask;
-        buf >>= 7;
-        ad_value |= (int)buf;
-        ad_value <<= 1;
-        my_adres_h <<= 1;
-    }
-        
-    /* get value from ADRESL */    
-    for(j = 0; j < 2; j++)
-    {      
-        buf = my_adres_l & bit_mask;
-        buf >>= 7;
-        ad_value |= (int)buf;
-    
-        if (j < 1)
-        {
-            ad_value <<= 1; 
-        }
-        my_adres_l <<= 1;
-    }
-    /* return voltage value that is type of int */
-    return ad_value;
+    *p_ad_value = (uint16_t)(p_adres->my_adres_h);                   // ex. ad_value = 0b0000000011111111
+    *p_ad_value <<= 2;                                               // ex. ad_value = 0b0000001111111100
+    *p_ad_value |= (bit_mask_for_l & (p_adres->my_adres_l >> 6));    // ex. ad_value = 0b0000001111111111
 }
 
 
 /*=====================================================
- * @breif
+ * @brief
  *     AD変換する関数
  * @param
  *     なし
@@ -97,30 +90,27 @@ static int bit_shift(char my_adres_h, char my_adres_l){
  *===================================================*/
 double get_adcon(void)
 {
-    /* A/D con Range */
+    /* A/Dコンレンジ */
     const unsigned int range = 0x3ff;
     
-    /* A/D value */
-    int ad_value = 0b0000000000;
+    /* A/D値用変数 */
+    uint16_t ad_value = 0b0000000000;
     double voltage_value;
+    adres_t my_adres;
 
-    /* variables to recive binary from Register */
-    long my_adres_h;
-    long my_adres_l; 
-        
-    /* A/D Con Enable */
+    /* A/Dコンを有効化 */
     ADCON0 = 0b10000001;
     ADCON0bits.GO_DONE = 1;
 
-    /* waiting for finish of A/D */
+    /* A/Dコン終了まで待つ */
     while(ADCON0bits.GO_DONE){;}
 
-    /* get binary from Register */
-    my_adres_h = ADRESH;
-    my_adres_l = ADRESL;
-    ad_value = bit_shift(my_adres_h, my_adres_l);
+    /* ADRESHとADRESLからデータを取得し結合する */
+    my_adres.my_adres_h = ADRESH;
+    my_adres.my_adres_l = ADRESL;
+    ad_value = bit_shift(&ad_value, &my_adres);
 
-    /* calculate value of voltage */
+    /* 電圧値を計算 */
     voltage_value = ad_value * 5.0 / range;
     
     return voltage_value;

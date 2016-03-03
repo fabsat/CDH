@@ -182,6 +182,9 @@ void send_data_master(destination_t destination, data_type_t data_type, data_end
 }
 
 
+void receive_data_master(destination_t destination, )
+
+
 
 /******************************************************************************************
  *                                    static関数                                          *

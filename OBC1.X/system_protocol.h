@@ -67,24 +67,24 @@ typedef struct
     uint8_t power4[2];
     uint8_t power5[2];
     uint8_t temp[2];
-    uint8_t OBC2:1;
-    uint8_t COMMUC:1;
-    uint8_t POWMCU:1;
+    uint8_t obc2:1;
+    uint8_t commcu:1;
+    uint8_t powmcu:1;
 } cw_t;
 
 
 /* cw_struct_t型変数の初期化用 */
-#define CW_DATA_INIT              \
-{                                 \
-	{0x00, 0x00},                 \
-	{0x00, 0x00},                 \
-	{0x00, 0x00},                 \
-	{0x00, 0x00},                 \
-	{0x00, 0x00},                 \
-	{0x00, 0x00},                 \
-	 0,                           \
-	 0,                           \
-	 0                            \
+#define CW_DATA_INIT  \
+{                     \
+	{0x00, 0x00}, \
+	{0x00, 0x00}, \
+	{0x00, 0x00}, \
+	{0x00, 0x00}, \
+	{0x00, 0x00}, \
+	{0x00, 0x00}, \
+	0,            \
+	0,            \
+	0             \
 }
 
 
