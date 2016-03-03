@@ -61,12 +61,12 @@ int main(void) {
     //spi_master_init();
     //__delay_ms(3000);
     
-    /*
+    
     union{
             double d;
             char c[1];
     }u;
-    */   
+       
 
     while(1){
         RD7 = 1;
