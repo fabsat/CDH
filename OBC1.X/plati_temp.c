@@ -60,7 +60,7 @@ static double get_pt(void)
  *===================================================*/
 double get_temp(void)
 {
-    double t_average = 0.0;
+    double t_average = 0.0;    // 変数一つでいけるはず！
     double t_rowdata = 0.0;
     int i;
     
