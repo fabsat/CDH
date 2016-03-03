@@ -1462,6 +1462,10 @@ extern double fmod(double, double);
 extern double trunc(double);
 extern double round(double);
 
+# 24 "pic_clock.h"
+typedef unsigned char uint8_t;
+typedef unsigned int uint16_t;
+
 # 17 "AD_value.h"
 void ad_con_init(void);
 static int bit_shift(char my_adres_h, char my_adres_l);

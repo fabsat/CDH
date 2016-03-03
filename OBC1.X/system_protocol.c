@@ -16,7 +16,7 @@
  * Created by fabsat Project(Tokai university Satellite Project[TSP])
  *****************************************************************************************/
 #include <xc.h>
-#include "pic_setting.h"
+#include "pic_clock.h"
 #include "system_protocol.h"
 #include "spi_master.h"
 
@@ -39,6 +39,8 @@ typedef struct
     uint8_t payload[MAX_PAYLOAD_SIZE]; // Payload本体
     uint8_t data_end_command;          // データ終了コマンド
 } packet_format_t;
+
+
 
 
 /* パケットの初期化処理用マクロ */

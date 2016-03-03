@@ -1032,6 +1032,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;pic.h: 184: extern unsigned char __resetbits;
 [; ;pic.h: 185: extern __bit __powerdown;
 [; ;pic.h: 186: extern __bit __timeout;
+[; ;pic_clock.h: 24: typedef unsigned char uint8_t;
+[; ;pic_clock.h: 25: typedef unsigned int uint16_t;
 [; ;uart_serial.h: 39: void uart_init();
 [; ;uart_serial.h: 40: void putch(unsigned char byte);
 [; ;uart_serial.h: 41: unsigned char getch();

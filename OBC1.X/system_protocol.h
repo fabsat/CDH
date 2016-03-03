@@ -3,7 +3,7 @@
 #define	_DATA_SEND_RECEIVE_PROTOCOL_H
 
 #include <xc.h>
-#include "pic_setting.h"
+#include "pic_clock.h"
 
 
 /* データ転送の相手先 */
@@ -36,6 +36,11 @@ typedef enum
 } data_type_t;
 
 
+
+#define COMMAND 0x03
+#define DATA    0x02
+#define CW      0x01
+
 /* コマンド一覧 */
 #define LED_BLINK     (0x01)
 #define GET_I2C_TEMP  (0x02)
@@ -56,23 +61,30 @@ typedef enum
 /* CWで発信するデータリストのステータス保存用構造体 */
 typedef struct
 {
-    //const uint8_t const *sat_name;
-    uint8_t pow_data[4];
-    uint8_t temp_data[4];
-    uint8_t obc2  : 1;
-    uint8_t commcu: 1;
-    uint8_t powmcu: 1;    
+    uint8_t power1[2];
+    uint8_t power2[2];
+    uint8_t power3[2];
+    uint8_t power4[2];
+    uint8_t power5[2];
+    uint8_t temp[2];
+    uint8_t OBC2:1;
+    uint8_t COMMUC:1;
+    uint8_t POWMCU:1;
 } cw_t;
 
 
 /* cw_struct_t型変数の初期化用 */
 #define CW_DATA_INIT              \
 {                                 \
-	{0x00, 0x00, 0x00, 0x00}, \
-	{0x00, 0x00, 0x00, 0x00}, \
-	 0,                       \
-	 0,                       \
-	 0                        \
+	{0x00, 0x00},                 \
+	{0x00, 0x00},                 \
+	{0x00, 0x00},                 \
+	{0x00, 0x00},                 \
+	{0x00, 0x00},                 \
+	{0x00, 0x00},                 \
+	 0,                           \
+	 0,                           \
+	 0                            \
 }
 
 

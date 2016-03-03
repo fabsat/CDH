@@ -1,6 +1,6 @@
 #include <xc.h>
 #include "uint8_to_string.h"
-#include "pic_setting.h"
+#include "pic_clock.h"
 
 
 /* Define List */

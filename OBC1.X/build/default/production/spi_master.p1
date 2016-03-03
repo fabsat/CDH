@@ -1071,6 +1071,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;pic.h: 184: extern unsigned char __resetbits;
 [; ;pic.h: 185: extern __bit __powerdown;
 [; ;pic.h: 186: extern __bit __timeout;
+[; ;pic_clock.h: 24: typedef unsigned char uint8_t;
+[; ;pic_clock.h: 25: typedef unsigned int uint16_t;
 [; ;spi_master.h: 43: void spi_master_init(void);
 [; ;spi_master.h: 60: char spi_master_receive(void);
 [; ;spi_master.h: 77: char spi_master_send(char data);

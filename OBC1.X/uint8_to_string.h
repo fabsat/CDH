@@ -3,7 +3,7 @@
 
 
 #include <xc.h>
-#include "pic_setting.h"
+#include "pic_clock.h"
 
 
 /* Prototype of Function */

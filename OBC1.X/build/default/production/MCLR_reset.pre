@@ -1434,6 +1434,10 @@ extern unsigned char __resetbits;
 extern __bit __powerdown;
 extern __bit __timeout;
 
+# 24 "pic_clock.h"
+typedef unsigned char uint8_t;
+typedef unsigned int uint16_t;
+
 # 27 "MCLR_reset.h"
 void MCLR_init(void);
 void MCLR_reset(unsigned char name);

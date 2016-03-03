@@ -1028,6 +1028,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;pic.h: 184: extern unsigned char __resetbits;
 [; ;pic.h: 185: extern __bit __powerdown;
 [; ;pic.h: 186: extern __bit __timeout;
+[; ;pic_clock.h: 24: typedef unsigned char uint8_t;
+[; ;pic_clock.h: 25: typedef unsigned int uint16_t;
 [; ;MCLR_reset.h: 27: void MCLR_init(void);
 [; ;MCLR_reset.h: 28: void MCLR_reset(unsigned char name);
 "20 MCLR_reset.c

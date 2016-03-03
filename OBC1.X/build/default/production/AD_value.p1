@@ -1083,6 +1083,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;math.h: 53: extern double fmod(double, double);
 [; ;math.h: 54: extern double trunc(double);
 [; ;math.h: 55: extern double round(double);
+[; ;pic_clock.h: 24: typedef unsigned char uint8_t;
+[; ;pic_clock.h: 25: typedef unsigned int uint16_t;
 [; ;AD_value.h: 17: void ad_con_init(void);
 [; ;AD_value.h: 18: static int bit_shift(char my_adres_h, char my_adres_l);
 [; ;AD_value.h: 19: double get_adcon(void);
@@ -1229,8 +1231,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e :U _get_adcon ]
 [f ]
 "101
-[v F1173 `Cui ~T0 @X0 1 s range ]
-[i F1173
+[v F1175 `Cui ~T0 @X0 1 s range ]
+[i F1175
 -> -> 1023 `i `ui
 ]
 "104
@@ -1273,7 +1275,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e = _ad_value ( _bit_shift (2 , -> _my_adres_h `uc -> _my_adres_l `uc ]
 [; ;AD_value.c: 124: voltage_value = ad_value * 5.0 / range;
 "124
-[e = _voltage_value / * -> _ad_value `d .5.0 -> F1173 `d ]
+[e = _voltage_value / * -> _ad_value `d .5.0 -> F1175 `d ]
 [; ;AD_value.c: 126: return voltage_value;
 "126
 [e ) _voltage_value ]

@@ -18,32 +18,6 @@
 #pragma config FOSC = HS, WDTE = OFF, PWRTE = ON,  BOREN = ON,  LVP = OFF
 #pragma config CPD = OFF, WRT = OFF, CP = OFF
 
-typedef struct
-{
-    unsigned char preint;
-    unsigned char data_type;
-    unsigned char payload_index_end;
-    unsigned char payload;
-    unsigned char data_end;
-} packet_t;
-
-typedef struct
-{
-    unsigned char power1[4];
-    unsigned char power2[4];
-    unsigned char temp[4];
-    unsigned char OBC2:1;
-    unsigned char COMMUC:1;
-    unsigned char POWMCU:1;
-} cw_t;
-
-#define command 0x03
-#define data    0x02
-#define cw      0x01
-
-#define Light   0x04
-#define temp    0x05
-
 
 
 

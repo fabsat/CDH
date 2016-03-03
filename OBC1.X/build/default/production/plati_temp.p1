@@ -1044,6 +1044,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;math.h: 53: extern double fmod(double, double);
 [; ;math.h: 54: extern double trunc(double);
 [; ;math.h: 55: extern double round(double);
+[; ;pic_clock.h: 24: typedef unsigned char uint8_t;
+[; ;pic_clock.h: 25: typedef unsigned int uint16_t;
 [; ;AD_value.h: 17: void ad_con_init(void);
 [; ;AD_value.h: 18: static int bit_shift(char my_adres_h, char my_adres_l);
 [; ;AD_value.h: 19: double get_adcon(void);
