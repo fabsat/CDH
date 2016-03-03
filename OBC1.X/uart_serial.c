@@ -1,4 +1,3 @@
-
 /************************************************
  * uart_serial.c
  * Tetsuya Kaku
@@ -18,7 +17,7 @@
 
 
 /*=====================================================
- * @breif
+ * @brief
  *     uart通信初期設定関数
  * @param
  *     なし
@@ -27,22 +26,46 @@
  * @note
  *     型番によってRXピンを確認する必要がある
  *===================================================*/
-void uart_init()
+void uart_init(void)
 {
-    TRISC7 = 1;         // RX=RC7 is serial data input
+    TRISCbit.TRISC7 = 1;         // RX=RC7 is serial data input
     SPBRG = SPBRG_DATA;
     TXSTA = (TX9_RX9_DATA | BRGH_DATA | 0x20);
     RCSTA = (TX9_RX9_DATA | 0x90);
 }
 
-void putch(unsigned char byte)
+
+/*=====================================================
+ * @brief
+ *     1Byteデータ送信
+ * @param
+ *     byte:送信データ
+ * @return
+ *     void:
+ * @note
+ *     none
+ *===================================================*/
+void putch(uint8_t byte)
 {
-    while(!TXIF){
+    while(!TXIF)
+    {
+        ;
     }
     TXREG = byte;
 }
 
-void put_string(unsigned char *str)
+
+/*=====================================================
+ * @brief
+ *     文字列送信
+ * @param
+ *     str:文字列へのポインタ
+ * @return
+ *     void:
+ * @note
+ *     none
+ *===================================================*/
+void put_string(uint8_t *str)
 {
     while(*str != '\0')
     {
@@ -52,21 +75,24 @@ void put_string(unsigned char *str)
 }
 
 
-unsigned char getch()
+/*=====================================================
+ * @brief
+ *     1Byte受信
+ * @param
+ *     void:
+ * @return
+ *     RCREG:受信データ
+ * @note
+ *     none
+ *===================================================*/
+uint8_t getch(void)
 {
-    while(!RCIF){
+    while(!RCIF)
+    {
+        ;
+        
     }
  
     return RCREG;
-}
- 
-unsigned char getche()
-{
-    unsigned char c;
- 
-    c = getch();
-    putch(c);
- 
-    return c;
 }
 
