@@ -410,22 +410,22 @@ static void receive_payload(destination_t destination, uint8_t *p_payload)
 {
     uint8_t i;
     uint8_t data_len;
-    uint8_t index_pos = 0;                             // Counter variable for MAX_PAYLOAD_SIZE
-//  uint8_t rec_index_pos = 0;                          // ここでカウントアップするindexはこれにして、この.cファイルにはグローバルでindex_posがあるので他の名前がいいと思います
+//    uint8_t index_pos = 0;                             // Counter variable for MAX_PAYLOAD_SIZE
+    uint8_t rec_index_pos = 0;                          // ここでカウントアップするindexはこれにして、この.cファイルにはグローバルでindex_posがあるので他の名前がいいと思います
     
     /* Send Payload */
-    while(*p_payload != 0x00 || index_pos < MAX_PAYLOAD_SIZE)           // *p_payloadが0x00の時は普通のデータ中にも出てくる可能性があると思うので次の式がいいと思います
-    //while(index_pos != rec_index_pos || rec_index_pos < MAX_PAYLOAD_SIZE)    
+    //while(*p_payload != 0x00 || index_pos < MAX_PAYLOAD_SIZE)           // *p_payloadが0x00の時は普通のデータ中にも出てくる可能性があると思うので次の式がいいと思います
+    while(index_pos != rec_index_pos || rec_index_pos < MAX_PAYLOAD_SIZE)    
     {
         data_len = *p_payload;                         // Get data length of Received data
         spi_master_receive(destination, p_payload++);     // Receive data length
-        index_pos++;                                
-        //rec_index_pos++;
+        //index_pos++;                                
+        rec_index_pos++;
         for(i = 0; i < data_len; i++)                  // Receive data in data length times
         {
             spi_master_receive(destination, p_payload++);
-            index_pos++;
-            //rec_index_pos++;
+            //index_pos++;
+            rec_index_pos++;
         }
     }
 }

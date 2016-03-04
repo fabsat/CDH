@@ -1733,14 +1733,14 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _i `uc ~T0 @X0 1 a ]
 "412
 [v _data_len `uc ~T0 @X0 1 a ]
-[v _index_pos `uc ~T0 @X0 1 a ]
+"414
+[v _rec_index_pos `uc ~T0 @X0 1 a ]
 [; ;system_protocol.c: 411: uint8_t i;
 [; ;system_protocol.c: 412: uint8_t data_len;
-[; ;system_protocol.c: 413: uint8_t index_pos = 0;
-"413
-[e = _index_pos -> -> 0 `i `uc ]
-[; ;system_protocol.c: 417: while(*p_payload != 0x00 || index_pos < 30)
-"417
+[; ;system_protocol.c: 414: uint8_t rec_index_pos = 0;
+[e = _rec_index_pos -> -> 0 `i `uc ]
+[; ;system_protocol.c: 418: while(index_pos != rec_index_pos || rec_index_pos < 30)
+"418
 [e $U 143  ]
 [e :U 144 ]
 [; ;system_protocol.c: 419: {
@@ -1752,9 +1752,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;system_protocol.c: 421: spi_master_receive(destination, p_payload++);
 "421
 [e ( _spi_master_receive (2 , _destination -> ++ _p_payload * -> -> 1 `i `x -> -> # *U _p_payload `i `x `uc ]
-[; ;system_protocol.c: 422: index_pos++;
-"422
-[e ++ _index_pos -> -> 1 `i `uc ]
+[; ;system_protocol.c: 423: rec_index_pos++;
+"423
+[e ++ _rec_index_pos -> -> 1 `i `uc ]
 [; ;system_protocol.c: 424: for(i = 0; i < data_len; i++)
 "424
 {
@@ -1767,9 +1767,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;system_protocol.c: 426: spi_master_receive(destination, p_payload++);
 "426
 [e ( _spi_master_receive (2 , _destination -> ++ _p_payload * -> -> 1 `i `x -> -> # *U _p_payload `i `x `uc ]
-[; ;system_protocol.c: 427: index_pos++;
-"427
-[e ++ _index_pos -> -> 1 `i `uc ]
+[; ;system_protocol.c: 428: rec_index_pos++;
+"428
+[e ++ _rec_index_pos -> -> 1 `i `uc ]
 "429
 }
 "424
@@ -1782,8 +1782,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 "430
 }
 [e :U 143 ]
-"417
-[e $ || != -> *U _p_payload `i -> 0 `i < -> _index_pos `i -> 30 `i 144  ]
+"418
+[e $ || != -> _index_pos `i -> _rec_index_pos `i < -> _rec_index_pos `i -> 30 `i 144  ]
 [e :U 145 ]
 [; ;system_protocol.c: 429: }
 [; ;system_protocol.c: 430: }
