@@ -15,44 +15,43 @@
  *=========================================================================================
  * Created by fabsat Project(Tokai university Satellite Project[TSP])
  *****************************************************************************************/
-
 #include <xc.h>
 #include "spi_master.h"
-#include "pic_clock.h"
-
-
-/* Prototype of static function */
-static void spi_reset(void);
+#include "pic_setting.h"
+#include "system_protocol.h"
 
 
 /*=====================================================
- * @breif
- *     SPI Master初期化関数
+ * @brief
+ *     SPI Masterスタート関数
  * @param
- *     なし
+ *     void:
  * @return
- *     なし
+ *     void:
  * @note
  *     Pin43:SDO(RC5)
  *     Pin42:SDI(RC4/SDA)
  *     Pin37:SCK(RC3/SCL)
- *     Pin35:SS RC2(CCP1) *User Define
  *===================================================*/
-void spi_master_init(void)
+void spi_master_start(void)
 {
-    /* SPI pin I/O Configuration */
-    TRISC3 = 0;              // RC3 is SCK -> OUTPUT
-    TRISC4 = 1;              // RC4 is SDI -> INPUT
-    TRISC5 = 0;              // RC5 is SDO -> OUTPUT
-    TRISC2 = 0;              // RC2 is SS  -> OUTPUT
+    /* SPI pin I/O Configuration ( RC4 is SDI -> INPUT  Controlled by module??) */
+    TRISCbits.TRISC3 = 0;    // RC3 is SCK -> OUTPUT
+    TRISCbits.TRISC5 = 0;    // RC5 is SDO -> OUTPUT
+    TRISCbits.TRISC4 = 1;    // RC4 is SDI -> INPUT
+    
+    /* SS pin configure OUTPUT */
+    SS_OBC2_TRIS   = 0;      // RC1 is SS  -> OUTPUT
+    //SS_COMMCU_TRIS = 0;
+    //SS_POWMCU_TRIS = 0;
 
     /* Allow Programming of SPI configuring */
     SSPCONbits.SSPEN = 0;
 
     /*  SPI Mode Setup */
-    SSPSTATbits.SMP = 0;    // Input data sampled at middle of data output time
-    SSPCONbits.CKP  = 0;    // Idle state for clock is a low level
-    SSPSTATbits.CKE = 0;    // Transmit occurs on transition from idle to active clock state
+    SSPSTATbits.SMP = 0;     // Input data sampled at middle of data output time
+    SSPCONbits.CKP  = 0;     // Idle state for clock is a low level
+    SSPSTATbits.CKE = 0;     // Transmit occurs on transition from idle to active clock state
     
     /* SPI Master mode, clock = FOSC/4(Maximum speed) */
     SSPCONbits.SSPM3 = 0;          
@@ -61,7 +60,9 @@ void spi_master_init(void)
     SSPCONbits.SSPM0 = 0;
 
     /* SS_PIN set HIGH */
-    SS_PIN = 1;
+    SS_OBC2   = 1;
+    //SS_COMMCU = 1;
+    //SS_POWMCU = 1;
    
     /* End SPI programming and Start serial port */
     SSPCONbits.SSPEN = 1;
@@ -72,58 +73,73 @@ void spi_master_init(void)
  * @brief
  *     SPI Masterデータ受信関数(1Byte)
  * @param
- *     none
+ *     destination          :通信の相手先を選択
+ *     p_store_received_data:受信データを受け取るポインタ
  * @return
- *     SSPBUF:読みだしたデータ(1Byte)
- *     -1    :timeout終了
+ *     SYS_SUCCESS:受信成功
+ *     SYS_TIMEOUT:timeout終了
  * @note
- *     ・通信完了フラグの待ち状態でreset_counterが
-n *       0になったらresetをかける
- *     ・2回resetをかけても完了しなければtimeoutと
- *       して-1を返す
+ *     1[s]で受信完了しなければTIMEOUTとなる
  *===================================================*/
-char spi_master_receive(void)
+sys_result_t spi_master_receive(destination_t destination,
+                                uint8_t *p_store_received_data)
 {
-    char dummy;
-    unsigned char timeout_counter   = 0;
-    unsigned char spi_reset_counter = 0xFF;
+    uint8_t dummy;
+    uint16_t timeout_counter = 1000;
 
     /* Read data to dummy */
     dummy = SSPBUF;
 
     /* Slave Select -> Low */
-    SS_PIN = 0;
+    switch(destination)
+    {
+        case OBC2:
+            SS_OBC2   = 0;
+            break;
+        case COMMCU:
+            //SS_COMMCU = 0;
+            break;
+        case POWMCU:
+            //SS_POWMCU = 0;
+            break;
+    }
 
-    /* Set dummy data to SSPBUF ,SPI START */
-    SSPBUF = 0xFF;
+    /* Set dummy data to SSPBUF and SPI START */
+    SSPBUF = 0x00;
 
-    /* Wait for receive finish */
+    /* Wait for receiving finish */
     while(SSPSTATbits.BF == 0)
     {
-        /* reset counter overflow sequence */
-        if(spi_reset_counter == 0x00 && timeout_counter < 2)
+        /* TIMEOUT (exceeds 1.0[s]) */
+        if(timeout_counter == 0)
         {
-            spi_reset();                  // SPI reset
-            timeout_counter++;            // Timeout count
-            spi_reset_counter = 0xFF;     // Counter reset
-            continue;
-        }
-
-        /* SPI timeout */
-        if(timeout_counter == 2)
-        {
-            return -1;
+            return SYS_TIMEOUT;
         }
 
         /* reset counter decrement */
-        spi_reset_counter--;       
+        __delay_ms(1);
+        timeout_counter--;
     }
 
     /* Slave Select -> High */
-    SS_PIN = 1;
+    switch(destination)
+    {
+        case OBC2:
+            SS_OBC2   = 1;
+            break;
+        case COMMCU:
+            //SS_COMMCU = 1;
+            break;
+        case POWMCU:
+            //SS_POWMCU = 1;
+            break;
+    }
 
-    /* received data return */
-    return SSPBUF;
+    /* received data is stored */
+    *p_store_received_data = SSPBUF;
+
+    /* Return SYS_SUCCESS */
+    return SYS_SUCCESS;
 }
 
 
@@ -131,82 +147,95 @@ char spi_master_receive(void)
  * @brief
  *     SPI Masterデータ送信関数(1Byte)
  * @param
- *     data:送信データ(1Byte)
+ *     destination:通信の相手先を選択
+ *     p_data     :送信データへのポインタ
  * @return
- *     0 :正常終了
- *     -1:timeout終了
+ *     SYS_SUCCESS:送信成功
+ *     SYS_TIMEOUT:timeout終了
  * @note
- *     ・通信完了フラグの待ち状態でreset_counterが
- *       0になったらresetをかける
- *     ・2回resetをかけても完了しなければtimeoutと
- *       して-1を返す
+ *     1[s]で送信完了しなければTIMEOUTとなる
  *===================================================*/
-char spi_master_send(char data)
+sys_result_t spi_master_send(destination_t destination,
+                             uint8_t *p_data)
 {
-    char dummy;    
-    unsigned char timeout_counter   = 0;
-    unsigned char spi_reset_counter = 0xFF;
+    uint8_t dummy;
+    uint16_t timeout_counter = 1000;
 
     /* Read data to dummy */
     dummy = SSPBUF;
-
+    
     /* Slave Select -> Low */
-    SS_PIN = 0;
+    switch(destination)
+    {
+        case OBC2:
+            SS_OBC2   = 0;
+            break;
+        case COMMCU:
+            //SS_COMMCU = 0;
+            break;
+        case POWMCU:
+            //SS_POWMCU = 0;
+            break;
+    }
 
     /* Set dummy data to SSPBUF ,SPI START */
-    SSPBUF = data;
+    SSPBUF = *p_data;
 
-    /* Wait for receive finish */
+    /* Wait for receiving finish */
     while(SSPSTATbits.BF == 0)
     {
-        /* reset counter overflow sequence */
-        if(spi_reset_counter == 0x00 && timeout_counter < 2)
+        /* TIMEOUT (exceeds 1.0[s]) */
+        if(timeout_counter == 0)
         {
-            spi_reset();                  // SPI reset
-            timeout_counter++;            // Timeout count
-            spi_reset_counter = 0xFF;     // Counter reset
-            continue;
-        }
-
-        /* SPI timeout */
-        if(timeout_counter == 2)
-        {
-            return -1;
+            return SYS_TIMEOUT;
         }
 
         /* reset counter decrement */
-        spi_reset_counter--;       
+        __delay_ms(1);
+        timeout_counter--;
     }
 
     /* Slave Select -> High */
-    SS_PIN = 1;
+    switch(destination)
+    {
+        case OBC2:
+            SS_OBC2   = 1;
+            break;
+        case COMMCU:
+            //SS_COMMCU = 1;
+            break;
+        case POWMCU:
+            //SS_POWMCU = 1;
+            break;
+    }
     
     /* Read data to dummy */
     dummy = SSPBUF;
 
-    /* received data return */
-    return 0;   
+    /* Return SYS_SUCCESS */
+    return SYS_SUCCESS;   
 }
 
 
-/*-----------------------------------------------------
+/*=====================================================
  * @brief
- *     SPIリセット関数
+ *     SPI stop関数
  * @param
- *     なし
+ *     void:
  * @return
- *     なし
+ *     void:
  * @note
- *     待ち状態のreset_counterによって呼び出される
- *---------------------------------------------------*/
-static void spi_reset(void)
+ *     none
+ *===================================================*/
+void spi_master_stop(void)
 {
-    unsigned char dummy;
-    
-    SSPEN = 0;         //  Reset SPI module
-    SSPEN = 1;         //  Reset SPI module
-    dummy = SSPBUF;
-    SSPIF = 0;
-    SSPEN = 0;         //  Reset SPI module
-    SSPEN = 1;         //  Reset SPI module
+    /* SS pin -> LOW */
+    SS_OBC2   = 0;
+    //SS_COMMCU = 0;
+    //SS_POWMCU = 0;
+
+    /* SPI(MSSP) disable */
+    SSPCONbits.SSPEN = 0;
 }
+
+

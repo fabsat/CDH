@@ -19,63 +19,82 @@
 #define	_SPI_MASTER_H
 
 #include <xc.h>
-#include "pic_clock.h"
-
+#include "pic_setting.h"
+#include "system_protocol.h"
 
 /* Slave Select Pin */
-#define SS_PIN (RC2)
+#define SS_OBC2        PORTCbits.RC1
+#define SS_COMMCU      R
+#define SS_POWMCU      R
+
+/* SS pin TRIS */
+#define SS_OBC2_TRIS   TRISCbits.TRISC1
+#define SS_COMMCU_TRIS TRIS
+#define SS_POWMCU_TRIS TRIS
+
+
 
 
 /* Prototype of Function */
 /*=====================================================
- * @breif
- *     SPI Master初期化関数
+ * @brief
+ *     SPI Masterスタート関数
  * @param
- *     なし
+ *     void:
  * @return
- *     なし
+ *     void:
  * @note
  *     Pin43:SDO(RC5)
  *     Pin42:SDI(RC4/SDA)
  *     Pin37:SCK(RC3/SCL)
- *     Pin35:SS  RC1(T1OSI/CCP2)
  *===================================================*/
-void spi_master_init(void);
+void spi_master_start(void);
 
 
 /*=====================================================
  * @brief
  *     SPI Masterデータ受信関数(1Byte)
  * @param
- *     none
+ *     destination          :通信の相手先を選択
+ *     p_store_received_data:受信データを受け取るポインタ
  * @return
- *     SSPBUF:読みだしたデータ(1Byte)
- *     -1    :timeout終了
+ *     SYS_SUCCESS:受信成功
+ *     SYS_TIMEOUT:timeout終了
  * @note
- *     ・通信完了フラグの待ち状態でreset_counterが
-n *       0になったらresetをかける
- *     ・2回resetをかけても完了しなければtimeoutと
- *       して-1を返す
+ *     1[s]で受信完了しなければTIMEOUTとなる
  *===================================================*/
-char spi_master_receive(void);
+sys_result_t spi_master_receive(destination_t destination,
+                                uint8_t *p_store_received_data);
 
 
 /*=====================================================
  * @brief
  *     SPI Masterデータ送信関数(1Byte)
  * @param
- *     data:送信データ(1Byte)
+ *     destination:通信の相手先を選択
+ *     p_data     :送信データへのポインタ
  * @return
- *     0 :正常終了
- *     -1:timeout終了
+ *     SYS_SUCCESS:送信成功
+ *     SYS_TIMEOUT:timeout終了
  * @note
- *     ・通信完了フラグの待ち状態でreset_counterが
- *       0になったらresetをかける
- *     ・2回resetをかけても完了しなければtimeoutと
- *       して-1を返す
+ *     1[s]で送信完了しなければTIMEOUTとなる
  *===================================================*/
-char spi_master_send(char data);
+sys_result_t spi_master_send(destination_t destination,
+                             uint8_t *p_data);
 
+
+/*=====================================================
+ * @brief
+ *     SPI stop関数
+ * @param
+ *     void:
+ * @return
+ *     void:
+ * @note
+ *     none
+ *===================================================*/
+void spi_master_stop(void);
 
 
 #endif	/* _SPI_MASTER_H */
+
