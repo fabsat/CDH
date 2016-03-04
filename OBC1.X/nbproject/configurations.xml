@@ -11,6 +11,7 @@
       <itemPath>MCLR_reset.h</itemPath>
       <itemPath>system_protocol.h</itemPath>
       <itemPath>uint8_to_string.h</itemPath>
+      <itemPath>uart_serial.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"

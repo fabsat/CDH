@@ -108,7 +108,7 @@ double get_adcon(void)
     /* ADRESHとADRESLからデータを取得し結合する */
     my_adres.my_adres_h = ADRESH;
     my_adres.my_adres_l = ADRESL;
-    ad_value = bit_shift(&ad_value, &my_adres);
+    bit_shift(&ad_value, &my_adres);
 
     /* 電圧値を計算 */
     voltage_value = ad_value * 5.0 / range;

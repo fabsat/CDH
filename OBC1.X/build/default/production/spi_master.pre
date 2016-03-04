@@ -1448,7 +1448,7 @@ COM,
 POW,
 } destination_t;
 
-# 25
+# 23
 typedef enum
 {
 CW_TYPE = 0x01,
@@ -1456,14 +1456,14 @@ DATA_TYPE,
 COMMAND_TYPE,
 } data_type_t;
 
-# 42
+# 40
 typedef enum
 {
 DATA_END = 0b00010000,
 DATA_CONTINUE,
 } data_end_command_t;
 
-# 54
+# 52
 typedef struct
 {
 uint8_t power1[2];
@@ -1476,27 +1476,28 @@ uint8_t obc2:1;
 uint8_t powmcu:1;
 } cw_t;
 
-# 138
+# 119
+void sysprot_init(void);
+
+# 146
 uint8_t sent_data_set(void *p_data, uint8_t data_len, uint8_t byte_of_data);
 
-# 151
+# 159
 void cw_data_set(cw_t *p_cw_data);
 
-# 166
+# 174
 void send_data_master(destination_t destination, uint8_t from_MCU, data_type_t data_type, data_end_command_t data_end_command);
 
 # 51 "spi_master.h"
 void spi_master_start(void);
 
-# 66
-sys_result_t spi_master_receive(destination_t destination,
-uint8_t *p_store_received_data);
+# 65
+void spi_master_receive(destination_t destination, uint8_t data);
 
-# 82
-sys_result_t spi_master_send(destination_t destination,
-uint8_t *p_data);
+# 80
+void spi_master_send(destination_t destination, uint8_t data);
 
-# 96
+# 93
 void spi_master_stop(void);
 
 # 36 "spi_master.c"
@@ -1508,9 +1509,9 @@ TRISCbits.TRISC5 = 0;
 TRISCbits.TRISC4 = 1;
 
 
+TRISCbits.TRISC2 = 0;
+TRISCbits.TRISC0 = 0;
 TRISCbits.TRISC1 = 0;
-
-
 
 
 SSPCONbits.SSPEN = 0;
@@ -1527,19 +1528,21 @@ SSPCONbits.SSPM1 = 0;
 SSPCONbits.SSPM0 = 0;
 
 
+PORTCbits.RC2 = 1;
+PORTCbits.RC0 = 1;
 PORTCbits.RC1 = 1;
-
-
 
 
 SSPCONbits.SSPEN = 1;
 }
 
-# 84
-sys_result_t spi_master_receive(destination_t destination, uint8_t *p_store_received_data)
+# 83
+void spi_master_receive(destination_t destination, uint8_t data)
 {
 uint8_t dummy;
 uint16_t timeout_counter = 1000;
+uint8_t *reg_address = 0x08;
+uint8_t bit_mask;
 
 
 dummy = SSPBUF;
@@ -1548,15 +1551,33 @@ dummy = SSPBUF;
 switch(destination)
 {
 case OBC2:
-PORTCbits.RC1 = 0;
+bit_mask = 0b00000100;
+while((*reg_address & bit_mask) == 0){;}
 break;
-case COMMCU:
-
+case COM:
+bit_mask = 0b00000001;
+while((*reg_address & bit_mask) == 0){;}
 break;
-case POWMCU:
-
+case POW:
+bit_mask = 0b00000010;
+while((*reg_address & bit_mask) == 0){;}
 break;
 }
+
+
+switch(destination)
+{
+case OBC2:
+PORTCbits.RC2 = 0;
+break;
+case COM:
+PORTCbits.RC0 = 0;
+break;
+case POW:
+PORTCbits.RC1 = 0;
+break;
+}
+
 
 
 SSPBUF = 0x00;
@@ -1567,11 +1588,11 @@ while(SSPSTATbits.BF == 0)
 
 if(timeout_counter == 0)
 {
-return SYS_TIMEOUT;
+return;
 }
 
 
-_delay((unsigned long)((1)*(20000000/4000.0)));
+_delay((unsigned long)((1)*(20000000/4000000.0)));
 timeout_counter--;
 }
 
@@ -1579,28 +1600,26 @@ timeout_counter--;
 switch(destination)
 {
 case OBC2:
+PORTCbits.RC2 = 1;
+break;
+case COM:
+PORTCbits.RC0 = 1;
+break;
+case POW:
 PORTCbits.RC1 = 1;
 break;
-case COMMCU:
-
-break;
-case POWMCU:
-
-break;
 }
 
-
-*p_store_received_data = SSPBUF;
-
-
-return SYS_SUCCESS;
+data = SSPBUF;
 }
 
-# 157
-sys_result_t spi_master_send(destination_t destination, uint8_t *p_data)
+# 171
+void spi_master_send(destination_t destination, uint8_t data)
 {
 uint8_t dummy;
 uint16_t timeout_counter = 1000;
+uint8_t *reg_address = 0x08;
+uint8_t bit_mask;
 
 
 dummy = SSPBUF;
@@ -1609,18 +1628,35 @@ dummy = SSPBUF;
 switch(destination)
 {
 case OBC2:
-PORTCbits.RC1 = 0;
+bit_mask = 0b00000100;
+while((*reg_address & bit_mask) == 0){;}
 break;
-case COMMCU:
-
+case COM:
+bit_mask = 0b00000001;
+while((*reg_address & bit_mask) == 0){;}
 break;
-case POWMCU:
-
+case POW:
+bit_mask = 0b00000010;
+while((*reg_address & bit_mask) == 0){;}
 break;
 }
 
 
-SSPBUF = *p_data;
+switch(destination)
+{
+case OBC2:
+PORTCbits.RC2 = 0;
+break;
+case COM:
+PORTCbits.RC0 = 0;
+break;
+case POW:
+PORTCbits.RC1 = 0;
+break;
+}
+
+
+SSPBUF = data;
 
 
 while(SSPSTATbits.BF == 0)
@@ -1628,11 +1664,11 @@ while(SSPSTATbits.BF == 0)
 
 if(timeout_counter == 0)
 {
-return SYS_TIMEOUT;
+return;
 }
 
 
-_delay((unsigned long)((1)*(20000000/4000.0)));
+_delay((unsigned long)((1)*(20000000/4000000.0)));
 timeout_counter--;
 }
 
@@ -1640,32 +1676,28 @@ timeout_counter--;
 switch(destination)
 {
 case OBC2:
+PORTCbits.RC2 = 1;
+break;
+case COM:
+PORTCbits.RC0 = 1;
+break;
+case POW:
 PORTCbits.RC1 = 1;
-break;
-case COMMCU:
-
-break;
-case POWMCU:
-
 break;
 }
 
 
 dummy = SSPBUF;
-
-
-return SYS_SUCCESS;
 }
 
-# 228
+# 258
 void spi_master_stop(void)
 {
 
+PORTCbits.RC2 = 0;
+PORTCbits.RC0 = 0;
 PORTCbits.RC1 = 0;
-
-
 
 
 SSPCONbits.SSPEN = 0;
 }
-

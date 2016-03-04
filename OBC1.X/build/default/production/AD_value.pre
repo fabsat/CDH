@@ -1499,7 +1499,7 @@ while(ADCON0bits.GO_DONE){;}
 
 my_adres.my_adres_h = ADRESH;
 my_adres.my_adres_l = ADRESL;
-ad_value = bit_shift(&ad_value, &my_adres);
+bit_shift(&ad_value, &my_adres);
 
 
 voltage_value = ad_value * 5.0 / range;

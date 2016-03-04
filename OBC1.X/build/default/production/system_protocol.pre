@@ -1448,7 +1448,7 @@ COM,
 POW,
 } destination_t;
 
-# 25
+# 23
 typedef enum
 {
 CW_TYPE = 0x01,
@@ -1456,14 +1456,14 @@ DATA_TYPE,
 COMMAND_TYPE,
 } data_type_t;
 
-# 42
+# 40
 typedef enum
 {
 DATA_END = 0b00010000,
 DATA_CONTINUE,
 } data_end_command_t;
 
-# 54
+# 52
 typedef struct
 {
 uint8_t power1[2];
@@ -1476,27 +1476,28 @@ uint8_t obc2:1;
 uint8_t powmcu:1;
 } cw_t;
 
-# 138
+# 119
+void sysprot_init(void);
+
+# 146
 uint8_t sent_data_set(void *p_data, uint8_t data_len, uint8_t byte_of_data);
 
-# 151
+# 159
 void cw_data_set(cw_t *p_cw_data);
 
-# 166
+# 174
 void send_data_master(destination_t destination, uint8_t from_MCU, data_type_t data_type, data_end_command_t data_end_command);
 
 # 51 "spi_master.h"
 void spi_master_start(void);
 
-# 66
-sys_result_t spi_master_receive(destination_t destination,
-uint8_t *p_store_received_data);
+# 65
+void spi_master_receive(destination_t destination, uint8_t data);
 
-# 82
-sys_result_t spi_master_send(destination_t destination,
-uint8_t *p_data);
+# 80
+void spi_master_send(destination_t destination, uint8_t data);
 
-# 96
+# 93
 void spi_master_stop(void);
 
 # 36 "system_protocol.c"
@@ -1507,17 +1508,34 @@ uint8_t payload[30];
 uint8_t data_end_command;
 } packet_format_t;
 
-# 58
+# 55
 static void uint8_data_set(uint8_t *p_data, uint8_t data_len);
-static void send_payload(destination_t destination, uint8_t *p_payload);
+static void uint16_data_set(uint16_t *p_data, uint8_t data_len);
+static void double_data_set(double *p_data, uint8_t data_len);
+static void uint16_to_byte_array(uint16_t *p_data, uint8_t *p_data_array);
+static void double_to_byte_array(double *p_data, uint8_t *p_data_array);
+static uint8_t send_payload(destination_t destination, uint8_t *p_payload);
+static void receive_payload(destination_t destination, uint8_t *p_payload);
+static void packet_send_master(destination_t destination, packet_format_t *p_packet);
+static void packet_receive_master(destination_t destination, packet_format_t *p_packet);
 
-# 68
+# 70
 static packet_format_t packet = { 0x00, {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}, 0x00 };
+static cw_t cw = { {0x00, 0x00}, {0x00, 0x00}, {0x00, 0x00}, {0x00, 0x00}, {0x00, 0x00}, {0x00, 0x00}, 0, 0 };
 
 
 static uint8_t index_pos;
 
-# 103
+# 84
+void sysprot_init(void)
+{
+TRISDbits.TRISD0 = 1;
+TRISDbits.TRISD1 = 1;
+
+
+}
+
+# 119
 uint8_t sent_data_set(void *p_data, uint8_t data_len, uint8_t byte_of_data)
 {
 
@@ -1543,10 +1561,12 @@ return 0xff;
 }
 
 
+
+
 return (uint8_t)(30 - index_pos);
 }
 
-# 142
+# 160
 void cw_data_set(cw_t *p_cw_data)
 {
 uint8_t i;
@@ -1568,36 +1588,22 @@ uint8_data_set(&(p_cw_data->obc2), 1);
 uint8_data_set(&(p_cw_data->powmcu), 1);
 }
 
-# 176
+# 194
 void send_data_master(destination_t destination, uint8_t from_MCU, data_type_t data_type, data_end_command_t data_end_command)
 {
 packet.data_type = (uint8_t)data_type;
 packet.data_end_command = (uint8_t)data_end_command;
 
-packet_send_master(destination, from_MCU, &packet);
+packet_send_master(destination, &packet);
 }
 
-
+# 215
 void receive_data_master(destination_t destination, uint8_t from_MCU)
 {
-packet_receive_master(destination, from_MCU, &packet);
+packet_receive_master(destination, &packet);
 }
 
-static void packet_receive_master(destination_t destination, uint8_t from_MCU, packet_format_t *p_packet)
-{
-uint8_t use_obc = 0x00;
-
-
-spi_master_receive(destination, use_obc);
-
-spi_master_receive(destination, &packet->data_type);
-
-spi_master_receive(destination, &packet->payload);
-
-spi_master_receive(destination, &packet->data_end_command);
-}
-
-# 221
+# 237
 static void uint8_data_set(uint8_t *p_data, uint8_t data_len)
 {
 while(data_len)
@@ -1608,7 +1614,7 @@ data_len--;
 }
 }
 
-# 243
+# 259
 static void uint16_data_set(uint16_t *p_data, uint8_t data_len)
 {
 uint8_t buf[3];
@@ -1626,7 +1632,7 @@ data_len--;
 }
 }
 
-# 272
+# 288
 static void double_data_set(double *p_data, uint8_t data_len)
 {
 uint8_t buf[5];
@@ -1644,7 +1650,7 @@ data_len--;
 }
 }
 
-# 301
+# 317
 static void uint16_to_byte_array(uint16_t *p_data, uint8_t *p_data_array)
 {
 const uint16_t bit_mask = 0b0000000011111111;
@@ -1655,7 +1661,7 @@ p_data_array[1] = (uint8_t)(*p_data >> 8);
 p_data_array[2] = (uint8_t)(*p_data & bit_mask);
 }
 
-# 323
+# 339
 static void double_to_byte_array(double *p_data, uint8_t *p_data_array)
 {
 uint8_t i;
@@ -1678,27 +1684,8 @@ p_data_array[i + 1] = converter.array[i];
 }
 }
 
-# 358
-static void packet_send_master(destination_t destination, packet_format_t *p_packet)
-{
-uint16_t timeout_counter;
-
-
-spi_master_send(destination, 0x00);
-
-
-spi_master_send(destination, &p_packet->data_type);
-
-
-send_payload(destination, &p_packet->payload);
-
-
-spi_master_send(destination, &p_packet->data_end_command);
-
-}
-
-# 389
-static void send_payload(destination_t destination, uint8_t *p_payload)
+# 374
+static uint8_t send_payload(destination_t destination, uint8_t *p_payload)
 {
 uint8_t i;
 uint8_t data_len;
@@ -1716,5 +1703,68 @@ spi_master_send(destination, p_payload++);
 index_pos++;
 }
 }
+
+return index_pos;
+}
+
+# 409
+static void receive_payload(destination_t destination, uint8_t *p_payload)
+{
+uint8_t i;
+uint8_t data_len;
+uint8_t index_pos = 0;
+
+
+
+while(*p_payload != 0x00 || index_pos < 30)
+
+{
+data_len = *p_payload;
+spi_master_receive(destination, p_payload++);
+index_pos++;
+
+for(i = 0; i < data_len; i++)
+{
+spi_master_receive(destination, p_payload++);
+index_pos++;
+
+}
+}
+}
+
+# 445
+static void packet_send_master(destination_t destination, packet_format_t *p_packet)
+{
+
+
+
+spi_master_send(destination, 0x00);
+
+
+spi_master_send(destination, &p_packet->data_type);
+
+
+send_payload(destination, &p_packet->payload);
+
+
+spi_master_send(destination, &p_packet->data_end_command);
+}
+
+# 474
+static void packet_receive_master(destination_t destination, packet_format_t *p_packet)
+{
+uint8_t use_obc = 0x00;
+
+
+spi_master_receive(destination, use_obc);
+
+
+spi_master_receive(destination, &p_packet->data_type);
+
+
+receive_payload(destination, &p_packet->payload);
+
+
+spi_master_receive(destination, &p_packet->data_end_command);
 }
 

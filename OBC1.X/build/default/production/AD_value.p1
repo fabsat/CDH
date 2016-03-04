@@ -1,10 +1,48 @@
 Version 3.2 HI-TECH Software Intermediate Code
-"16 uint8_to_string.c
-[v _process_100 `(v ~T0 @X0 0 sf3`uc`*uc`*uc ]
-"17
-[v _process_10 `(v ~T0 @X0 0 sf3`uc`*uc`*uc ]
-"18
-[v _process_1 `(v ~T0 @X0 0 sf3`uc`*uc`*uc ]
+"166 C:\Program Files (x86)\Microchip\xc8\v1.35\include\pic16f877a.h
+[s S7 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S7 . RA0 RA1 RA2 RA3 RA4 RA5 ]
+"165
+[u S6 `S7 1 ]
+[n S6 . . ]
+"175
+[v _PORTAbits `VS6 ~T0 @X0 0 e@5 ]
+"1294
+[s S55 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S55 . TRISA0 TRISA1 TRISA2 TRISA3 TRISA4 TRISA5 ]
+"1293
+[u S54 `S55 1 ]
+[n S54 . . ]
+"1303
+[v _TRISAbits `VS54 ~T0 @X0 0 e@133 ]
+"2175
+[v _ADCON1 `Vuc ~T0 @X0 0 e@159 ]
+"29 AD_value.c
+[s S96 `uc 1 `uc 1 ]
+[n S96 . my_adres_h my_adres_l ]
+"1124 C:\Program Files (x86)\Microchip\xc8\v1.35\include\pic16f877a.h
+[v _ADCON0 `Vuc ~T0 @X0 0 e@31 ]
+"1130
+[s S47 :1 `uc 1 :1 `uc 1 :1 `uc 1 :3 `uc 1 :2 `uc 1 ]
+[n S47 . ADON . GO_nDONE CHS ADCS ]
+"1137
+[s S48 :2 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S48 . . GO CHS0 CHS1 CHS2 ADCS0 ADCS1 ]
+"1146
+[s S49 :2 `uc 1 :1 `uc 1 ]
+[n S49 . . nDONE ]
+"1150
+[s S50 :2 `uc 1 :1 `uc 1 ]
+[n S50 . . GO_DONE ]
+"1129
+[u S46 `S47 1 `S48 1 `S49 1 `S50 1 ]
+[n S46 . . . . . ]
+"1155
+[v _ADCON0bits `VS46 ~T0 @X0 0 e@31 ]
+"1118
+[v _ADRESH `Vuc ~T0 @X0 0 e@30 ]
+"2169
+[v _ADRESL `Vuc ~T0 @X0 0 e@158 ]
 [; ;htc.h: 26: extern const char __xc8_OPTIM_SPEED;
 [; ;htc.h: 28: extern double __fpnormalize(double);
 [; ;xc8debug.h: 14: extern void __builtin_software_breakpoint(void);
@@ -1026,252 +1064,128 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;pic_clock.h: 29: typedef signed char int8_t;
 [; ;pic_clock.h: 30: typedef unsigned int uint16_t;
 [; ;pic_clock.h: 31: typedef signed int int16_t;
-[; ;uint8_to_string.h: 23: void uint8_to_string(uint8_t num, uint8_t *p_str_buf, uint8_t buf_size);
-[; ;uint8_to_string.c: 16: static void process_100(uint8_t num, uint8_t *p_str_buf, uint8_t *p_flag);
-[; ;uint8_to_string.c: 17: static void process_10(uint8_t num, uint8_t *p_str_buf, uint8_t *p_flag);
-[; ;uint8_to_string.c: 18: static void process_1(uint8_t num, uint8_t *p_str_buf, uint8_t *p_flag);
-"35 uint8_to_string.c
-[v _uint8_to_string `(v ~T0 @X0 1 ef3`uc`*uc`uc ]
-"36
-{
-[; ;uint8_to_string.c: 35: void uint8_to_string(uint8_t num, uint8_t *p_str_buf, uint8_t buf_size)
-[; ;uint8_to_string.c: 36: {
-[e :U _uint8_to_string ]
-"35
-[v _num `uc ~T0 @X0 1 r1 ]
-[v _p_str_buf `*uc ~T0 @X0 1 r2 ]
-[v _buf_size `uc ~T0 @X0 1 r3 ]
-"36
-[f ]
-"37
-[v _flag `uc ~T0 @X0 1 a ]
-[; ;uint8_to_string.c: 37: uint8_t flag = 0;
-[e = _flag -> -> 0 `i `uc ]
-[; ;uint8_to_string.c: 40: if(buf_size < 4)
-"40
-[e $ ! < -> _buf_size `i -> 4 `i 97  ]
-[; ;uint8_to_string.c: 41: {
-"41
-{
-[; ;uint8_to_string.c: 42: return;
-"42
-[e $UE 96  ]
-"43
-}
-[e :U 97 ]
-[; ;uint8_to_string.c: 43: }
-[; ;uint8_to_string.c: 46: if(100 <= num && num <= 255)
-"46
-[e $ ! && <= -> 100 `i -> _num `i <= -> _num `i -> 255 `i 98  ]
-[; ;uint8_to_string.c: 47: {
-"47
-{
-[; ;uint8_to_string.c: 48: process_100(num, p_str_buf, &flag);
-"48
-[e ( _process_100 (3 , , _num _p_str_buf &U _flag ]
-"49
-}
-[; ;uint8_to_string.c: 49: }
-[e $U 99  ]
+[; ;AD_value.h: 35: void ad_con_init(void);
+[; ;AD_value.h: 48: double get_adcon(void);
+[; ;AD_value.c: 28: typedef struct
+[; ;AD_value.c: 29: {
+[; ;AD_value.c: 30: uint8_t my_adres_h;
+[; ;AD_value.c: 31: uint8_t my_adres_l;
+[; ;AD_value.c: 32: } adres_t;
+[; ;AD_value.c: 36: static void bit_shift(uint16_t *p_ad_value, adres_t *p_adres);
+"49 AD_value.c
+[v _ad_con_init `(v ~T0 @X0 1 ef ]
 "50
-[e :U 98 ]
-[; ;uint8_to_string.c: 50: else if(10 <= num && num <= 99)
-[e $ ! && <= -> 10 `i -> _num `i <= -> _num `i -> 99 `i 100  ]
-[; ;uint8_to_string.c: 51: {
-"51
 {
-[; ;uint8_to_string.c: 52: process_10(num, p_str_buf, &flag);
+[; ;AD_value.c: 49: void ad_con_init(void)
+[; ;AD_value.c: 50: {
+[e :U _ad_con_init ]
+[f ]
+[; ;AD_value.c: 52: PORTAbits.RA0 = 0;
 "52
-[e ( _process_10 (3 , , _num _p_str_buf &U _flag ]
+[e = . . _PORTAbits 0 0 -> -> 0 `i `uc ]
+[; ;AD_value.c: 53: PORTAbits.RA3 = 0;
 "53
-}
-[; ;uint8_to_string.c: 53: }
-[e $U 101  ]
+[e = . . _PORTAbits 0 3 -> -> 0 `i `uc ]
+[; ;AD_value.c: 54: TRISAbits.TRISA0 = 1;
 "54
-[e :U 100 ]
-[; ;uint8_to_string.c: 54: else if(0 <= num && num <= 9)
-[e $ ! && <= -> 0 `i -> _num `i <= -> _num `i -> 9 `i 102  ]
-[; ;uint8_to_string.c: 55: {
+[e = . . _TRISAbits 0 0 -> -> 1 `i `uc ]
+[; ;AD_value.c: 55: TRISAbits.TRISA3 = 1;
 "55
-{
-[; ;uint8_to_string.c: 56: process_1(num, p_str_buf, &flag);
+[e = . . _TRISAbits 0 3 -> -> 1 `i `uc ]
+[; ;AD_value.c: 56: ADCON1 = 0b00000001;
 "56
-[e ( _process_1 (3 , , _num _p_str_buf &U _flag ]
+[e = _ADCON1 -> -> 1 `i `uc ]
+[; ;AD_value.c: 57: }
 "57
+[e :UE 97 ]
 }
-[e :U 102 ]
-"58
-[e :U 101 ]
-[e :U 99 ]
-[; ;uint8_to_string.c: 57: }
-[; ;uint8_to_string.c: 58: }
-[e :UE 96 ]
-}
-"64
-[v _process_100 `(v ~T0 @X0 1 sf3`uc`*uc`*uc ]
-"65
-{
-[; ;uint8_to_string.c: 64: static void process_100(uint8_t num, uint8_t *p_str_buf, uint8_t *p_flag)
-[; ;uint8_to_string.c: 65: {
-[e :U _process_100 ]
-"64
-[v _num `uc ~T0 @X0 1 r1 ]
-[v _p_str_buf `*uc ~T0 @X0 1 r2 ]
-[v _p_flag `*uc ~T0 @X0 1 r3 ]
-"65
-[f ]
-[; ;uint8_to_string.c: 67: if(0 <= num && num <= 199)
-"67
-[e $ ! && <= -> 0 `i -> _num `i <= -> _num `i -> 199 `i 104  ]
-[; ;uint8_to_string.c: 68: {
-"68
-{
-[; ;uint8_to_string.c: 69: p_str_buf[*p_flag] = 0x30 + 1;
-"69
-[e = *U + _p_str_buf * -> *U _p_flag `ux -> -> # *U _p_str_buf `ui `ux -> + -> 48 `i -> 1 `i `uc ]
-[; ;uint8_to_string.c: 70: (*p_flag)++;
-"70
-[e ++ *U _p_flag -> -> 1 `i `uc ]
 "71
-}
-[; ;uint8_to_string.c: 71: }
-[e $U 105  ]
+[v _bit_shift `(v ~T0 @X0 1 sf2`*ui`*S96 ]
 "72
-[e :U 104 ]
-[; ;uint8_to_string.c: 72: else if(200 <= num && num <= 255)
-[e $ ! && <= -> 200 `i -> _num `i <= -> _num `i -> 255 `i 106  ]
-[; ;uint8_to_string.c: 73: {
+{
+[; ;AD_value.c: 71: static void bit_shift(uint16_t *p_ad_value, adres_t *p_adres)
+[; ;AD_value.c: 72: {
+[e :U _bit_shift ]
+"71
+[v _p_ad_value `*ui ~T0 @X0 1 r1 ]
+[v _p_adres `*S96 ~T0 @X0 1 r2 ]
+"72
+[f ]
 "73
-{
-[; ;uint8_to_string.c: 74: p_str_buf[*p_flag] = 0x30 + 2;
-"74
-[e = *U + _p_str_buf * -> *U _p_flag `ux -> -> # *U _p_str_buf `ui `ux -> + -> 48 `i -> 2 `i `uc ]
-[; ;uint8_to_string.c: 75: (*p_flag)++;
+[v F1113 `Cuc ~T0 @X0 1 s bit_mask_for_l ]
+[i F1113
+-> -> 3 `i `uc
+]
+[; ;AD_value.c: 73: const uint8_t bit_mask_for_l = 0b00000011;
+[; ;AD_value.c: 75: *p_ad_value = (uint16_t)(p_adres->my_adres_h);
 "75
-[e ++ *U _p_flag -> -> 1 `i `uc ]
+[e = *U _p_ad_value -> . *U _p_adres 0 `ui ]
+[; ;AD_value.c: 76: *p_ad_value <<= 2;
 "76
+[e =<< *U _p_ad_value -> 2 `i ]
+[; ;AD_value.c: 77: *p_ad_value |= (bit_mask_for_l & (p_adres->my_adres_l >> 6));
+"77
+[e =| *U _p_ad_value -> & -> F1113 `i >> -> . *U _p_adres 1 `i -> 6 `i `ui ]
+[; ;AD_value.c: 78: }
+"78
+[e :UE 98 ]
 }
-[e :U 106 ]
-"79
-[e :U 105 ]
-[; ;uint8_to_string.c: 76: }
-[; ;uint8_to_string.c: 79: process_10((num % 100), p_str_buf, p_flag);
-[e ( _process_10 (3 , , -> % -> _num `i -> 100 `i `uc _p_str_buf _p_flag ]
-[; ;uint8_to_string.c: 80: }
-"80
-[e :UE 103 ]
-}
-"86
-[v _process_10 `(v ~T0 @X0 1 sf3`uc`*uc`*uc ]
-"87
+"91
+[v _get_adcon `(d ~T0 @X0 1 ef ]
+"92
 {
-[; ;uint8_to_string.c: 86: static void process_10(uint8_t num, uint8_t *p_str_buf, uint8_t *p_flag)
-[; ;uint8_to_string.c: 87: {
-[e :U _process_10 ]
-"86
-[v _num `uc ~T0 @X0 1 r1 ]
-[v _p_str_buf `*uc ~T0 @X0 1 r2 ]
-[v _p_flag `*uc ~T0 @X0 1 r3 ]
-"87
+[; ;AD_value.c: 91: double get_adcon(void)
+[; ;AD_value.c: 92: {
+[e :U _get_adcon ]
 [f ]
-"88
-[v _divide `uc ~T0 @X0 1 a ]
-[; ;uint8_to_string.c: 88: uint8_t divide = num / 10;
-[e = _divide -> / -> _num `i -> 10 `i `uc ]
-"89
-[v _val `uc ~T0 @X0 1 a ]
-[; ;uint8_to_string.c: 89: uint8_t val = 0x30;
-[e = _val -> -> 48 `i `uc ]
-"90
-[v _i `uc ~T0 @X0 1 a ]
-[; ;uint8_to_string.c: 90: uint8_t i;
-[; ;uint8_to_string.c: 93: for(i = 0; i < divide; i++)
-"93
-{
-[e = _i -> -> 0 `i `uc ]
-[e $U 111  ]
 "94
-[e :U 108 ]
-[; ;uint8_to_string.c: 94: {
-{
-[; ;uint8_to_string.c: 95: val++;
-"95
-[e ++ _val -> -> 1 `i `uc ]
-"96
-}
-"93
-[e ++ _i -> -> 1 `i `uc ]
-[e :U 111 ]
-[e $ < -> _i `i -> _divide `i 108  ]
-[e :U 109 ]
-"96
-}
-[; ;uint8_to_string.c: 96: }
-[; ;uint8_to_string.c: 98: p_str_buf[*p_flag] = val;
+[v F1116 `Cui ~T0 @X0 1 s range ]
+[i F1116
+-> -> 1023 `i `ui
+]
+"97
+[v _ad_value `ui ~T0 @X0 1 a ]
+[; ;AD_value.c: 94: const unsigned int range = 0x3ff;
+[; ;AD_value.c: 97: uint16_t ad_value = 0b0000000000;
+[e = _ad_value -> -> 0 `i `ui ]
 "98
-[e = *U + _p_str_buf * -> *U _p_flag `ux -> -> # *U _p_str_buf `ui `ux _val ]
-[; ;uint8_to_string.c: 99: (*p_flag)++;
+[v _voltage_value `d ~T0 @X0 1 a ]
 "99
-[e ++ *U _p_flag -> -> 1 `i `uc ]
-[; ;uint8_to_string.c: 101: process_1((num % 10), p_str_buf, p_flag);
-"101
-[e ( _process_1 (3 , , -> % -> _num `i -> 10 `i `uc _p_str_buf _p_flag ]
-[; ;uint8_to_string.c: 102: }
+[v _my_adres `S96 ~T0 @X0 1 a ]
+[; ;AD_value.c: 98: double voltage_value;
+[; ;AD_value.c: 99: adres_t my_adres;
+[; ;AD_value.c: 102: ADCON0 = 0b10000001;
 "102
-[e :UE 107 ]
-}
-"108
-[v _process_1 `(v ~T0 @X0 1 sf3`uc`*uc`*uc ]
-"109
+[e = _ADCON0 -> -> 129 `i `uc ]
+[; ;AD_value.c: 103: ADCON0bits.GO_DONE = 1;
+"103
+[e = . . _ADCON0bits 3 1 -> -> 1 `i `uc ]
+[; ;AD_value.c: 106: while(ADCON0bits.GO_DONE){;}
+"106
+[e $U 100  ]
+[e :U 101 ]
 {
-[; ;uint8_to_string.c: 108: static void process_1(uint8_t num, uint8_t *p_str_buf, uint8_t *p_flag)
-[; ;uint8_to_string.c: 109: {
-[e :U _process_1 ]
-"108
-[v _num `uc ~T0 @X0 1 r1 ]
-[v _p_str_buf `*uc ~T0 @X0 1 r2 ]
-[v _p_flag `*uc ~T0 @X0 1 r3 ]
+}
+[e :U 100 ]
+[e $ != -> . . _ADCON0bits 3 1 `i -> -> -> 0 `i `Vuc `i 101  ]
+[e :U 102 ]
+[; ;AD_value.c: 109: my_adres.my_adres_h = ADRESH;
 "109
-[f ]
+[e = . _my_adres 0 _ADRESH ]
+[; ;AD_value.c: 110: my_adres.my_adres_l = ADRESL;
 "110
-[v _i `uc ~T0 @X0 1 a ]
+[e = . _my_adres 1 _ADRESL ]
+[; ;AD_value.c: 111: bit_shift(&ad_value, &my_adres);
 "111
-[v _val `uc ~T0 @X0 1 a ]
-[; ;uint8_to_string.c: 110: uint8_t i;
-[; ;uint8_to_string.c: 111: uint8_t val = 0x30;
-[e = _val -> -> 48 `i `uc ]
-[; ;uint8_to_string.c: 113: for(i = 0; i < num; i++)
-"113
-{
-[e = _i -> -> 0 `i `uc ]
-[e $U 116  ]
+[e ( _bit_shift (2 , &U _ad_value &U _my_adres ]
+[; ;AD_value.c: 114: voltage_value = ad_value * 5.0 / range;
 "114
-[e :U 113 ]
-[; ;uint8_to_string.c: 114: {
-{
-[; ;uint8_to_string.c: 115: val++;
-"115
-[e ++ _val -> -> 1 `i `uc ]
+[e = _voltage_value / * -> _ad_value `d .5.0 -> F1116 `d ]
+[; ;AD_value.c: 116: return voltage_value;
 "116
-}
-"113
-[e ++ _i -> -> 1 `i `uc ]
-[e :U 116 ]
-[e $ < -> _i `i -> _num `i 113  ]
-[e :U 114 ]
-"116
-}
-[; ;uint8_to_string.c: 116: }
-[; ;uint8_to_string.c: 118: p_str_buf[*p_flag] = val;
-"118
-[e = *U + _p_str_buf * -> *U _p_flag `ux -> -> # *U _p_str_buf `ui `ux _val ]
-[; ;uint8_to_string.c: 119: (*p_flag)++;
-"119
-[e ++ *U _p_flag -> -> 1 `i `uc ]
-[; ;uint8_to_string.c: 121: p_str_buf[*p_flag] = '\0';
-"121
-[e = *U + _p_str_buf * -> *U _p_flag `ux -> -> # *U _p_str_buf `ui `ux -> -> 0 `ui `uc ]
-[; ;uint8_to_string.c: 122: }
-"122
-[e :UE 112 ]
+[e ) _voltage_value ]
+[e $UE 99  ]
+[; ;AD_value.c: 117: }
+"117
+[e :UE 99 ]
 }

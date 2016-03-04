@@ -32,7 +32,7 @@
  *===================================================*/
 void uart_init(void)
 {
-    TRISCbit.TRISC7 = 1;         // RX=RC7 is serial data input
+    TRISCbits.TRISC7 = 1;         // RX=RC7 is serial data input
     SPBRG = SPBRG_DATA;
     TXSTA = (TX9_RX9_DATA | BRGH_DATA | 0x20);
     RCSTA = (TX9_RX9_DATA | 0x90);

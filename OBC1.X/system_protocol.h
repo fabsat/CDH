@@ -14,9 +14,7 @@ typedef enum
     POW,
 } destination_t;
 
-
-#define USE_MCU 0x00        // 使用しているマイコンがOBC1=0x00, OBC2=0x01
-
+#define USE_MCU 0x00        // 使用しているマイコンがOBC1=0x00, OBC2=0x01, COM=0x02, POW=0x03
 
 /********************************************************************************
  *                          パケット関連の各種定義                                *
@@ -74,17 +72,14 @@ typedef struct
 	{0x00, 0x00}, \
 	{0x00, 0x00}, \
 	0,            \
-	0,            \
 	0             \
 }
 
 
 /* Peripheral MCU Notification Pin and I/O Setting Register */
 #define PORTD_REG_ADR         0x08
-#define OBC2_READY            PORTDbits.RD2
 #define COM_READY             PORTDbits.RD0
 #define POW_READY             PORTDbits.RD1
-#define OBC2_READY_PIN_TRIS   TRISDbits.TRISD2
 #define COM_READY_PIN_TRIS    TRISDbits.TRISD0
 #define POW_READY_PIN_TRIS    TRISDbits.TRISD1
 
@@ -110,6 +105,19 @@ do                                                \
 /********************************************************************************
  *                       ライブラリ関数のプロトタイプ宣言                          *
  *******************************************************************************/
+
+/*=====================================================
+ * @brief
+ *     system_protocolの初期設定
+ * @param
+ *     void:
+ * @return
+ *     void:
+ *  @note
+ *     各MCUからの状態通知ピンの設定
+ *===================================================*/
+void sysprot_init(void);
+
 
 /*=====================================================
  * @brief

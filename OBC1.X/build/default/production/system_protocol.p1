@@ -1,10 +1,43 @@
 Version 3.2 HI-TECH Software Intermediate Code
-"16 uint8_to_string.c
-[v _process_100 `(v ~T0 @X0 0 sf3`uc`*uc`*uc ]
-"17
-[v _process_10 `(v ~T0 @X0 0 sf3`uc`*uc`*uc ]
-"18
-[v _process_1 `(v ~T0 @X0 0 sf3`uc`*uc`*uc ]
+"37 system_protocol.c
+[s S97 `uc 1 `uc -> 30 `i `uc 1 ]
+[n S97 . data_type payload data_end_command ]
+"53 system_protocol.h
+[s S96 `uc -> 2 `i `uc -> 2 `i `uc -> 2 `i `uc -> 2 `i `uc -> 2 `i `uc -> 2 `i :1 `uc 1 :1 `uc 1 ]
+[n S96 . power1 power2 power3 power4 power5 temp obc2 powmcu ]
+"1465 C:\Program Files (x86)\Microchip\xc8\v1.35\include\pic16f877a.h
+[s S61 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S61 . TRISD0 TRISD1 TRISD2 TRISD3 TRISD4 TRISD5 TRISD6 TRISD7 ]
+"1464
+[u S60 `S61 1 ]
+[n S60 . . ]
+"1476
+[v _TRISDbits `VS60 ~T0 @X0 0 e@136 ]
+"55 system_protocol.c
+[v _uint8_data_set `(v ~T0 @X0 0 sf2`*uc`uc ]
+"56
+[v _uint16_data_set `(v ~T0 @X0 0 sf2`*ui`uc ]
+"57
+[v _double_data_set `(v ~T0 @X0 0 sf2`*d`uc ]
+"195
+[c E1099 0 1 2 .. ]
+[n E1099 . OBC2 COM POW  ]
+[c E1104 1 2 3 .. ]
+[n E1104 . CW_TYPE DATA_TYPE COMMAND_TYPE  ]
+[c E1109 16 17 .. ]
+[n E1109 . DATA_END DATA_CONTINUE  ]
+"62
+[v _packet_send_master `(v ~T0 @X0 0 sf2`E1099`*S97 ]
+"63
+[v _packet_receive_master `(v ~T0 @X0 0 sf2`E1099`*S97 ]
+"58
+[v _uint16_to_byte_array `(v ~T0 @X0 0 sf2`*ui`*uc ]
+"59
+[v _double_to_byte_array `(v ~T0 @X0 0 sf2`*d`*uc ]
+"80 spi_master.h
+[v _spi_master_send `(v ~T0 @X0 0 ef2`E1099`uc ]
+"65
+[v _spi_master_receive `(v ~T0 @X0 0 ef2`E1099`uc ]
 [; ;htc.h: 26: extern const char __xc8_OPTIM_SPEED;
 [; ;htc.h: 28: extern double __fpnormalize(double);
 [; ;xc8debug.h: 14: extern void __builtin_software_breakpoint(void);
@@ -1026,252 +1059,795 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;pic_clock.h: 29: typedef signed char int8_t;
 [; ;pic_clock.h: 30: typedef unsigned int uint16_t;
 [; ;pic_clock.h: 31: typedef signed int int16_t;
-[; ;uint8_to_string.h: 23: void uint8_to_string(uint8_t num, uint8_t *p_str_buf, uint8_t buf_size);
-[; ;uint8_to_string.c: 16: static void process_100(uint8_t num, uint8_t *p_str_buf, uint8_t *p_flag);
-[; ;uint8_to_string.c: 17: static void process_10(uint8_t num, uint8_t *p_str_buf, uint8_t *p_flag);
-[; ;uint8_to_string.c: 18: static void process_1(uint8_t num, uint8_t *p_str_buf, uint8_t *p_flag);
-"35 uint8_to_string.c
-[v _uint8_to_string `(v ~T0 @X0 1 ef3`uc`*uc`uc ]
-"36
-{
-[; ;uint8_to_string.c: 35: void uint8_to_string(uint8_t num, uint8_t *p_str_buf, uint8_t buf_size)
-[; ;uint8_to_string.c: 36: {
-[e :U _uint8_to_string ]
-"35
-[v _num `uc ~T0 @X0 1 r1 ]
-[v _p_str_buf `*uc ~T0 @X0 1 r2 ]
-[v _buf_size `uc ~T0 @X0 1 r3 ]
-"36
-[f ]
-"37
-[v _flag `uc ~T0 @X0 1 a ]
-[; ;uint8_to_string.c: 37: uint8_t flag = 0;
-[e = _flag -> -> 0 `i `uc ]
-[; ;uint8_to_string.c: 40: if(buf_size < 4)
-"40
-[e $ ! < -> _buf_size `i -> 4 `i 97  ]
-[; ;uint8_to_string.c: 41: {
-"41
-{
-[; ;uint8_to_string.c: 42: return;
-"42
-[e $UE 96  ]
-"43
-}
-[e :U 97 ]
-[; ;uint8_to_string.c: 43: }
-[; ;uint8_to_string.c: 46: if(100 <= num && num <= 255)
-"46
-[e $ ! && <= -> 100 `i -> _num `i <= -> _num `i -> 255 `i 98  ]
-[; ;uint8_to_string.c: 47: {
-"47
-{
-[; ;uint8_to_string.c: 48: process_100(num, p_str_buf, &flag);
-"48
-[e ( _process_100 (3 , , _num _p_str_buf &U _flag ]
-"49
-}
-[; ;uint8_to_string.c: 49: }
-[e $U 99  ]
-"50
-[e :U 98 ]
-[; ;uint8_to_string.c: 50: else if(10 <= num && num <= 99)
-[e $ ! && <= -> 10 `i -> _num `i <= -> _num `i -> 99 `i 100  ]
-[; ;uint8_to_string.c: 51: {
-"51
-{
-[; ;uint8_to_string.c: 52: process_10(num, p_str_buf, &flag);
-"52
-[e ( _process_10 (3 , , _num _p_str_buf &U _flag ]
-"53
-}
-[; ;uint8_to_string.c: 53: }
-[e $U 101  ]
-"54
-[e :U 100 ]
-[; ;uint8_to_string.c: 54: else if(0 <= num && num <= 9)
-[e $ ! && <= -> 0 `i -> _num `i <= -> _num `i -> 9 `i 102  ]
-[; ;uint8_to_string.c: 55: {
-"55
-{
-[; ;uint8_to_string.c: 56: process_1(num, p_str_buf, &flag);
-"56
-[e ( _process_1 (3 , , _num _p_str_buf &U _flag ]
-"57
-}
-[e :U 102 ]
-"58
-[e :U 101 ]
-[e :U 99 ]
-[; ;uint8_to_string.c: 57: }
-[; ;uint8_to_string.c: 58: }
-[e :UE 96 ]
-}
-"64
-[v _process_100 `(v ~T0 @X0 1 sf3`uc`*uc`*uc ]
-"65
-{
-[; ;uint8_to_string.c: 64: static void process_100(uint8_t num, uint8_t *p_str_buf, uint8_t *p_flag)
-[; ;uint8_to_string.c: 65: {
-[e :U _process_100 ]
-"64
-[v _num `uc ~T0 @X0 1 r1 ]
-[v _p_str_buf `*uc ~T0 @X0 1 r2 ]
-[v _p_flag `*uc ~T0 @X0 1 r3 ]
-"65
-[f ]
-[; ;uint8_to_string.c: 67: if(0 <= num && num <= 199)
-"67
-[e $ ! && <= -> 0 `i -> _num `i <= -> _num `i -> 199 `i 104  ]
-[; ;uint8_to_string.c: 68: {
-"68
-{
-[; ;uint8_to_string.c: 69: p_str_buf[*p_flag] = 0x30 + 1;
-"69
-[e = *U + _p_str_buf * -> *U _p_flag `ux -> -> # *U _p_str_buf `ui `ux -> + -> 48 `i -> 1 `i `uc ]
-[; ;uint8_to_string.c: 70: (*p_flag)++;
-"70
-[e ++ *U _p_flag -> -> 1 `i `uc ]
+[; ;system_protocol.h: 10: typedef enum
+[; ;system_protocol.h: 11: {
+[; ;system_protocol.h: 12: OBC2,
+[; ;system_protocol.h: 13: COM,
+[; ;system_protocol.h: 14: POW,
+[; ;system_protocol.h: 15: } destination_t;
+[; ;system_protocol.h: 23: typedef enum
+[; ;system_protocol.h: 24: {
+[; ;system_protocol.h: 25: CW_TYPE = 0x01,
+[; ;system_protocol.h: 26: DATA_TYPE,
+[; ;system_protocol.h: 27: COMMAND_TYPE,
+[; ;system_protocol.h: 28: } data_type_t;
+[; ;system_protocol.h: 40: typedef enum
+[; ;system_protocol.h: 41: {
+[; ;system_protocol.h: 42: DATA_END = 0b00010000,
+[; ;system_protocol.h: 43: DATA_CONTINUE,
+[; ;system_protocol.h: 44: } data_end_command_t;
+[; ;system_protocol.h: 52: typedef struct
+[; ;system_protocol.h: 53: {
+[; ;system_protocol.h: 54: uint8_t power1[2];
+[; ;system_protocol.h: 55: uint8_t power2[2];
+[; ;system_protocol.h: 56: uint8_t power3[2];
+[; ;system_protocol.h: 57: uint8_t power4[2];
+[; ;system_protocol.h: 58: uint8_t power5[2];
+[; ;system_protocol.h: 59: uint8_t temp[2];
+[; ;system_protocol.h: 60: uint8_t obc2:1;
+[; ;system_protocol.h: 61: uint8_t powmcu:1;
+[; ;system_protocol.h: 62: } cw_t;
+[; ;system_protocol.h: 119: void sysprot_init(void);
+[; ;system_protocol.h: 146: uint8_t sent_data_set(void *p_data, uint8_t data_len, uint8_t byte_of_data);
+[; ;system_protocol.h: 159: void cw_data_set(cw_t *p_cw_data);
+[; ;system_protocol.h: 174: void send_data_master(destination_t destination, uint8_t from_MCU, data_type_t data_type, data_end_command_t data_end_command);
+[; ;spi_master.h: 51: void spi_master_start(void);
+[; ;spi_master.h: 65: void spi_master_receive(destination_t destination, uint8_t data);
+[; ;spi_master.h: 80: void spi_master_send(destination_t destination, uint8_t data);
+[; ;spi_master.h: 93: void spi_master_stop(void);
+[; ;system_protocol.c: 36: typedef struct
+[; ;system_protocol.c: 37: {
+[; ;system_protocol.c: 38: uint8_t data_type;
+[; ;system_protocol.c: 39: uint8_t payload[30];
+[; ;system_protocol.c: 40: uint8_t data_end_command;
+[; ;system_protocol.c: 41: } packet_format_t;
+[; ;system_protocol.c: 55: static void uint8_data_set(uint8_t *p_data, uint8_t data_len);
+[; ;system_protocol.c: 56: static void uint16_data_set(uint16_t *p_data, uint8_t data_len);
+[; ;system_protocol.c: 57: static void double_data_set(double *p_data, uint8_t data_len);
+[; ;system_protocol.c: 58: static void uint16_to_byte_array(uint16_t *p_data, uint8_t *p_data_array);
+[; ;system_protocol.c: 59: static void double_to_byte_array(double *p_data, uint8_t *p_data_array);
+[; ;system_protocol.c: 60: static uint8_t send_payload(destination_t destination, uint8_t *p_payload);
+[; ;system_protocol.c: 61: static void receive_payload(destination_t destination, uint8_t *p_payload);
+[; ;system_protocol.c: 62: static void packet_send_master(destination_t destination, packet_format_t *p_packet);
+[; ;system_protocol.c: 63: static void packet_receive_master(destination_t destination, packet_format_t *p_packet);
+"70 system_protocol.c
+[v _packet `S97 ~T0 @X0 1 s ]
+[i _packet
+:U ..
+:U ..
+-> -> 0 `i `uc
+:U ..
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+..
+-> -> 0 `i `uc
+..
+..
+]
+[; ;system_protocol.c: 70: static packet_format_t packet = { 0x00, {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}, 0x00 };
 "71
-}
-[; ;uint8_to_string.c: 71: }
-[e $U 105  ]
-"72
-[e :U 104 ]
-[; ;uint8_to_string.c: 72: else if(200 <= num && num <= 255)
-[e $ ! && <= -> 200 `i -> _num `i <= -> _num `i -> 255 `i 106  ]
-[; ;uint8_to_string.c: 73: {
-"73
-{
-[; ;uint8_to_string.c: 74: p_str_buf[*p_flag] = 0x30 + 2;
+[v _cw `S96 ~T0 @X0 1 s ]
+[i _cw
+:U ..
+:U ..
+:U ..
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+..
+:U ..
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+..
+:U ..
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+..
+:U ..
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+..
+:U ..
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+..
+:U ..
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+..
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+..
+..
+]
+[; ;system_protocol.c: 71: static cw_t cw = { {0x00, 0x00}, {0x00, 0x00}, {0x00, 0x00}, {0x00, 0x00}, {0x00, 0x00}, {0x00, 0x00}, 0, 0 };
 "74
-[e = *U + _p_str_buf * -> *U _p_flag `ux -> -> # *U _p_str_buf `ui `ux -> + -> 48 `i -> 2 `i `uc ]
-[; ;uint8_to_string.c: 75: (*p_flag)++;
-"75
-[e ++ *U _p_flag -> -> 1 `i `uc ]
-"76
-}
-[e :U 106 ]
-"79
-[e :U 105 ]
-[; ;uint8_to_string.c: 76: }
-[; ;uint8_to_string.c: 79: process_10((num % 100), p_str_buf, p_flag);
-[e ( _process_10 (3 , , -> % -> _num `i -> 100 `i `uc _p_str_buf _p_flag ]
-[; ;uint8_to_string.c: 80: }
-"80
-[e :UE 103 ]
-}
-"86
-[v _process_10 `(v ~T0 @X0 1 sf3`uc`*uc`*uc ]
-"87
+[v _index_pos `uc ~T0 @X0 1 s ]
+[; ;system_protocol.c: 74: static uint8_t index_pos;
+"84
+[v _sysprot_init `(v ~T0 @X0 1 ef ]
+"85
 {
-[; ;uint8_to_string.c: 86: static void process_10(uint8_t num, uint8_t *p_str_buf, uint8_t *p_flag)
-[; ;uint8_to_string.c: 87: {
-[e :U _process_10 ]
-"86
-[v _num `uc ~T0 @X0 1 r1 ]
-[v _p_str_buf `*uc ~T0 @X0 1 r2 ]
-[v _p_flag `*uc ~T0 @X0 1 r3 ]
-"87
+[; ;system_protocol.c: 84: void sysprot_init(void)
+[; ;system_protocol.c: 85: {
+[e :U _sysprot_init ]
 [f ]
-"88
-[v _divide `uc ~T0 @X0 1 a ]
-[; ;uint8_to_string.c: 88: uint8_t divide = num / 10;
-[e = _divide -> / -> _num `i -> 10 `i `uc ]
-"89
-[v _val `uc ~T0 @X0 1 a ]
-[; ;uint8_to_string.c: 89: uint8_t val = 0x30;
-[e = _val -> -> 48 `i `uc ]
+[; ;system_protocol.c: 86: TRISDbits.TRISD0 = 1;
+"86
+[e = . . _TRISDbits 0 0 -> -> 1 `i `uc ]
+[; ;system_protocol.c: 87: TRISDbits.TRISD1 = 1;
+"87
+[e = . . _TRISDbits 0 1 -> -> 1 `i `uc ]
+[; ;system_protocol.c: 90: }
 "90
+[e :UE 98 ]
+}
+"119
+[v _sent_data_set `(uc ~T0 @X0 1 ef3`*v`uc`uc ]
+"120
+{
+[; ;system_protocol.c: 119: uint8_t sent_data_set(void *p_data, uint8_t data_len, uint8_t byte_of_data)
+[; ;system_protocol.c: 120: {
+[e :U _sent_data_set ]
+"119
+[v _p_data `*v ~T0 @X0 1 r1 ]
+[v _data_len `uc ~T0 @X0 1 r2 ]
+[v _byte_of_data `uc ~T0 @X0 1 r3 ]
+"120
+[f ]
+[; ;system_protocol.c: 122: if((30 - index_pos) - (data_len * (byte_of_data + 1)) < 0)
+"122
+[e $ ! < - - -> 30 `i -> _index_pos `i * -> _data_len `i + -> _byte_of_data `i -> 1 `i -> 0 `i 100  ]
+[; ;system_protocol.c: 123: {
+"123
+{
+[; ;system_protocol.c: 124: return 0xff;
+"124
+[e ) -> -> 255 `i `uc ]
+[e $UE 99  ]
+"125
+}
+[e :U 100 ]
+[; ;system_protocol.c: 125: }
+[; ;system_protocol.c: 128: switch(byte_of_data)
+"128
+[e $U 102  ]
+[; ;system_protocol.c: 129: {
+"129
+{
+[; ;system_protocol.c: 130: case 1:
+"130
+[e :U 103 ]
+[; ;system_protocol.c: 131: uint8_data_set((uint8_t *)p_data, data_len);
+"131
+[e ( _uint8_data_set (2 , -> _p_data `*uc _data_len ]
+[; ;system_protocol.c: 132: break;
+"132
+[e $U 101  ]
+[; ;system_protocol.c: 133: case 2:
+"133
+[e :U 104 ]
+[; ;system_protocol.c: 134: uint16_data_set((uint16_t *)p_data, data_len);
+"134
+[e ( _uint16_data_set (2 , -> _p_data `*ui _data_len ]
+[; ;system_protocol.c: 135: break;
+"135
+[e $U 101  ]
+[; ;system_protocol.c: 136: case 4:
+"136
+[e :U 105 ]
+[; ;system_protocol.c: 137: double_data_set((double *)p_data, data_len);
+"137
+[e ( _double_data_set (2 , -> _p_data `*d _data_len ]
+[; ;system_protocol.c: 138: break;
+"138
+[e $U 101  ]
+[; ;system_protocol.c: 139: default:
+"139
+[e :U 106 ]
+[; ;system_protocol.c: 140: return 0xff;
+"140
+[e ) -> -> 255 `i `uc ]
+[e $UE 99  ]
+"141
+}
+[; ;system_protocol.c: 141: }
+[e $U 101  ]
+"128
+[e :U 102 ]
+[e [\ _byte_of_data , $ -> -> 1 `i `uc 103
+ , $ -> -> 2 `i `uc 104
+ , $ -> -> 4 `i `uc 105
+ 106 ]
+"141
+[e :U 101 ]
+[; ;system_protocol.c: 146: return (uint8_t)(30 - index_pos);
+"146
+[e ) -> - -> 30 `i -> _index_pos `i `uc ]
+[e $UE 99  ]
+[; ;system_protocol.c: 147: }
+"147
+[e :UE 99 ]
+}
+"160
+[v _cw_data_set `(v ~T0 @X0 1 ef1`*S96 ]
+"161
+{
+[; ;system_protocol.c: 160: void cw_data_set(cw_t *p_cw_data)
+[; ;system_protocol.c: 161: {
+[e :U _cw_data_set ]
+"160
+[v _p_cw_data `*S96 ~T0 @X0 1 r1 ]
+"161
+[f ]
+"162
 [v _i `uc ~T0 @X0 1 a ]
-[; ;uint8_to_string.c: 90: uint8_t i;
-[; ;uint8_to_string.c: 93: for(i = 0; i < divide; i++)
-"93
-{
-[e = _i -> -> 0 `i `uc ]
-[e $U 111  ]
-"94
-[e :U 108 ]
-[; ;uint8_to_string.c: 94: {
-{
-[; ;uint8_to_string.c: 95: val++;
-"95
-[e ++ _val -> -> 1 `i `uc ]
-"96
-}
-"93
-[e ++ _i -> -> 1 `i `uc ]
-[e :U 111 ]
-[e $ < -> _i `i -> _divide `i 108  ]
-[e :U 109 ]
-"96
-}
-[; ;uint8_to_string.c: 96: }
-[; ;uint8_to_string.c: 98: p_str_buf[*p_flag] = val;
-"98
-[e = *U + _p_str_buf * -> *U _p_flag `ux -> -> # *U _p_str_buf `ui `ux _val ]
-[; ;uint8_to_string.c: 99: (*p_flag)++;
-"99
-[e ++ *U _p_flag -> -> 1 `i `uc ]
-[; ;uint8_to_string.c: 101: process_1((num % 10), p_str_buf, p_flag);
-"101
-[e ( _process_1 (3 , , -> % -> _num `i -> 10 `i `uc _p_str_buf _p_flag ]
-[; ;uint8_to_string.c: 102: }
-"102
+[; ;system_protocol.c: 162: uint8_t i;
+[; ;system_protocol.c: 165: uint8_data_set(&(p_cw_data->power1), 2);
+"165
+[e ( _uint8_data_set (2 , &U . *U _p_cw_data 0 -> -> 2 `i `uc ]
+[; ;system_protocol.c: 166: uint8_data_set(&(p_cw_data->power2), 2);
+"166
+[e ( _uint8_data_set (2 , &U . *U _p_cw_data 1 -> -> 2 `i `uc ]
+[; ;system_protocol.c: 167: uint8_data_set(&(p_cw_data->power3), 2);
+"167
+[e ( _uint8_data_set (2 , &U . *U _p_cw_data 2 -> -> 2 `i `uc ]
+[; ;system_protocol.c: 168: uint8_data_set(&(p_cw_data->power4), 2);
+"168
+[e ( _uint8_data_set (2 , &U . *U _p_cw_data 3 -> -> 2 `i `uc ]
+[; ;system_protocol.c: 169: uint8_data_set(&(p_cw_data->power5), 2);
+"169
+[e ( _uint8_data_set (2 , &U . *U _p_cw_data 4 -> -> 2 `i `uc ]
+[; ;system_protocol.c: 172: uint8_data_set(&(p_cw_data->temp), 2);
+"172
+[e ( _uint8_data_set (2 , &U . *U _p_cw_data 5 -> -> 2 `i `uc ]
+[; ;system_protocol.c: 175: uint8_data_set(&(p_cw_data->obc2), 1);
+"175
+[e ( _uint8_data_set (2 , &U . *U _p_cw_data 6 -> -> 1 `i `uc ]
+[; ;system_protocol.c: 178: uint8_data_set(&(p_cw_data->powmcu), 1);
+"178
+[e ( _uint8_data_set (2 , &U . *U _p_cw_data 7 -> -> 1 `i `uc ]
+[; ;system_protocol.c: 179: }
+"179
 [e :UE 107 ]
 }
-"108
-[v _process_1 `(v ~T0 @X0 1 sf3`uc`*uc`*uc ]
-"109
+"194
+[v _send_data_master `(v ~T0 @X0 1 ef4`E1099`uc`E1104`E1109 ]
+"195
 {
-[; ;uint8_to_string.c: 108: static void process_1(uint8_t num, uint8_t *p_str_buf, uint8_t *p_flag)
-[; ;uint8_to_string.c: 109: {
-[e :U _process_1 ]
-"108
-[v _num `uc ~T0 @X0 1 r1 ]
-[v _p_str_buf `*uc ~T0 @X0 1 r2 ]
-[v _p_flag `*uc ~T0 @X0 1 r3 ]
-"109
+[; ;system_protocol.c: 194: void send_data_master(destination_t destination, uint8_t from_MCU, data_type_t data_type, data_end_command_t data_end_command)
+[; ;system_protocol.c: 195: {
+[e :U _send_data_master ]
+"194
+[v _destination `E1099 ~T0 @X0 1 r1 ]
+[v _from_MCU `uc ~T0 @X0 1 r2 ]
+[v _data_type `E1104 ~T0 @X0 1 r3 ]
+[v _data_end_command `E1109 ~T0 @X0 1 r4 ]
+"195
 [f ]
-"110
+[; ;system_protocol.c: 196: packet.data_type = (uint8_t)data_type;
+"196
+[e = . _packet 0 -> _data_type `uc ]
+[; ;system_protocol.c: 197: packet.data_end_command = (uint8_t)data_end_command;
+"197
+[e = . _packet 2 -> _data_end_command `uc ]
+[; ;system_protocol.c: 199: packet_send_master(destination, &packet);
+"199
+[e ( _packet_send_master (2 , _destination &U _packet ]
+[; ;system_protocol.c: 200: }
+"200
+[e :UE 108 ]
+}
+"215
+[v _receive_data_master `(v ~T0 @X0 1 ef2`E1099`uc ]
+"216
+{
+[; ;system_protocol.c: 215: void receive_data_master(destination_t destination, uint8_t from_MCU)
+[; ;system_protocol.c: 216: {
+[e :U _receive_data_master ]
+"215
+[v _destination `E1099 ~T0 @X0 1 r1 ]
+[v _from_MCU `uc ~T0 @X0 1 r2 ]
+"216
+[f ]
+[; ;system_protocol.c: 217: packet_receive_master(destination, &packet);
+"217
+[e ( _packet_receive_master (2 , _destination &U _packet ]
+[; ;system_protocol.c: 218: }
+"218
+[e :UE 109 ]
+}
+"237
+[v _uint8_data_set `(v ~T0 @X0 1 sf2`*uc`uc ]
+"238
+{
+[; ;system_protocol.c: 237: static void uint8_data_set(uint8_t *p_data, uint8_t data_len)
+[; ;system_protocol.c: 238: {
+[e :U _uint8_data_set ]
+"237
+[v _p_data `*uc ~T0 @X0 1 r1 ]
+[v _data_len `uc ~T0 @X0 1 r2 ]
+"238
+[f ]
+[; ;system_protocol.c: 239: while(data_len)
+"239
+[e $U 111  ]
+[e :U 112 ]
+[; ;system_protocol.c: 240: {
+"240
+{
+[; ;system_protocol.c: 241: packet.payload[index_pos++] = 1;
+"241
+[e = *U + &U . _packet 1 * -> ++ _index_pos -> -> 1 `i `uc `ux -> -> # *U &U . _packet 1 `ui `ux -> -> 1 `i `uc ]
+[; ;system_protocol.c: 242: packet.payload[index_pos++] = *p_data++;
+"242
+[e = *U + &U . _packet 1 * -> ++ _index_pos -> -> 1 `i `uc `ux -> -> # *U &U . _packet 1 `ui `ux *U ++ _p_data * -> -> 1 `i `x -> -> # *U _p_data `i `x ]
+[; ;system_protocol.c: 243: data_len--;
+"243
+[e -- _data_len -> -> 1 `i `uc ]
+"244
+}
+[e :U 111 ]
+"239
+[e $ != -> _data_len `i -> -> -> 0 `i `uc `i 112  ]
+[e :U 113 ]
+[; ;system_protocol.c: 244: }
+[; ;system_protocol.c: 245: }
+"245
+[e :UE 110 ]
+}
+"259
+[v _uint16_data_set `(v ~T0 @X0 1 sf2`*ui`uc ]
+"260
+{
+[; ;system_protocol.c: 259: static void uint16_data_set(uint16_t *p_data, uint8_t data_len)
+[; ;system_protocol.c: 260: {
+[e :U _uint16_data_set ]
+"259
+[v _p_data `*ui ~T0 @X0 1 r1 ]
+[v _data_len `uc ~T0 @X0 1 r2 ]
+"260
+[f ]
+"261
+[v _buf `uc ~T0 @X0 -> 3 `i a ]
+"262
 [v _i `uc ~T0 @X0 1 a ]
-"111
-[v _val `uc ~T0 @X0 1 a ]
-[; ;uint8_to_string.c: 110: uint8_t i;
-[; ;uint8_to_string.c: 111: uint8_t val = 0x30;
-[e = _val -> -> 48 `i `uc ]
-[; ;uint8_to_string.c: 113: for(i = 0; i < num; i++)
-"113
+[; ;system_protocol.c: 261: uint8_t buf[3];
+[; ;system_protocol.c: 262: uint8_t i;
+[; ;system_protocol.c: 264: while(data_len)
+"264
+[e $U 115  ]
+[e :U 116 ]
+[; ;system_protocol.c: 265: {
+"265
+{
+[; ;system_protocol.c: 266: uint16_to_byte_array(p_data++, buf);
+"266
+[e ( _uint16_to_byte_array (2 , ++ _p_data * -> -> 1 `i `x -> -> # *U _p_data `i `x &U _buf ]
+[; ;system_protocol.c: 268: for(i = 0; i < 3; i++)
+"268
 {
 [e = _i -> -> 0 `i `uc ]
-[e $U 116  ]
-"114
-[e :U 113 ]
-[; ;uint8_to_string.c: 114: {
+[e $ < -> _i `i -> 3 `i 118  ]
+[e $U 119  ]
+"269
+[e :U 118 ]
+[; ;system_protocol.c: 269: {
 {
-[; ;uint8_to_string.c: 115: val++;
-"115
-[e ++ _val -> -> 1 `i `uc ]
-"116
+[; ;system_protocol.c: 270: packet.payload[index_pos++] = buf[i];
+"270
+[e = *U + &U . _packet 1 * -> ++ _index_pos -> -> 1 `i `uc `ux -> -> # *U &U . _packet 1 `ui `ux *U + &U _buf * -> _i `ux -> -> # *U &U _buf `ui `ux ]
+"271
 }
-"113
+"268
 [e ++ _i -> -> 1 `i `uc ]
-[e :U 116 ]
-[e $ < -> _i `i -> _num `i 113  ]
-[e :U 114 ]
-"116
+[e $ < -> _i `i -> 3 `i 118  ]
+[e :U 119 ]
+"271
 }
-[; ;uint8_to_string.c: 116: }
-[; ;uint8_to_string.c: 118: p_str_buf[*p_flag] = val;
-"118
-[e = *U + _p_str_buf * -> *U _p_flag `ux -> -> # *U _p_str_buf `ui `ux _val ]
-[; ;uint8_to_string.c: 119: (*p_flag)++;
-"119
-[e ++ *U _p_flag -> -> 1 `i `uc ]
-[; ;uint8_to_string.c: 121: p_str_buf[*p_flag] = '\0';
-"121
-[e = *U + _p_str_buf * -> *U _p_flag `ux -> -> # *U _p_str_buf `ui `ux -> -> 0 `ui `uc ]
-[; ;uint8_to_string.c: 122: }
-"122
-[e :UE 112 ]
+[; ;system_protocol.c: 271: }
+[; ;system_protocol.c: 272: data_len--;
+"272
+[e -- _data_len -> -> 1 `i `uc ]
+"273
+}
+[e :U 115 ]
+"264
+[e $ != -> _data_len `i -> -> -> 0 `i `uc `i 116  ]
+[e :U 117 ]
+[; ;system_protocol.c: 273: }
+[; ;system_protocol.c: 274: }
+"274
+[e :UE 114 ]
+}
+"288
+[v _double_data_set `(v ~T0 @X0 1 sf2`*d`uc ]
+"289
+{
+[; ;system_protocol.c: 288: static void double_data_set(double *p_data, uint8_t data_len)
+[; ;system_protocol.c: 289: {
+[e :U _double_data_set ]
+"288
+[v _p_data `*d ~T0 @X0 1 r1 ]
+[v _data_len `uc ~T0 @X0 1 r2 ]
+"289
+[f ]
+"290
+[v _buf `uc ~T0 @X0 -> 5 `i a ]
+"291
+[v _i `uc ~T0 @X0 1 a ]
+[; ;system_protocol.c: 290: uint8_t buf[5];
+[; ;system_protocol.c: 291: uint8_t i;
+[; ;system_protocol.c: 293: while(data_len)
+"293
+[e $U 122  ]
+[e :U 123 ]
+[; ;system_protocol.c: 294: {
+"294
+{
+[; ;system_protocol.c: 295: double_to_byte_array(p_data++, buf);
+"295
+[e ( _double_to_byte_array (2 , ++ _p_data * -> -> 1 `i `x -> -> # *U _p_data `i `x &U _buf ]
+[; ;system_protocol.c: 297: for(i = 0; i < 5; i++)
+"297
+{
+[e = _i -> -> 0 `i `uc ]
+[e $ < -> _i `i -> 5 `i 125  ]
+[e $U 126  ]
+"298
+[e :U 125 ]
+[; ;system_protocol.c: 298: {
+{
+[; ;system_protocol.c: 299: packet.payload[index_pos++] = buf[i];
+"299
+[e = *U + &U . _packet 1 * -> ++ _index_pos -> -> 1 `i `uc `ux -> -> # *U &U . _packet 1 `ui `ux *U + &U _buf * -> _i `ux -> -> # *U &U _buf `ui `ux ]
+"300
+}
+"297
+[e ++ _i -> -> 1 `i `uc ]
+[e $ < -> _i `i -> 5 `i 125  ]
+[e :U 126 ]
+"300
+}
+[; ;system_protocol.c: 300: }
+[; ;system_protocol.c: 301: data_len--;
+"301
+[e -- _data_len -> -> 1 `i `uc ]
+"302
+}
+[e :U 122 ]
+"293
+[e $ != -> _data_len `i -> -> -> 0 `i `uc `i 123  ]
+[e :U 124 ]
+[; ;system_protocol.c: 302: }
+[; ;system_protocol.c: 303: }
+"303
+[e :UE 121 ]
+}
+"317
+[v _uint16_to_byte_array `(v ~T0 @X0 1 sf2`*ui`*uc ]
+"318
+{
+[; ;system_protocol.c: 317: static void uint16_to_byte_array(uint16_t *p_data, uint8_t *p_data_array)
+[; ;system_protocol.c: 318: {
+[e :U _uint16_to_byte_array ]
+"317
+[v _p_data `*ui ~T0 @X0 1 r1 ]
+[v _p_data_array `*uc ~T0 @X0 1 r2 ]
+"318
+[f ]
+"319
+[v F1212 `Cui ~T0 @X0 1 s bit_mask ]
+[i F1212
+-> -> 255 `i `ui
+]
+[; ;system_protocol.c: 319: const uint16_t bit_mask = 0b0000000011111111;
+[; ;system_protocol.c: 322: p_data_array[0] = 2;
+"322
+[e = *U + _p_data_array * -> -> 0 `i `x -> -> # *U _p_data_array `i `x -> -> 2 `i `uc ]
+[; ;system_protocol.c: 323: p_data_array[1] = (uint8_t)(*p_data >> 8);
+"323
+[e = *U + _p_data_array * -> -> 1 `i `x -> -> # *U _p_data_array `i `x -> >> *U _p_data -> 8 `i `uc ]
+[; ;system_protocol.c: 324: p_data_array[2] = (uint8_t)(*p_data & bit_mask);
+"324
+[e = *U + _p_data_array * -> -> 2 `i `x -> -> # *U _p_data_array `i `x -> & *U _p_data F1212 `uc ]
+[; ;system_protocol.c: 325: }
+"325
+[e :UE 128 ]
+}
+"339
+[v _double_to_byte_array `(v ~T0 @X0 1 sf2`*d`*uc ]
+"340
+{
+[; ;system_protocol.c: 339: static void double_to_byte_array(double *p_data, uint8_t *p_data_array)
+[; ;system_protocol.c: 340: {
+[e :U _double_to_byte_array ]
+"339
+[v _p_data `*d ~T0 @X0 1 r1 ]
+[v _p_data_array `*uc ~T0 @X0 1 r2 ]
+"340
+[f ]
+"341
+[v _i `uc ~T0 @X0 1 a ]
+"343
+[u S129 `d 1 `uc -> 4 `i ]
+[n S129 . data array ]
+"346
+[v _converter `S129 ~T0 @X0 1 a ]
+[; ;system_protocol.c: 341: uint8_t i;
+[; ;system_protocol.c: 342: union
+[; ;system_protocol.c: 343: {
+[; ;system_protocol.c: 344: double data;
+[; ;system_protocol.c: 345: uint8_t array[4];
+[; ;system_protocol.c: 346: } converter;
+[; ;system_protocol.c: 349: converter.data = *p_data;
+"349
+[e = . _converter 0 *U _p_data ]
+[; ;system_protocol.c: 352: p_data_array[0] = 4;
+"352
+[e = *U + _p_data_array * -> -> 0 `i `x -> -> # *U _p_data_array `i `x -> -> 4 `i `uc ]
+[; ;system_protocol.c: 355: for(i = 0; i < 4; i++)
+"355
+{
+[e = _i -> -> 0 `i `uc ]
+[e $ < -> _i `i -> 4 `i 131  ]
+[e $U 132  ]
+"356
+[e :U 131 ]
+[; ;system_protocol.c: 356: {
+{
+[; ;system_protocol.c: 357: p_data_array[i + 1] = converter.array[i];
+"357
+[e = *U + _p_data_array * -> + -> _i `i -> 1 `i `x -> -> # *U _p_data_array `i `x *U + &U . _converter 1 * -> _i `ux -> -> # *U &U . _converter 1 `ui `ux ]
+"358
+}
+"355
+[e ++ _i -> -> 1 `i `uc ]
+[e $ < -> _i `i -> 4 `i 131  ]
+[e :U 132 ]
+"358
+}
+[; ;system_protocol.c: 358: }
+[; ;system_protocol.c: 359: }
+"359
+[e :UE 130 ]
+}
+"374
+[v _send_payload `(uc ~T0 @X0 1 sf2`E1099`*uc ]
+"375
+{
+[; ;system_protocol.c: 374: static uint8_t send_payload(destination_t destination, uint8_t *p_payload)
+[; ;system_protocol.c: 375: {
+[e :U _send_payload ]
+"374
+[v _destination `E1099 ~T0 @X0 1 r1 ]
+[v _p_payload `*uc ~T0 @X0 1 r2 ]
+"375
+[f ]
+"376
+[v _i `uc ~T0 @X0 1 a ]
+"377
+[v _data_len `uc ~T0 @X0 1 a ]
+[v _index_pos `uc ~T0 @X0 1 a ]
+[; ;system_protocol.c: 376: uint8_t i;
+[; ;system_protocol.c: 377: uint8_t data_len;
+[; ;system_protocol.c: 378: uint8_t index_pos = 0;
+"378
+[e = _index_pos -> -> 0 `i `uc ]
+[; ;system_protocol.c: 381: while(*p_payload != 0x00 || index_pos < 30)
+"381
+[e $U 135  ]
+[e :U 136 ]
+[; ;system_protocol.c: 382: {
+"382
+{
+[; ;system_protocol.c: 383: data_len = *p_payload;
+"383
+[e = _data_len *U _p_payload ]
+[; ;system_protocol.c: 384: spi_master_send(destination, p_payload++);
+"384
+[e ( _spi_master_send (2 , _destination -> ++ _p_payload * -> -> 1 `i `x -> -> # *U _p_payload `i `x `uc ]
+[; ;system_protocol.c: 385: index_pos++;
+"385
+[e ++ _index_pos -> -> 1 `i `uc ]
+[; ;system_protocol.c: 386: for(i = 0; i < data_len; i++)
+"386
+{
+[e = _i -> -> 0 `i `uc ]
+[e $U 141  ]
+"387
+[e :U 138 ]
+[; ;system_protocol.c: 387: {
+{
+[; ;system_protocol.c: 388: spi_master_send(destination, p_payload++);
+"388
+[e ( _spi_master_send (2 , _destination -> ++ _p_payload * -> -> 1 `i `x -> -> # *U _p_payload `i `x `uc ]
+[; ;system_protocol.c: 389: index_pos++;
+"389
+[e ++ _index_pos -> -> 1 `i `uc ]
+"390
+}
+"386
+[e ++ _i -> -> 1 `i `uc ]
+[e :U 141 ]
+[e $ < -> _i `i -> _data_len `i 138  ]
+[e :U 139 ]
+"390
+}
+"391
+}
+[e :U 135 ]
+"381
+[e $ || != -> *U _p_payload `i -> 0 `i < -> _index_pos `i -> 30 `i 136  ]
+[e :U 137 ]
+[; ;system_protocol.c: 390: }
+[; ;system_protocol.c: 391: }
+[; ;system_protocol.c: 393: return index_pos;
+"393
+[e ) _index_pos ]
+[e $UE 134  ]
+[; ;system_protocol.c: 394: }
+"394
+[e :UE 134 ]
+}
+"409
+[v _receive_payload `(v ~T0 @X0 1 sf2`E1099`*uc ]
+"410
+{
+[; ;system_protocol.c: 409: static void receive_payload(destination_t destination, uint8_t *p_payload)
+[; ;system_protocol.c: 410: {
+[e :U _receive_payload ]
+"409
+[v _destination `E1099 ~T0 @X0 1 r1 ]
+[v _p_payload `*uc ~T0 @X0 1 r2 ]
+"410
+[f ]
+"411
+[v _i `uc ~T0 @X0 1 a ]
+"412
+[v _data_len `uc ~T0 @X0 1 a ]
+[v _index_pos `uc ~T0 @X0 1 a ]
+[; ;system_protocol.c: 411: uint8_t i;
+[; ;system_protocol.c: 412: uint8_t data_len;
+[; ;system_protocol.c: 413: uint8_t index_pos = 0;
+"413
+[e = _index_pos -> -> 0 `i `uc ]
+[; ;system_protocol.c: 417: while(*p_payload != 0x00 || index_pos < 30)
+"417
+[e $U 143  ]
+[e :U 144 ]
+[; ;system_protocol.c: 419: {
+"419
+{
+[; ;system_protocol.c: 420: data_len = *p_payload;
+"420
+[e = _data_len *U _p_payload ]
+[; ;system_protocol.c: 421: spi_master_receive(destination, p_payload++);
+"421
+[e ( _spi_master_receive (2 , _destination -> ++ _p_payload * -> -> 1 `i `x -> -> # *U _p_payload `i `x `uc ]
+[; ;system_protocol.c: 422: index_pos++;
+"422
+[e ++ _index_pos -> -> 1 `i `uc ]
+[; ;system_protocol.c: 424: for(i = 0; i < data_len; i++)
+"424
+{
+[e = _i -> -> 0 `i `uc ]
+[e $U 149  ]
+"425
+[e :U 146 ]
+[; ;system_protocol.c: 425: {
+{
+[; ;system_protocol.c: 426: spi_master_receive(destination, p_payload++);
+"426
+[e ( _spi_master_receive (2 , _destination -> ++ _p_payload * -> -> 1 `i `x -> -> # *U _p_payload `i `x `uc ]
+[; ;system_protocol.c: 427: index_pos++;
+"427
+[e ++ _index_pos -> -> 1 `i `uc ]
+"429
+}
+"424
+[e ++ _i -> -> 1 `i `uc ]
+[e :U 149 ]
+[e $ < -> _i `i -> _data_len `i 146  ]
+[e :U 147 ]
+"429
+}
+"430
+}
+[e :U 143 ]
+"417
+[e $ || != -> *U _p_payload `i -> 0 `i < -> _index_pos `i -> 30 `i 144  ]
+[e :U 145 ]
+[; ;system_protocol.c: 429: }
+[; ;system_protocol.c: 430: }
+[; ;system_protocol.c: 431: }
+"431
+[e :UE 142 ]
+}
+"445
+[v _packet_send_master `(v ~T0 @X0 1 sf2`E1099`*S97 ]
+"446
+{
+[; ;system_protocol.c: 445: static void packet_send_master(destination_t destination, packet_format_t *p_packet)
+[; ;system_protocol.c: 446: {
+[e :U _packet_send_master ]
+"445
+[v _destination `E1099 ~T0 @X0 1 r1 ]
+[v _p_packet `*S97 ~T0 @X0 1 r2 ]
+"446
+[f ]
+[; ;system_protocol.c: 450: spi_master_send(destination, 0x00);
+"450
+[e ( _spi_master_send (2 , _destination -> -> 0 `i `uc ]
+[; ;system_protocol.c: 453: spi_master_send(destination, &p_packet->data_type);
+"453
+[e ( _spi_master_send (2 , _destination -> &U . *U _p_packet 0 `uc ]
+[; ;system_protocol.c: 456: send_payload(destination, &p_packet->payload);
+"456
+[e ( _send_payload (2 , _destination &U . *U _p_packet 1 ]
+[; ;system_protocol.c: 459: spi_master_send(destination, &p_packet->data_end_command);
+"459
+[e ( _spi_master_send (2 , _destination -> &U . *U _p_packet 2 `uc ]
+[; ;system_protocol.c: 460: }
+"460
+[e :UE 150 ]
+}
+"474
+[v _packet_receive_master `(v ~T0 @X0 1 sf2`E1099`*S97 ]
+"475
+{
+[; ;system_protocol.c: 474: static void packet_receive_master(destination_t destination, packet_format_t *p_packet)
+[; ;system_protocol.c: 475: {
+[e :U _packet_receive_master ]
+"474
+[v _destination `E1099 ~T0 @X0 1 r1 ]
+[v _p_packet `*S97 ~T0 @X0 1 r2 ]
+"475
+[f ]
+"476
+[v _use_obc `uc ~T0 @X0 1 a ]
+[; ;system_protocol.c: 476: uint8_t use_obc = 0x00;
+[e = _use_obc -> -> 0 `i `uc ]
+[; ;system_protocol.c: 479: spi_master_receive(destination, use_obc);
+"479
+[e ( _spi_master_receive (2 , _destination _use_obc ]
+[; ;system_protocol.c: 482: spi_master_receive(destination, &p_packet->data_type);
+"482
+[e ( _spi_master_receive (2 , _destination -> &U . *U _p_packet 0 `uc ]
+[; ;system_protocol.c: 485: receive_payload(destination, &p_packet->payload);
+"485
+[e ( _receive_payload (2 , _destination &U . *U _p_packet 1 ]
+[; ;system_protocol.c: 488: spi_master_receive(destination, &p_packet->data_end_command);
+"488
+[e ( _spi_master_receive (2 , _destination -> &U . *U _p_packet 2 `uc ]
+[; ;system_protocol.c: 489: }
+"489
+[e :UE 151 ]
 }

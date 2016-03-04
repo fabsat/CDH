@@ -13,6 +13,8 @@
 #include "plati_temp.h"
 #include "spi_master.h"
 #include "MCLR_reset.h"
+#include "system_protocol.h"
+
 
 //コンフィグ設定
 #pragma config FOSC = HS, WDTE = OFF, PWRTE = ON,  BOREN = ON,  LVP = OFF
@@ -25,32 +27,37 @@ int main(void) {
     
     TRISD7 = 0;
     RD7 = 0;
-    __delay_ms(500);
-    MCLR_init();
-    uart_init();
-    
-    
-    
-    ad_con_init();            // AD変換の初期設定
-    spi_master_init();
-    __delay_ms(3000);
-    
-    /*
-    union{
-            double d;
-            char c[1];
-    }u;
-    */   
 
+    MCLR_init();            // MCLR_reset 初期設定
+    sysprot_init();         // system_protocol 初期設定
+    uart_init();
+    ad_con_init();            // AD変換の初期設定
+
+    //spi_master_init();
+
+    /*CWのデータセット*///ビルドエラー発生
+/*    packet_format_t.data_type = 1;
+    spi_master_start();
+    spi_master_receive(POW, cw_t.power1);
+    spi_master_receive(POW, cw_t.power2);
+    spi_master_receive(POW, cw_t.power3);
+    spi_master_receive(POW, cw_t.power4);
+    spi_master_receive(POW, cw_t.power5);
+    cw_t.temp = get_temp();
+    cw_t.obc2 = 1;
+    cw_t.powmcu = 1;
+*/
+    
+    /*生存判定*/
+    if(COM_READY==0) MCLR_reset(COM_RESET);
+    if(POW_READY==0) MCLR_reset(POW_RESET);
+    
+            
     while(1){
         RD7 = 1;
-        MCLR_reset(OBC2_RESET);
+//        MCLR_reset(POW_RESET);            //　これをしたらBBM全体がリセットされる
         __delay_ms(1000);
-    //    u.d=0.0;
-    //    u.d=get_temp(); 
-    //    printf("%.2f\r\n", u.d);
-        //spi_master_send(u.c);
-    //    spi_master_send('T');
+   
         RD7 = 0;
         __delay_ms(1000);
     }

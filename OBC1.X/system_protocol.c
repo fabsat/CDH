@@ -40,9 +40,6 @@ typedef struct
     uint8_t data_end_command;          // データ終了コマンド
 } packet_format_t;
 
-
-
-
 /* パケットの初期化処理用マクロ */
 #define PACKET_INIT                                                \
 {                                                                  \
@@ -56,9 +53,14 @@ typedef struct
  *                                static関数のプロトタイプ宣言                              *
  *****************************************************************************************/
 static void uint8_data_set(uint8_t *p_data, uint8_t data_len);
-static void send_payload(destination_t destination, uint8_t *p_payload);
-
-
+static void uint16_data_set(uint16_t *p_data, uint8_t data_len);
+static void double_data_set(double *p_data, uint8_t data_len);
+static void uint16_to_byte_array(uint16_t *p_data, uint8_t *p_data_array);
+static void double_to_byte_array(double *p_data, uint8_t *p_data_array);
+static uint8_t send_payload(destination_t destination, uint8_t *p_payload);
+static void receive_payload(destination_t destination, uint8_t *p_payload);
+static void packet_send_master(destination_t destination, packet_format_t *p_packet);
+static void packet_receive_master(destination_t destination, packet_format_t *p_packet);
 
 
 /******************************************************************************************
@@ -66,6 +68,7 @@ static void send_payload(destination_t destination, uint8_t *p_payload);
  *****************************************************************************************/
 /* このグローバル変数のパケットに各種データを格納していく データが送信されたら初期化される */
 static packet_format_t packet = PACKET_INIT;
+static cw_t cw = CW_DATA_INIT;
 
 /* データの格納できる先頭インデックスを示す データが送信されたら初期化される */
 static uint8_t index_pos;
@@ -75,6 +78,19 @@ static uint8_t index_pos;
 /******************************************************************************************
  *                                     ライブラリ関数                                      *
  *****************************************************************************************/
+
+
+/*system_protocol初期設定関数*/
+void sysprot_init(void)
+{
+    COM_READY_PIN_TRIS  = 1;
+    POW_READY_PIN_TRIS  = 1;
+    
+    //他にあれば随時追加します
+}
+
+
+
 
 /*=====================================================
  * @brief
@@ -124,6 +140,8 @@ uint8_t sent_data_set(void *p_data, uint8_t data_len, uint8_t byte_of_data)
             return 0xff;
     }
 
+//    index_pos += (data_len * (byte_of_data + 1));         // これを入れないとindex_posが更新されないと思います．
+        
     /* 残りのPayload空き容量(Byte)を返す */
     return (uint8_t)(MAX_PAYLOAD_SIZE - index_pos);
 }
@@ -178,27 +196,25 @@ void send_data_master(destination_t destination, uint8_t from_MCU, data_type_t d
     packet.data_type        = (uint8_t)data_type;
     packet.data_end_command = (uint8_t)data_end_command;
 
-    packet_send_master(destination, from_MCU, &packet);
+    packet_send_master(destination, &packet);
 }
 
 
+/*=====================================================
+ * @brief
+ *     指定したサブシステムにデータを受信する(Master用)
+ * @param
+ *     destination     :送信元
+ *     data_type       :payloadに格納したデータのタイプ
+ *     data_end_command:データはまだ継続するかどうか
+ * @return
+ *     void:
+ * @note
+ *     この関数実行後にsetしたデータ内容は初期化される
+ *===================================================*/
 void receive_data_master(destination_t destination, uint8_t from_MCU)
 {   
-    packet_receive_master(destination, from_MCU, &packet);
-}
-
-static void packet_receive_master(destination_t destination, uint8_t from_MCU, packet_format_t *p_packet)
-{
-    uint8_t use_obc = 0x00;
-    
-    /*使用している*/
-    spi_master_receive(destination, use_obc);
-
-    spi_master_receive(destination, &packet->data_type);
-
-    spi_master_receive(destination, &packet->payload);
-
-    spi_master_receive(destination, &packet->data_end_command);
+    packet_receive_master(destination, &packet);
 }
 
 
@@ -343,37 +359,6 @@ static void double_to_byte_array(double *p_data, uint8_t *p_data_array)
 }
 
 
-/*=====================================================
- * @brief
- *     他MCUにパケットデータを送信する(SPI Master用)
- * @param
- *     destination:送信の相手先
- *     p_packet   :パケットへのポインタ
- * @return
- *     SYS_SUCCESS:パケット送信成功
- *     SYS_TIMEOUT:タイムアウト終了
- * @note
- *     none
- *===================================================*/
-static void packet_send_master(destination_t destination, packet_format_t *p_packet)
-{
-    uint16_t timeout_counter;
-
-    /* プリアンブルを送信 */
-    spi_master_send(destination, USE_MCU);
-
-    /* data_typeを送信 */
-    spi_master_send(destination, &p_packet->data_type);
-
-    /* ペイロードを送信 */
-    send_payload(destination, &p_packet->payload);
-
-    /* data_end_commandを送信 */
-    spi_master_send(destination, &p_packet->data_end_command);
-
-}
-
-
 /*-----------------------------------------------------
  * @brief
  *     payloadのデータ送信
@@ -381,12 +366,12 @@ static void packet_send_master(destination_t destination, packet_format_t *p_pac
  *     destination:送信の相手先
  *     p_payload  :payloadへのポインタ
  * @return
- *     void:
+ *     index_pos  :payloadのデータ個数
  * @note
  *     送信するpayloadのバイトデータが0x00になるまで
  *     又はMAX_PAYLOAD_SIZEを送るまでSPIでデータ送信する。
  *---------------------------------------------------*/
-static void send_payload(destination_t destination, uint8_t *p_payload)
+static uint8_t send_payload(destination_t destination, uint8_t *p_payload)
 {
     uint8_t i;
     uint8_t data_len;
@@ -404,11 +389,103 @@ static void send_payload(destination_t destination, uint8_t *p_payload)
             index_pos++;
         }
     }
+    
+    return index_pos;
 }
 
 
+/*-----------------------------------------------------
+ * @brief
+ *     payloadのデータ受信
+ * @param
+ *     destination:送信元
+ *     p_payload  :payloadへのポインタ
+ * @return
+ *     void:
+ * @note
+ *     受信するpayloadのバイトデータが0x00になるまで
+ *     又はMAX_PAYLOAD_SIZEを送るまでSPIでデータ受信する。
+ *---------------------------------------------------*/
+static void receive_payload(destination_t destination, uint8_t *p_payload)
+{
+    uint8_t i;
+    uint8_t data_len;
+    uint8_t index_pos = 0;                             // Counter variable for MAX_PAYLOAD_SIZE
+//  uint8_t rec_index_pos = 0;                          // ここでカウントアップするindexはこれにして、この.cファイルにはグローバルでindex_posがあるので他の名前がいいと思います
+    
+    /* Send Payload */
+    while(*p_payload != 0x00 || index_pos < MAX_PAYLOAD_SIZE)           // *p_payloadが0x00の時は普通のデータ中にも出てくる可能性があると思うので次の式がいいと思います
+    //while(index_pos != rec_index_pos || rec_index_pos < MAX_PAYLOAD_SIZE)    
+    {
+        data_len = *p_payload;                         // Get data length of Received data
+        spi_master_receive(destination, p_payload++);     // Receive data length
+        index_pos++;                                
+        //rec_index_pos++;
+        for(i = 0; i < data_len; i++)                  // Receive data in data length times
+        {
+            spi_master_receive(destination, p_payload++);
+            index_pos++;
+            //rec_index_pos++;
+        }
+    }
+}
 
 
+/*=====================================================
+ * @brief
+ *     他MCUにパケットデータを送信する(SPI Master用)
+ * @param
+ *     destination:送信の相手先
+ *     p_packet   :パケットへのポインタ
+ * @return
+ *     void:
+ * @note
+ *     none
+ *===================================================*/
+static void packet_send_master(destination_t destination, packet_format_t *p_packet)
+{
+    //uint8_t payload_index;            //これはなんですか？
 
+    /* プリアンブルを送信 */
+    spi_master_send(destination, USE_MCU);
+
+    /* data_typeを送信 */
+    spi_master_send(destination, &p_packet->data_type);
+    
+    /* ペイロードを送信 */
+    send_payload(destination, &p_packet->payload);
+    
+    /* data_end_commandを送信 */
+    spi_master_send(destination, &p_packet->data_end_command);
+}
+
+
+/*=====================================================
+ * @brief
+ *     他MCUからパケットデータを受信する(SPI Master用)
+ * @param
+ *     destination:送信元
+ *     p_packet   :パケットへのポインタ
+ * @return
+ *     void:
+ * @note
+ *     none
+ *===================================================*/
+static void packet_receive_master(destination_t destination, packet_format_t *p_packet)
+{
+    uint8_t use_obc = 0x00;
+    
+    /*受信元のMCU*/
+    spi_master_receive(destination, use_obc);
+
+    /*受信データをdata_typeに格納*/
+    spi_master_receive(destination, &p_packet->data_type);
+
+    /*受信データをpayloadに格納*/
+    receive_payload(destination, &p_packet->payload);    
+    
+    /*受信データをdata_end_commandに格納*/
+    spi_master_receive(destination, &p_packet->data_end_command);
+}
 
 

@@ -12,7 +12,6 @@
 #define MAX_1          9
 #define MIN_1          0
 
-
 /* Prototype of Function */
 static void process_100(uint8_t num, uint8_t *p_str_buf, uint8_t *p_flag);
 static void process_10(uint8_t num, uint8_t *p_str_buf, uint8_t *p_flag);
