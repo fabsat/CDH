@@ -1469,15 +1469,13 @@ return t2;
 double get_temp(void)
 {
 double t_average = 0.0;
-double t_rowdata = 0.0;
 int i;
 
 
 for(i = 0; i <= 300; i++){
-t_rowdata += get_pt();
+t_average += get_pt();
 }
-
-t_average = t_rowdata / 300.0;
+t_average /= 300.0;
 
 return t_average;
 }

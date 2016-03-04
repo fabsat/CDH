@@ -35,18 +35,6 @@ int main(void) {
 
     //spi_master_init();
 
-    /*CWのデータセット*///ビルドエラー発生
-/*    packet_format_t.data_type = 1;
-    spi_master_start();
-    spi_master_receive(POW, cw_t.power1);
-    spi_master_receive(POW, cw_t.power2);
-    spi_master_receive(POW, cw_t.power3);
-    spi_master_receive(POW, cw_t.power4);
-    spi_master_receive(POW, cw_t.power5);
-    cw_t.temp = get_temp();
-    cw_t.obc2 = 1;
-    cw_t.powmcu = 1;
-*/
     
     /*生存判定*/
     if(COM_READY==0) MCLR_reset(COM_RESET);

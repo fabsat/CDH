@@ -20,6 +20,8 @@
 #include "system_protocol.h"
 #include "spi_master.h"
 
+#include "AD_value.h"
+#include "plati_temp.h"
 
 
 
@@ -87,6 +89,27 @@ void sysprot_init(void)
     POW_READY_PIN_TRIS  = 1;
     
     //他にあれば随時追加します
+}
+
+
+/*エラーが出る*/
+void cw_set(void)
+{
+    packet_format_t.data_type = 1;
+    spi_master_start();
+    spi_master_receive(POW, cw_t.power1[0]);
+    spi_master_receive(POW, cw_t.power1[1]);
+    spi_master_receive(POW, cw_t.power2[0]);
+    spi_master_receive(POW, cw_t.power2[1]);
+    spi_master_receive(POW, cw_t.power3[0]);
+    spi_master_receive(POW, cw_t.power3[1]);
+    spi_master_receive(POW, cw_t.power4[0]);
+    spi_master_receive(POW, cw_t.power4[1]);
+    spi_master_receive(POW, cw_t.power5[0]);
+    spi_master_receive(POW, cw_t.power5[1]);
+    cw_t.temp = (uint16_t)get_temp();
+    cw_t.obc2 = 1;
+    cw_t.powmcu = 1;
 }
 
 

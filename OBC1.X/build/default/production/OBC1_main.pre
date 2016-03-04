@@ -1563,13 +1563,15 @@ uint8_t powmcu:1;
 # 119
 void sysprot_init(void);
 
-# 146
+void cw_set(void);
+
+# 147
 uint8_t sent_data_set(void *p_data, uint8_t data_len, uint8_t byte_of_data);
 
-# 159
+# 160
 void cw_data_set(cw_t *p_cw_data);
 
-# 174
+# 175
 void send_data_master(destination_t destination, uint8_t from_MCU, data_type_t data_type, data_end_command_t data_end_command);
 
 # 51 "spi_master.h"
@@ -1608,7 +1610,7 @@ sysprot_init();
 uart_init();
 ad_con_init();
 
-# 52
+# 40
 if(PORTDbits.RD0==0) MCLR_reset(0x05);
 if(PORTDbits.RD1==0) MCLR_reset(0x06);
 

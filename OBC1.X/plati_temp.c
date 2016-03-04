@@ -41,7 +41,7 @@ static double get_pt(void)
     //温度算出の計算
     r1 = (get_adcon() / (5.0 - get_adcon())) * 2400.0;       //5.0Vを2.4kΩで分圧しているため
     t1 = (r1 / 100.0 - 1.0) / a;
-    r2 = ((t1 * b + a) * t1 +1.0) * 100.0;   // t1 * b + aでOK??
+    r2 = ((t1 * b + a) * t1 +1.0) * 100.0;   
     t2 = (r1 / 100.0 - r2 / 100.0) / a + t1;
 
     return t2;
@@ -60,16 +60,14 @@ static double get_pt(void)
  *===================================================*/
 double get_temp(void)
 {
-    double t_average = 0.0;    // 変数一つでいけるはず！
-    double t_rowdata = 0.0;
+    double t_average = 0.0;
     int i;
     
     //温度データの平均化
     for(i = 0; i <= 300; i++){
-        t_rowdata += get_pt();
+        t_average += get_pt();
     }
-    
-    t_average = t_rowdata / 300.0;
+    t_average /= 300.0;
 
     return t_average;
 }

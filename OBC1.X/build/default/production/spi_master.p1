@@ -1111,9 +1111,10 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;system_protocol.h: 61: uint8_t powmcu:1;
 [; ;system_protocol.h: 62: } cw_t;
 [; ;system_protocol.h: 119: void sysprot_init(void);
-[; ;system_protocol.h: 146: uint8_t sent_data_set(void *p_data, uint8_t data_len, uint8_t byte_of_data);
-[; ;system_protocol.h: 159: void cw_data_set(cw_t *p_cw_data);
-[; ;system_protocol.h: 174: void send_data_master(destination_t destination, uint8_t from_MCU, data_type_t data_type, data_end_command_t data_end_command);
+[; ;system_protocol.h: 121: void cw_set(void);
+[; ;system_protocol.h: 147: uint8_t sent_data_set(void *p_data, uint8_t data_len, uint8_t byte_of_data);
+[; ;system_protocol.h: 160: void cw_data_set(cw_t *p_cw_data);
+[; ;system_protocol.h: 175: void send_data_master(destination_t destination, uint8_t from_MCU, data_type_t data_type, data_end_command_t data_end_command);
 [; ;spi_master.h: 51: void spi_master_start(void);
 [; ;spi_master.h: 65: void spi_master_receive(destination_t destination, uint8_t data);
 [; ;spi_master.h: 80: void spi_master_send(destination_t destination, uint8_t data);

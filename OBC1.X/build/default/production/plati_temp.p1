@@ -1080,40 +1080,36 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;plati_temp.c: 63: double t_average = 0.0;
 [e = _t_average .0.0 ]
 "64
-[v _t_rowdata `d ~T0 @X0 1 a ]
-[; ;plati_temp.c: 64: double t_rowdata = 0.0;
-[e = _t_rowdata .0.0 ]
-"65
 [v _i `i ~T0 @X0 1 a ]
-[; ;plati_temp.c: 65: int i;
-[; ;plati_temp.c: 68: for(i = 0; i <= 300; i++){
-"68
+[; ;plati_temp.c: 64: int i;
+[; ;plati_temp.c: 67: for(i = 0; i <= 300; i++){
+"67
 {
 [e = _i -> 0 `i ]
 [e $ <= _i -> 300 `i 98  ]
 [e $U 99  ]
 [e :U 98 ]
 {
-[; ;plati_temp.c: 69: t_rowdata += get_pt();
-"69
-[e =+ _t_rowdata ( _get_pt ..  ]
-"70
-}
+[; ;plati_temp.c: 68: t_average += get_pt();
 "68
+[e =+ _t_average ( _get_pt ..  ]
+"69
+}
+"67
 [e ++ _i -> 1 `i ]
 [e $ <= _i -> 300 `i 98  ]
 [e :U 99 ]
-"70
+"69
 }
-[; ;plati_temp.c: 70: }
-[; ;plati_temp.c: 72: t_average = t_rowdata / 300.0;
+[; ;plati_temp.c: 69: }
+[; ;plati_temp.c: 70: t_average /= 300.0;
+"70
+[e =/ _t_average .300.0 ]
+[; ;plati_temp.c: 72: return t_average;
 "72
-[e = _t_average / _t_rowdata .300.0 ]
-[; ;plati_temp.c: 74: return t_average;
-"74
 [e ) _t_average ]
 [e $UE 97  ]
-[; ;plati_temp.c: 75: }
-"75
+[; ;plati_temp.c: 73: }
+"73
 [e :UE 97 ]
 }
