@@ -1497,37 +1497,97 @@ extern int vsscanf(const char *, const char *, va_list) __attribute__((unsupport
 extern int sprintf(char *, const char *, ...);
 extern int printf(const char *, ...);
 
-# 24 "pic_clock.h"
+# 28 "pic_clock.h"
 typedef unsigned char uint8_t;
+typedef signed char int8_t;
 typedef unsigned int uint16_t;
+typedef signed int int16_t;
 
-# 39 "uart_serial.h"
-void uart_init();
-void putch(unsigned char byte);
-unsigned char getch();
-unsigned char getche();
-
-# 17 "AD_value.h"
-void ad_con_init(void);
-static int bit_shift(char my_adres_h, char my_adres_l);
-double get_adcon(void);
-
-# 17 "plati_temp.h"
-static double get_pt(void);
-double get_temp(void);
-
-# 43 "spi_master.h"
-void spi_master_init(void);
-
-# 60
-char spi_master_receive(void);
+# 64 "uart_serial.h"
+void uart_init(void);
 
 # 77
-char spi_master_send(char data);
+void putch(uint8_t byte);
 
-# 27 "MCLR_reset.h"
+# 91
+void put_string(uint8_t *str);
+
+# 104
+uint8_t getch(void);
+
+# 35 "AD_value.h"
+void ad_con_init(void);
+
+# 48
+double get_adcon(void);
+
+# 34 "plati_temp.h"
+double get_temp(void);
+
+# 10 "system_protocol.h"
+typedef enum
+{
+OBC2,
+COM,
+POW,
+} destination_t;
+
+# 25
+typedef enum
+{
+CW_TYPE = 0x01,
+DATA_TYPE,
+COMMAND_TYPE,
+} data_type_t;
+
+# 42
+typedef enum
+{
+DATA_END = 0b00010000,
+DATA_CONTINUE,
+} data_end_command_t;
+
+# 54
+typedef struct
+{
+uint8_t power1[2];
+uint8_t power2[2];
+uint8_t power3[2];
+uint8_t power4[2];
+uint8_t power5[2];
+uint8_t temp[2];
+uint8_t obc2:1;
+uint8_t powmcu:1;
+} cw_t;
+
+# 138
+uint8_t sent_data_set(void *p_data, uint8_t data_len, uint8_t byte_of_data);
+
+# 151
+void cw_data_set(cw_t *p_cw_data);
+
+# 166
+void send_data_master(destination_t destination, uint8_t from_MCU, data_type_t data_type, data_end_command_t data_end_command);
+
+# 51 "spi_master.h"
+void spi_master_start(void);
+
+# 66
+sys_result_t spi_master_receive(destination_t destination,
+uint8_t *p_store_received_data);
+
+# 82
+sys_result_t spi_master_send(destination_t destination,
+uint8_t *p_data);
+
+# 96
+void spi_master_stop(void);
+
+# 41 "MCLR_reset.h"
 void MCLR_init(void);
-void MCLR_reset(unsigned char name);
+
+# 55
+void MCLR_reset(uint8_t resetted_mcu);
 
 
 # 18 "OBC1_main.c"
@@ -1554,7 +1614,7 @@ _delay((unsigned long)((3000)*(20000000/4000.0)));
 # 45
 while(1){
 RD7 = 1;
-MCLR_reset(0x04);
+MCLR_reset(OBC2_RESET);
 _delay((unsigned long)((1000)*(20000000/4000.0)));
 
 # 54

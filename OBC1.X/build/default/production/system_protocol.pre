@@ -1434,27 +1434,21 @@ extern unsigned char __resetbits;
 extern __bit __powerdown;
 extern __bit __timeout;
 
-# 24 "pic_clock.h"
+# 28 "pic_clock.h"
 typedef unsigned char uint8_t;
+typedef signed char int8_t;
 typedef unsigned int uint16_t;
+typedef signed int int16_t;
 
 # 10 "system_protocol.h"
 typedef enum
 {
 OBC2,
-COMMCU,
-POWMCU,
+COM,
+POW,
 } destination_t;
 
-
-typedef enum
-{
-SYS_ERROR = 0,
-SYS_SUCCESS = 1,
-SYS_TIMEOUT = 2,
-} sys_result_t;
-
-# 31
+# 25
 typedef enum
 {
 CW_TYPE = 0x01,
@@ -1462,14 +1456,14 @@ DATA_TYPE,
 COMMAND_TYPE,
 } data_type_t;
 
-# 50
+# 42
 typedef enum
 {
 DATA_END = 0b00010000,
 DATA_CONTINUE,
 } data_end_command_t;
 
-# 62
+# 54
 typedef struct
 {
 uint8_t power1[2];
@@ -1478,28 +1472,32 @@ uint8_t power3[2];
 uint8_t power4[2];
 uint8_t power5[2];
 uint8_t temp[2];
-uint8_t OBC2:1;
-uint8_t COMMUC:1;
-uint8_t POWMCU:1;
+uint8_t obc2:1;
+uint8_t powmcu:1;
 } cw_t;
 
-# 146
+# 138
 uint8_t sent_data_set(void *p_data, uint8_t data_len, uint8_t byte_of_data);
 
-# 159
+# 151
 void cw_data_set(cw_t *p_cw_data);
 
-# 174
-void send_data_master(destination_t destination, data_type_t data_type, data_end_command_t data_end_command);
+# 166
+void send_data_master(destination_t destination, uint8_t from_MCU, data_type_t data_type, data_end_command_t data_end_command);
 
-# 43 "spi_master.h"
-void spi_master_init(void);
+# 51 "spi_master.h"
+void spi_master_start(void);
 
-# 60
-char spi_master_receive(void);
+# 66
+sys_result_t spi_master_receive(destination_t destination,
+uint8_t *p_store_received_data);
 
-# 77
-char spi_master_send(char data);
+# 82
+sys_result_t spi_master_send(destination_t destination,
+uint8_t *p_data);
+
+# 96
+void spi_master_stop(void);
 
 # 36 "system_protocol.c"
 typedef struct
@@ -1509,17 +1507,17 @@ uint8_t payload[30];
 uint8_t data_end_command;
 } packet_format_t;
 
-# 59
+# 58
 static void uint8_data_set(uint8_t *p_data, uint8_t data_len);
 static void send_payload(destination_t destination, uint8_t *p_payload);
 
-# 69
-static packet_format_t packet;
+# 68
+static packet_format_t packet = { 0x00, {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}, 0x00 };
 
 
 static uint8_t index_pos;
 
-# 104
+# 103
 uint8_t sent_data_set(void *p_data, uint8_t data_len, uint8_t byte_of_data)
 {
 
@@ -1548,37 +1546,58 @@ return 0xff;
 return (uint8_t)(30 - index_pos);
 }
 
-# 143
+# 142
 void cw_data_set(cw_t *p_cw_data)
 {
 uint8_t i;
 
 
-uint8_data_set(&(p_cw_data->pow_data), 4);
+uint8_data_set(&(p_cw_data->power1), 2);
+uint8_data_set(&(p_cw_data->power2), 2);
+uint8_data_set(&(p_cw_data->power3), 2);
+uint8_data_set(&(p_cw_data->power4), 2);
+uint8_data_set(&(p_cw_data->power5), 2);
 
 
-uint8_data_set(&(p_cw_data->temp_data), 4);
+uint8_data_set(&(p_cw_data->temp), 2);
 
 
 uint8_data_set(&(p_cw_data->obc2), 1);
-
-
-uint8_data_set(&(p_cw_data->commcu), 1);
 
 
 uint8_data_set(&(p_cw_data->powmcu), 1);
 }
 
 # 176
-void send_data_master(destination_t destination, data_type_t data_type, data_end_command_t data_end_command)
+void send_data_master(destination_t destination, uint8_t from_MCU, data_type_t data_type, data_end_command_t data_end_command)
 {
 packet.data_type = (uint8_t)data_type;
 packet.data_end_command = (uint8_t)data_end_command;
 
-packet_send_master(destination, &packet);
+packet_send_master(destination, from_MCU, &packet);
 }
 
-# 201
+
+void receive_data_master(destination_t destination, uint8_t from_MCU)
+{
+packet_receive_master(destination, from_MCU, &packet);
+}
+
+static void packet_receive_master(destination_t destination, uint8_t from_MCU, packet_format_t *p_packet)
+{
+uint8_t use_obc = 0x00;
+
+
+spi_master_receive(destination, use_obc);
+
+spi_master_receive(destination, &packet->data_type);
+
+spi_master_receive(destination, &packet->payload);
+
+spi_master_receive(destination, &packet->data_end_command);
+}
+
+# 221
 static void uint8_data_set(uint8_t *p_data, uint8_t data_len)
 {
 while(data_len)
@@ -1589,7 +1608,7 @@ data_len--;
 }
 }
 
-# 223
+# 243
 static void uint16_data_set(uint16_t *p_data, uint8_t data_len)
 {
 uint8_t buf[3];
@@ -1607,7 +1626,7 @@ data_len--;
 }
 }
 
-# 252
+# 272
 static void double_data_set(double *p_data, uint8_t data_len)
 {
 uint8_t buf[5];
@@ -1625,7 +1644,7 @@ data_len--;
 }
 }
 
-# 281
+# 301
 static void uint16_to_byte_array(uint16_t *p_data, uint8_t *p_data_array)
 {
 const uint16_t bit_mask = 0b0000000011111111;
@@ -1636,7 +1655,7 @@ p_data_array[1] = (uint8_t)(*p_data >> 8);
 p_data_array[2] = (uint8_t)(*p_data & bit_mask);
 }
 
-# 303
+# 323
 static void double_to_byte_array(double *p_data, uint8_t *p_data_array)
 {
 uint8_t i;
@@ -1659,43 +1678,26 @@ p_data_array[i + 1] = converter.array[i];
 }
 }
 
-# 338
-static sys_result_t packet_send_master(destination_t destination, packet_format_t *p_packet)
+# 358
+static void packet_send_master(destination_t destination, packet_format_t *p_packet)
 {
 uint16_t timeout_counter;
 
 
-spi_master_send(destination, &p_packet->preamble);
+spi_master_send(destination, 0x00);
 
 
-
-do { timeout_counter = 1000; while(PORTAbits.RA3 == 0) { if(timeout_counter == 0) { return SYS_TIMEOUT; } _delay((unsigned long)((1)*(20000000/4000.0))); timeout_counter--; } } while(0);
-
-# 355
 spi_master_send(destination, &p_packet->data_type);
 
 
-
-do { timeout_counter = 1000; while(PORTAbits.RA3 == 0) { if(timeout_counter == 0) { return SYS_TIMEOUT; } _delay((unsigned long)((1)*(20000000/4000.0))); timeout_counter--; } } while(0);
-
-# 367
-spi_master_send(destination, &p_packet->payload_index_end);
-
-
-
-do { timeout_counter = 1000; while(PORTAbits.RA3 == 0) { if(timeout_counter == 0) { return SYS_TIMEOUT; } _delay((unsigned long)((1)*(20000000/4000.0))); timeout_counter--; } } while(0);
-
-# 379
-send_payload(destination, p_packet->payload);
+send_payload(destination, &p_packet->payload);
 
 
 spi_master_send(destination, &p_packet->data_end_command);
 
-
-return SYS_SUCCESS;
 }
 
-# 401
+# 389
 static void send_payload(destination_t destination, uint8_t *p_payload)
 {
 uint8_t i;

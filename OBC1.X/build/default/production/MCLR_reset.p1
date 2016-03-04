@@ -1028,61 +1028,66 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;pic.h: 184: extern unsigned char __resetbits;
 [; ;pic.h: 185: extern __bit __powerdown;
 [; ;pic.h: 186: extern __bit __timeout;
-[; ;pic_clock.h: 24: typedef unsigned char uint8_t;
-[; ;pic_clock.h: 25: typedef unsigned int uint16_t;
-[; ;MCLR_reset.h: 27: void MCLR_init(void);
-[; ;MCLR_reset.h: 28: void MCLR_reset(unsigned char name);
-"20 MCLR_reset.c
+[; ;pic_clock.h: 28: typedef unsigned char uint8_t;
+[; ;pic_clock.h: 29: typedef signed char int8_t;
+[; ;pic_clock.h: 30: typedef unsigned int uint16_t;
+[; ;pic_clock.h: 31: typedef signed int int16_t;
+[; ;MCLR_reset.h: 41: void MCLR_init(void);
+[; ;MCLR_reset.h: 55: void MCLR_reset(uint8_t resetted_mcu);
+"35 MCLR_reset.c
 [v _MCLR_init `(v ~T0 @X0 1 ef ]
+"36
 {
-[; ;MCLR_reset.c: 20: void MCLR_init(void){
+[; ;MCLR_reset.c: 35: void MCLR_init(void)
+[; ;MCLR_reset.c: 36: {
 [e :U _MCLR_init ]
 [f ]
-"22
+"37
 [v _nin `*uc ~T0 @X0 1 a ]
-[; ;MCLR_reset.c: 22: char *nin;
-[; ;MCLR_reset.c: 23: nin = 0x09;
-"23
+[; ;MCLR_reset.c: 37: uint8_t *nin;
+[; ;MCLR_reset.c: 38: nin = 0x09;
+"38
 [e = _nin -> -> 9 `i `*uc ]
-[; ;MCLR_reset.c: 25: TRISEbits.TRISE2 = 0;
-"25
-[e = . . _TRISEbits 0 2 -> -> 0 `i `uc ]
-[; ;MCLR_reset.c: 26: TRISEbits.TRISE1 = 0;
-"26
+[; ;MCLR_reset.c: 41: TRISEbits.TRISE1 = 0;
+"41
 [e = . . _TRISEbits 0 1 -> -> 0 `i `uc ]
-[; ;MCLR_reset.c: 27: TRISEbits.TRISE0 = 0;
-"27
+[; ;MCLR_reset.c: 42: TRISEbits.TRISE0 = 0;
+"42
 [e = . . _TRISEbits 0 0 -> -> 0 `i `uc ]
-[; ;MCLR_reset.c: 28: *nin = 0b00000111;
-"28
-[e = *U _nin -> -> 7 `i `uc ]
-[; ;MCLR_reset.c: 30: }
-"30
+[; ;MCLR_reset.c: 45: *nin = 0x03;
+"45
+[e = *U _nin -> -> 3 `i `uc ]
+[; ;MCLR_reset.c: 46: }
+"46
 [e :UE 96 ]
 }
-"32
+"60
 [v _MCLR_reset `(v ~T0 @X0 1 ef1`uc ]
+"61
 {
-[; ;MCLR_reset.c: 32: void MCLR_reset(unsigned char name){
+[; ;MCLR_reset.c: 60: void MCLR_reset(uint8_t resetted_mcu)
+[; ;MCLR_reset.c: 61: {
 [e :U _MCLR_reset ]
-[v _name `uc ~T0 @X0 1 r1 ]
+"60
+[v _resetted_mcu `uc ~T0 @X0 1 r1 ]
+"61
 [f ]
-"34
+"62
 [v _nin `*uc ~T0 @X0 1 a ]
-[; ;MCLR_reset.c: 34: char *nin;
-[; ;MCLR_reset.c: 35: nin = 0x09;
-"35
+[; ;MCLR_reset.c: 62: uint8_t *nin;
+[; ;MCLR_reset.c: 63: nin = 0x09;
+"63
 [e = _nin -> -> 9 `i `*uc ]
-[; ;MCLR_reset.c: 37: *nin = 0x00;
-"37
-[e = *U _nin -> -> 0 `i `uc ]
-[; ;MCLR_reset.c: 38: _delay((unsigned long)((10)*(20000000/4000.0)));
-"38
+[; ;MCLR_reset.c: 66: *nin = resetted_mcu;
+"66
+[e = *U _nin _resetted_mcu ]
+[; ;MCLR_reset.c: 67: _delay((unsigned long)((10)*(20000000/4000.0)));
+"67
 [e ( __delay (1 -> * -> -> 10 `i `d / -> -> 20000000 `l `d .4000.0 `ul ]
-[; ;MCLR_reset.c: 39: *nin = name;
-"39
-[e = *U _nin _name ]
-[; ;MCLR_reset.c: 41: }
-"41
+[; ;MCLR_reset.c: 68: *nin = 0x03;
+"68
+[e = *U _nin -> -> 3 `i `uc ]
+[; ;MCLR_reset.c: 69: }
+"69
 [e :UE 97 ]
 }

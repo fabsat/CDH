@@ -10,18 +10,12 @@
 typedef enum
 {
     OBC2,
-    COMMCU,
-    POWMCU,
+    COM,
+    POW,
 } destination_t;
 
-/* 関数の処理結果のタイプ */
-typedef enum
-{
-    SYS_ERROR   = 0,
-    SYS_SUCCESS = 1,
-    SYS_TIMEOUT = 2,
-} sys_result_t;
 
+#define USE_MCU 0x00        // 使用しているマイコンがOBC1=0x00, OBC2=0x01
 
 
 /********************************************************************************
@@ -34,8 +28,6 @@ typedef enum
     DATA_TYPE,
     COMMAND_TYPE,
 } data_type_t;
-
-
 
 #define COMMAND 0x03
 #define DATA    0x02
@@ -68,7 +60,6 @@ typedef struct
     uint8_t power5[2];
     uint8_t temp[2];
     uint8_t obc2:1;
-    uint8_t commcu:1;
     uint8_t powmcu:1;
 } cw_t;
 
@@ -89,12 +80,13 @@ typedef struct
 
 
 /* Peripheral MCU Notification Pin and I/O Setting Register */
-#define OBC2_NOTIFICATION     PORTAbits.RA3
-#define COMMCU_NOTIFICATION   PORTAbits.RA4
-#define POWMCU_NOTIFICATION   PORTAbits.RA5
-#define OBC2_NOTIF_PIN_TRIS   TRISAbits.TRISA3
-#define COMMCU_NOTIF_PIN_TRIS TRISAbits.TRISA4
-#define POWMCU_NOTIF_PIN_TRIS TIRSAbits.TRISA5
+#define PORTD_REG_ADR         0x08
+#define OBC2_READY            PORTDbits.RD2
+#define COM_READY             PORTDbits.RD0
+#define POW_READY             PORTDbits.RD1
+#define OBC2_READY_PIN_TRIS   TRISDbits.TRISD2
+#define COM_READY_PIN_TRIS    TRISDbits.TRISD0
+#define POW_READY_PIN_TRIS    TRISDbits.TRISD1
 
 
 /* Macro for checking TIMEOUT */
@@ -171,7 +163,7 @@ void cw_data_set(cw_t *p_cw_data);
  * @note
  *     この関数実行後にsetしたデータ内容は初期化される
  *===================================================*/
-void send_data_master(destination_t destination, data_type_t data_type, data_end_command_t data_end_command);
+void send_data_master(destination_t destination, uint8_t from_MCU, data_type_t data_type, data_end_command_t data_end_command);
 
 
 

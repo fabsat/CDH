@@ -1434,9 +1434,11 @@ extern unsigned char __resetbits;
 extern __bit __powerdown;
 extern __bit __timeout;
 
-# 24 "pic_clock.h"
+# 28 "pic_clock.h"
 typedef unsigned char uint8_t;
+typedef signed char int8_t;
 typedef unsigned int uint16_t;
+typedef signed int int16_t;
 
 # 23 "uint8_to_string.h"
 void uint8_to_string(uint8_t num, uint8_t *p_str_buf, uint8_t buf_size);

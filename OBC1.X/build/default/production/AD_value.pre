@@ -1434,45 +1434,32 @@ extern unsigned char __resetbits;
 extern __bit __powerdown;
 extern __bit __timeout;
 
-# 30 "C:\Program Files (x86)\Microchip\xc8\v1.35\include\math.h"
-extern double fabs(double);
-extern double floor(double);
-extern double ceil(double);
-extern double modf(double, double *);
-extern double sqrt(double);
-extern double atof(const char *);
-extern double sin(double) ;
-extern double cos(double) ;
-extern double tan(double) ;
-extern double asin(double) ;
-extern double acos(double) ;
-extern double atan(double);
-extern double atan2(double, double) ;
-extern double log(double);
-extern double log10(double);
-extern double pow(double, double) ;
-extern double exp(double) ;
-extern double sinh(double) ;
-extern double cosh(double) ;
-extern double tanh(double);
-extern double eval_poly(double, const double *, int);
-extern double frexp(double, int *);
-extern double ldexp(double, int);
-extern double fmod(double, double);
-extern double trunc(double);
-extern double round(double);
-
-# 24 "pic_clock.h"
+# 28 "pic_clock.h"
 typedef unsigned char uint8_t;
+typedef signed char int8_t;
 typedef unsigned int uint16_t;
+typedef signed int int16_t;
 
-# 17 "AD_value.h"
+# 35 "AD_value.h"
 void ad_con_init(void);
-static int bit_shift(char my_adres_h, char my_adres_l);
+
+# 48
 double get_adcon(void);
 
-# 31 "AD_value.c"
-void ad_con_init(void){
+# 28 "AD_value.c"
+typedef struct
+{
+uint8_t my_adres_h;
+uint8_t my_adres_l;
+} adres_t;
+
+
+
+static void bit_shift(uint16_t *p_ad_value, adres_t *p_adres);
+
+# 49
+void ad_con_init(void)
+{
 
 PORTAbits.RA0 = 0;
 PORTAbits.RA3 = 0;
@@ -1481,55 +1468,26 @@ TRISAbits.TRISA3 = 1;
 ADCON1 = 0b00000001;
 }
 
-# 52
-static int bit_shift(char my_adres_h, char my_adres_l){
-
-int i, j;
-int ad_value;
-
-char buf = 0x00;
-char bit_mask = 0b10000000;
-
-
-for(i = 0; i < 8; i++)
+# 71
+static void bit_shift(uint16_t *p_ad_value, adres_t *p_adres)
 {
-buf = my_adres_h & bit_mask;
-buf >>= 7;
-ad_value |= (int)buf;
-ad_value <<= 1;
-my_adres_h <<= 1;
+const uint8_t bit_mask_for_l = 0b00000011;
+
+*p_ad_value = (uint16_t)(p_adres->my_adres_h);
+*p_ad_value <<= 2;
+*p_ad_value |= (bit_mask_for_l & (p_adres->my_adres_l >> 6));
 }
 
-
-for(j = 0; j < 2; j++)
-{
-buf = my_adres_l & bit_mask;
-buf >>= 7;
-ad_value |= (int)buf;
-
-if (j < 1)
-{
-ad_value <<= 1;
-}
-my_adres_l <<= 1;
-}
-
-return ad_value;
-}
-
-# 98
+# 91
 double get_adcon(void)
 {
 
 const unsigned int range = 0x3ff;
 
 
-int ad_value = 0b0000000000;
+uint16_t ad_value = 0b0000000000;
 double voltage_value;
-
-
-long my_adres_h;
-long my_adres_l;
+adres_t my_adres;
 
 
 ADCON0 = 0b10000001;
@@ -1539,9 +1497,9 @@ ADCON0bits.GO_DONE = 1;
 while(ADCON0bits.GO_DONE){;}
 
 
-my_adres_h = ADRESH;
-my_adres_l = ADRESL;
-ad_value = bit_shift(my_adres_h, my_adres_l);
+my_adres.my_adres_h = ADRESH;
+my_adres.my_adres_l = ADRESL;
+ad_value = bit_shift(&ad_value, &my_adres);
 
 
 voltage_value = ad_value * 5.0 / range;

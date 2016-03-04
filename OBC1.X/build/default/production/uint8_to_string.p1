@@ -1022,8 +1022,10 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;pic.h: 184: extern unsigned char __resetbits;
 [; ;pic.h: 185: extern __bit __powerdown;
 [; ;pic.h: 186: extern __bit __timeout;
-[; ;pic_clock.h: 24: typedef unsigned char uint8_t;
-[; ;pic_clock.h: 25: typedef unsigned int uint16_t;
+[; ;pic_clock.h: 28: typedef unsigned char uint8_t;
+[; ;pic_clock.h: 29: typedef signed char int8_t;
+[; ;pic_clock.h: 30: typedef unsigned int uint16_t;
+[; ;pic_clock.h: 31: typedef signed int int16_t;
 [; ;uint8_to_string.h: 23: void uint8_to_string(uint8_t num, uint8_t *p_str_buf, uint8_t buf_size);
 [; ;uint8_to_string.c: 17: static void process_100(uint8_t num, uint8_t *p_str_buf, uint8_t *p_flag);
 [; ;uint8_to_string.c: 18: static void process_10(uint8_t num, uint8_t *p_str_buf, uint8_t *p_flag);

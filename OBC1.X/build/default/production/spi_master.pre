@@ -1434,30 +1434,83 @@ extern unsigned char __resetbits;
 extern __bit __powerdown;
 extern __bit __timeout;
 
-# 24 "pic_clock.h"
+# 28 "pic_clock.h"
 typedef unsigned char uint8_t;
+typedef signed char int8_t;
 typedef unsigned int uint16_t;
+typedef signed int int16_t;
 
-# 43 "spi_master.h"
-void spi_master_init(void);
+# 10 "system_protocol.h"
+typedef enum
+{
+OBC2,
+COM,
+POW,
+} destination_t;
 
-# 60
-char spi_master_receive(void);
+# 25
+typedef enum
+{
+CW_TYPE = 0x01,
+DATA_TYPE,
+COMMAND_TYPE,
+} data_type_t;
 
-# 77
-char spi_master_send(char data);
+# 42
+typedef enum
+{
+DATA_END = 0b00010000,
+DATA_CONTINUE,
+} data_end_command_t;
 
-# 25 "spi_master.c"
-static void spi_reset(void);
+# 54
+typedef struct
+{
+uint8_t power1[2];
+uint8_t power2[2];
+uint8_t power3[2];
+uint8_t power4[2];
+uint8_t power5[2];
+uint8_t temp[2];
+uint8_t obc2:1;
+uint8_t powmcu:1;
+} cw_t;
 
-# 41
-void spi_master_init(void)
+# 138
+uint8_t sent_data_set(void *p_data, uint8_t data_len, uint8_t byte_of_data);
+
+# 151
+void cw_data_set(cw_t *p_cw_data);
+
+# 166
+void send_data_master(destination_t destination, uint8_t from_MCU, data_type_t data_type, data_end_command_t data_end_command);
+
+# 51 "spi_master.h"
+void spi_master_start(void);
+
+# 66
+sys_result_t spi_master_receive(destination_t destination,
+uint8_t *p_store_received_data);
+
+# 82
+sys_result_t spi_master_send(destination_t destination,
+uint8_t *p_data);
+
+# 96
+void spi_master_stop(void);
+
+# 36 "spi_master.c"
+void spi_master_start(void)
 {
 
-TRISC3 = 0;
-TRISC4 = 1;
-TRISC5 = 0;
-TRISC2 = 0;
+TRISCbits.TRISC3 = 0;
+TRISCbits.TRISC5 = 0;
+TRISCbits.TRISC4 = 1;
+
+
+TRISCbits.TRISC1 = 0;
+
+
 
 
 SSPCONbits.SSPEN = 0;
@@ -1474,114 +1527,145 @@ SSPCONbits.SSPM1 = 0;
 SSPCONbits.SSPM0 = 0;
 
 
-(RC2) = 1;
+PORTCbits.RC1 = 1;
+
+
 
 
 SSPCONbits.SSPEN = 1;
 }
 
-# 85
-char spi_master_receive(void)
+# 84
+sys_result_t spi_master_receive(destination_t destination, uint8_t *p_store_received_data)
 {
-char dummy;
-unsigned char timeout_counter = 0;
-unsigned char spi_reset_counter = 0xFF;
+uint8_t dummy;
+uint16_t timeout_counter = 1000;
 
 
 dummy = SSPBUF;
 
 
-(RC2) = 0;
+switch(destination)
+{
+case OBC2:
+PORTCbits.RC1 = 0;
+break;
+case COMMCU:
+
+break;
+case POWMCU:
+
+break;
+}
 
 
-SSPBUF = 0xFF;
+SSPBUF = 0x00;
 
 
 while(SSPSTATbits.BF == 0)
 {
 
-if(spi_reset_counter == 0x00 && timeout_counter < 2)
+if(timeout_counter == 0)
 {
-spi_reset();
-timeout_counter++;
-spi_reset_counter = 0xFF;
-continue;
+return SYS_TIMEOUT;
 }
 
 
-if(timeout_counter == 2)
+_delay((unsigned long)((1)*(20000000/4000.0)));
+timeout_counter--;
+}
+
+
+switch(destination)
 {
-return -1;
+case OBC2:
+PORTCbits.RC1 = 1;
+break;
+case COMMCU:
+
+break;
+case POWMCU:
+
+break;
 }
 
 
-spi_reset_counter--;
+*p_store_received_data = SSPBUF;
+
+
+return SYS_SUCCESS;
 }
 
-
-(RC2) = 1;
-
-
-return SSPBUF;
-}
-
-# 144
-char spi_master_send(char data)
+# 157
+sys_result_t spi_master_send(destination_t destination, uint8_t *p_data)
 {
-char dummy;
-unsigned char timeout_counter = 0;
-unsigned char spi_reset_counter = 0xFF;
+uint8_t dummy;
+uint16_t timeout_counter = 1000;
 
 
 dummy = SSPBUF;
 
 
-(RC2) = 0;
+switch(destination)
+{
+case OBC2:
+PORTCbits.RC1 = 0;
+break;
+case COMMCU:
+
+break;
+case POWMCU:
+
+break;
+}
 
 
-SSPBUF = data;
+SSPBUF = *p_data;
 
 
 while(SSPSTATbits.BF == 0)
 {
 
-if(spi_reset_counter == 0x00 && timeout_counter < 2)
+if(timeout_counter == 0)
 {
-spi_reset();
-timeout_counter++;
-spi_reset_counter = 0xFF;
-continue;
+return SYS_TIMEOUT;
 }
 
 
-if(timeout_counter == 2)
+_delay((unsigned long)((1)*(20000000/4000.0)));
+timeout_counter--;
+}
+
+
+switch(destination)
 {
-return -1;
+case OBC2:
+PORTCbits.RC1 = 1;
+break;
+case COMMCU:
+
+break;
+case POWMCU:
+
+break;
 }
-
-
-spi_reset_counter--;
-}
-
-
-(RC2) = 1;
 
 
 dummy = SSPBUF;
 
 
-return 0;
+return SYS_SUCCESS;
 }
 
-# 202
-static void spi_reset(void)
+# 228
+void spi_master_stop(void)
 {
-unsigned char dummy;
 
-SSPEN = 0;
-SSPEN = 1;
-dummy = SSPBUF;
-SSPIF = 0;
-SSPEN = 0;
-SSPEN = 1;
+PORTCbits.RC1 = 0;
+
+
+
+
+SSPCONbits.SSPEN = 0;
 }
+

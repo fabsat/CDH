@@ -19,20 +19,20 @@
 #define	_SPI_MASTER_H
 
 #include <xc.h>
-#include "pic_setting.h"
+#include "pic_clock.h"
 #include "system_protocol.h"
 
-/* Slave Select Pin */
-#define SS_OBC2        PORTCbits.RC1
-#define SS_COMMCU      R
-#define SS_POWMCU      R
 
-/* SS pin TRIS */
-#define SS_OBC2_TRIS   TRISCbits.TRISC1
-#define SS_COMMCU_TRIS TRIS
-#define SS_POWMCU_TRIS TRIS
+/* Slave Selectピン */
+#define SS_OBC2        PORTCbits.RC2
+#define SS_COM         PORTCbits.RC0
+#define SS_POW         PORTCbits.RC1
 
 
+/* SS pinのTRISレジスタ */
+#define SS_OBC2_TRIS   TRISCbits.TRISC2
+#define SS_COM_TRIS    TRISCbits.TRISC0
+#define SS_POW_TRIS    TRISCbits.TRISC1
 
 
 /* Prototype of Function */
@@ -55,16 +55,14 @@ void spi_master_start(void);
  * @brief
  *     SPI Masterデータ受信関数(1Byte)
  * @param
- *     destination          :通信の相手先を選択
- *     p_store_received_data:受信データを受け取るポインタ
+ *     destination:通信の相手先を選択
  * @return
- *     SYS_SUCCESS:受信成功
- *     SYS_TIMEOUT:timeout終了
+ *     received_data:受信データ
  * @note
  *     1[s]で受信完了しなければTIMEOUTとなる
  *===================================================*/
-sys_result_t spi_master_receive(destination_t destination,
-                                uint8_t *p_store_received_data);
+uint8_t spi_master_receive(destination_t destination);
+
 
 
 /*=====================================================
@@ -72,15 +70,13 @@ sys_result_t spi_master_receive(destination_t destination,
  *     SPI Masterデータ送信関数(1Byte)
  * @param
  *     destination:通信の相手先を選択
- *     p_data     :送信データへのポインタ
+ *     data     :送信データ
  * @return
- *     SYS_SUCCESS:送信成功
- *     SYS_TIMEOUT:timeout終了
+ *     void:
  * @note
- *     1[s]で送信完了しなければTIMEOUTとなる
+ *     1[ms]で送信完了しなければTIMEOUTとなる
  *===================================================*/
-sys_result_t spi_master_send(destination_t destination,
-                             uint8_t *p_data);
+void spi_master_send(destination_t destination, uint8_t data);
 
 
 /*=====================================================
@@ -97,4 +93,3 @@ void spi_master_stop(void);
 
 
 #endif	/* _SPI_MASTER_H */
-

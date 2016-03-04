@@ -65,7 +65,7 @@ static void send_payload(destination_t destination, uint8_t *p_payload);
  *                                     グローバル変数                                      *
  *****************************************************************************************/
 /* このグローバル変数のパケットに各種データを格納していく データが送信されたら初期化される */
-static packet_format_t packet;
+static packet_format_t packet = PACKET_INIT;
 
 /* データの格納できる先頭インデックスを示す データが送信されたら初期化される */
 static uint8_t index_pos;
@@ -111,7 +111,7 @@ uint8_t sent_data_set(void *p_data, uint8_t data_len, uint8_t byte_of_data)
     /* 各型のデータ格納へ分岐 */
     switch(byte_of_data)
     {
-	case 1:
+        case 1:
             uint8_data_set((uint8_t *)p_data, data_len);
             break;
         case 2:
@@ -144,16 +144,17 @@ void cw_data_set(cw_t *p_cw_data)
     uint8_t i;
     
     /* 電源データの格納 */
-    uint8_data_set(&(p_cw_data->pow_data), 4);
+    uint8_data_set(&(p_cw_data->power1), 2);
+    uint8_data_set(&(p_cw_data->power2), 2);
+    uint8_data_set(&(p_cw_data->power3), 2);
+    uint8_data_set(&(p_cw_data->power4), 2);
+    uint8_data_set(&(p_cw_data->power5), 2);
 
     /* 温度データの格納 */
-    uint8_data_set(&(p_cw_data->temp_data), 4);
+    uint8_data_set(&(p_cw_data->temp), 2);
 
     /* OBC2のステータス格納 */
     uint8_data_set(&(p_cw_data->obc2), 1);
-
-    /* COMMCUのステータス格納 */
-    uint8_data_set(&(p_cw_data->commcu), 1);
 
     /* POWMCUのステータス格納 */
     uint8_data_set(&(p_cw_data->powmcu), 1);
@@ -172,16 +173,33 @@ void cw_data_set(cw_t *p_cw_data)
  * @note
  *     この関数実行後にsetしたデータ内容は初期化される
  *===================================================*/
-void send_data_master(destination_t destination, data_type_t data_type, data_end_command_t data_end_command)
+void send_data_master(destination_t destination, uint8_t from_MCU, data_type_t data_type, data_end_command_t data_end_command)
 {
     packet.data_type        = (uint8_t)data_type;
     packet.data_end_command = (uint8_t)data_end_command;
 
-    packet_send_master(destination, &packet);
+    packet_send_master(destination, from_MCU, &packet);
 }
 
 
-void receive_data_master(destination_t destination, )
+void receive_data_master(destination_t destination, uint8_t from_MCU)
+{   
+    packet_receive_master(destination, from_MCU, &packet);
+}
+
+static void packet_receive_master(destination_t destination, uint8_t from_MCU, packet_format_t *p_packet)
+{
+    uint8_t use_obc = 0x00;
+    
+    /*使用している*/
+    spi_master_receive(destination, use_obc);
+
+    spi_master_receive(destination, &packet->data_type);
+
+    spi_master_receive(destination, &packet->payload);
+
+    spi_master_receive(destination, &packet->data_end_command);
+}
 
 
 
@@ -337,54 +355,22 @@ static void double_to_byte_array(double *p_data, uint8_t *p_data_array)
  * @note
  *     none
  *===================================================*/
-static sys_result_t packet_send_master(destination_t destination, packet_format_t *p_packet)
+static void packet_send_master(destination_t destination, packet_format_t *p_packet)
 {
     uint16_t timeout_counter;
 
     /* プリアンブルを送信 */
-    spi_master_send(destination, &p_packet->preamble);
+    spi_master_send(destination, USE_MCU);
 
-    /* data_typeの受信可能待ち */
-#if destination == OBC2
-    WAIT_OR_TIMEOUT(OBC2_NOTIFICATION);
-#elif destination == COMMCU
-    WAIT_OR_TIMEOUT(COMMCU_NOTIFICATION);
-#elif destination == POWMCU
-    WAIT_OR_TIMEOUT(POWMCU_NOTIFICATION);
-#endif
-    
     /* data_typeを送信 */
     spi_master_send(destination, &p_packet->data_type);
 
-    /* payload_index_endの受信可能待ち */
-#if destination == OBC2
-    WAIT_OR_TIMEOUT(OBC2_NOTIFICATION);
-#elif destination == COMMCU
-    WAIT_OR_TIMEOUT(COMMCU_NOTIFICATION);
-#elif destination == POWMCU
-    WAIT_OR_TIMEOUT(POWMCU_NOTIFICATION);
-#endif
-    
-    /* payload_index_endの送信 */
-    spi_master_send(destination, &p_packet->payload_index_end);
-    
-    /* payloadの受信可能待ち */
-#if destination == OBC2
-    WAIT_OR_TIMEOUT(OBC2_NOTIFICATION);
-#elif destination == COMMCU
-    WAIT_OR_TIMEOUT(COMMCU_NOTIFICATION);
-#elif destination == POWMCU
-    WAIT_OR_TIMEOUT(POWMCU_NOTIFICATION);
-#endif
-    
     /* ペイロードを送信 */
-    send_payload(destination, p_packet->payload);
+    send_payload(destination, &p_packet->payload);
 
     /* data_end_commandを送信 */
     spi_master_send(destination, &p_packet->data_end_command);
 
-
-    return SYS_SUCCESS;
 }
 
 

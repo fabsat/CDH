@@ -1434,34 +1434,40 @@ extern unsigned char __resetbits;
 extern __bit __powerdown;
 extern __bit __timeout;
 
-# 24 "pic_clock.h"
+# 28 "pic_clock.h"
 typedef unsigned char uint8_t;
+typedef signed char int8_t;
 typedef unsigned int uint16_t;
+typedef signed int int16_t;
 
-# 27 "MCLR_reset.h"
+# 41 "MCLR_reset.h"
 void MCLR_init(void);
-void MCLR_reset(unsigned char name);
 
-# 20 "MCLR_reset.c"
-void MCLR_init(void){
+# 55
+void MCLR_reset(uint8_t resetted_mcu);
 
-char *nin;
+# 35 "MCLR_reset.c"
+void MCLR_init(void)
+{
+uint8_t *nin;
 nin = 0x09;
 
-TRISEbits.TRISE2 = 0;
+
 TRISEbits.TRISE1 = 0;
 TRISEbits.TRISE0 = 0;
-*nin = 0b00000111;
 
+
+*nin = 0x03;
 }
 
-void MCLR_reset(unsigned char name){
-
-char *nin;
+# 60
+void MCLR_reset(uint8_t resetted_mcu)
+{
+uint8_t *nin;
 nin = 0x09;
 
-*nin = 0x00;
-_delay((unsigned long)((10)*(20000000/4000.0)));
-*nin = name;
 
+*nin = resetted_mcu;
+_delay((unsigned long)((10)*(20000000/4000.0)));
+*nin = 0x03;
 }

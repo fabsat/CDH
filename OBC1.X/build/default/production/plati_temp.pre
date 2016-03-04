@@ -1434,76 +1434,51 @@ extern unsigned char __resetbits;
 extern __bit __powerdown;
 extern __bit __timeout;
 
-# 30 "C:\Program Files (x86)\Microchip\xc8\v1.35\include\math.h"
-extern double fabs(double);
-extern double floor(double);
-extern double ceil(double);
-extern double modf(double, double *);
-extern double sqrt(double);
-extern double atof(const char *);
-extern double sin(double) ;
-extern double cos(double) ;
-extern double tan(double) ;
-extern double asin(double) ;
-extern double acos(double) ;
-extern double atan(double);
-extern double atan2(double, double) ;
-extern double log(double);
-extern double log10(double);
-extern double pow(double, double) ;
-extern double exp(double) ;
-extern double sinh(double) ;
-extern double cosh(double) ;
-extern double tanh(double);
-extern double eval_poly(double, const double *, int);
-extern double frexp(double, int *);
-extern double ldexp(double, int);
-extern double fmod(double, double);
-extern double trunc(double);
-extern double round(double);
-
-# 24 "pic_clock.h"
+# 28 "pic_clock.h"
 typedef unsigned char uint8_t;
+typedef signed char int8_t;
 typedef unsigned int uint16_t;
+typedef signed int int16_t;
 
-# 17 "AD_value.h"
+# 35 "AD_value.h"
 void ad_con_init(void);
-static int bit_shift(char my_adres_h, char my_adres_l);
+
+# 48
 double get_adcon(void);
 
-# 17 "plati_temp.h"
-static double get_pt(void);
+# 34 "plati_temp.h"
 double get_temp(void);
 
-# 32 "plati_temp.c"
-static double get_pt(void){
-
-double R1, R2, T1, T2;
+# 35 "plati_temp.c"
+static double get_pt(void)
+{
+double r1, r2, t1, t2;
 double a = 0.0039083;
 double b = -0.0000005775;
 
 
-R1 = (get_adcon()/(5.0-get_adcon()))*2400.0;
-T1 = (R1/100.0-1.0)/a;
-R2 = ((T1*b+a)*T1+1.0)*100.0;
-T2 = (R1/100.0-R2/100.0)/a+T1;
+r1 = (get_adcon() / (5.0 - get_adcon())) * 2400.0;
+t1 = (r1 / 100.0 - 1.0) / a;
+r2 = ((t1 * b + a) * t1 +1.0) * 100.0;
+t2 = (r1 / 100.0 - r2 / 100.0) / a + t1;
 
-return T2;
+return t2;
 }
 
-# 58
-double get_temp(void){
-
-double T=0.0;
-double t=0.0;
+# 61
+double get_temp(void)
+{
+double t_average = 0.0;
+double t_rowdata = 0.0;
 int i;
 
 
-for(i=0; i<=300; i++){
-t += get_pt();
+for(i = 0; i <= 300; i++){
+t_rowdata += get_pt();
 }
-T = t/300.0;
 
-return T;
+t_average = t_rowdata / 300.0;
+
+return t_average;
 }
 
