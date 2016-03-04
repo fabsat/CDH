@@ -21,13 +21,12 @@
 #include <xc.h>
 #include "pic_clock.h"
 
-
-#define OBC2_MCLR     TRISEbits.TRISE2     //MCLRに使用するピンをRE2
-#define OBC2_RESET    0x03                 //OBC2だけをリセット(RE2ピンをLOWに)
-#define COM_MCLR      TRISEbits.TRISE1     //MCLRに使用するピンをRE1
-#define COM_RESET     0x05                 //COMだけをリセット(RE1ピンをLOWに)
-#define POW_MCLR      TRISEbits.TRISE0     //MCLRに使用するピンをRE0
-#define POW_RESET     0x06                 //POWだけをリセット(RE0ピンをLOWに)
+#define COM_MCLR       TRISEbits.TRISE1     // MCLRに使用するピンをRE1
+#define COM_RESET      0x05                 // COMだけをリセット(RE1ピンをLOWに)
+#define POW_MCLR       TRISEbits.TRISE0     // MCLRに使用するピンをRE0
+#define POW_RESET      0x06                 // POWだけをリセット(RE0ピンをLOWに)
+#define PORTE_REG_ADR  0x09                 // PORTEのレジスタアドレス
+#define PORTE_POEWR_ON 0x03                 // RE1, 2をON
 
 /*=====================================================
  * @brief

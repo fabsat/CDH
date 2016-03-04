@@ -35,15 +35,14 @@
 void MCLR_init(void)
 {
     uint8_t *nin;
-    nin = 0x09;     // PORTEのレジスタアドレスをポインタ変数に格納
+    nin = PORTE_REG_ADR;     // PORTEのレジスタアドレスをポインタ変数に格納
 
     /* MCLRリセットに使用する各I/Oピンを出力に設定 */
-    OBC2_MCLR = 0;
     COM_MCLR  = 0;
     POW_MCLR  = 0;
 
     /* 信号をHighにしてリセットOff */
-    *nin = 0b00000111;
+    *nin = PORTE_POEWR_ON;
 }
 
 
@@ -61,10 +60,10 @@ void MCLR_init(void)
 void MCLR_reset(uint8_t resetted_mcu)
 {  
     uint8_t *nin;
-    nin = 0x09;
+    nin = PORTE_REG_ADR;
 
     /* リセット実行 */
     *nin = resetted_mcu;      // 指定したMCU(RE2~0ピンのいずれかをLOWに))
     __delay_ms(10);
-    *nin = 0x07;              // 全てHIGHにして再起動
+    *nin = PORTE_POEWR_ON;              // 全てHIGHにして再起動
 }
