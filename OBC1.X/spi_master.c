@@ -41,9 +41,9 @@ void spi_master_start(void)
     TRISCbits.TRISC4 = 1;    // RC4 is SDI -> INPUT
     
     /* SS pin configure OUTPUT */
-    SS_OBC2_TRIS   = 0;      // RC1 is SS  -> OUTPUT
-    //SS_COMMCU_TRIS = 0;
-    //SS_POWMCU_TRIS = 0;
+    SS_OBC2_TRIS = 0;      // RC1 is SS  -> OUTPUT
+    SS_COM_TRIS  = 0;
+    SS_POW_TRIS  = 0;
 
     /* Allow Programming of SPI configuring */
     SSPCONbits.SSPEN = 0;
@@ -60,9 +60,9 @@ void spi_master_start(void)
     SSPCONbits.SSPM0 = 0;
 
     /* SS_PIN set HIGH */
-    SS_OBC2   = 1;
-    //SS_COMMCU = 1;
-    //SS_POWMCU = 1;
+    SS_OBC2 = 1;
+    SS_COM  = 1;
+    SS_POW  = 1;
    
     /* End SPI programming and Start serial port */
     SSPCONbits.SSPEN = 1;
@@ -73,51 +73,66 @@ void spi_master_start(void)
  * @brief
  *     SPI Masterデータ受信関数(1Byte)
  * @param
- *     destination          :通信の相手先を選択
- *     p_store_received_data:受信データを受け取るポインタ
+ *     destination:通信の相手先を選択
  * @return
- *     SYS_SUCCESS:受信成功
- *     SYS_TIMEOUT:timeout終了
+ *     received_data:受信データ
  * @note
  *     1[s]で受信完了しなければTIMEOUTとなる
  *===================================================*/
-sys_result_t spi_master_receive(destination_t destination,
-                                uint8_t *p_store_received_data)
+uint8_t spi_master_receive(destination_t destination)
 {
     uint8_t dummy;
     uint16_t timeout_counter = 1000;
 
-    /* Read data to dummy */
+    /* ダミー変数にデータをリードする */
     dummy = SSPBUF;
 
+    /* 各サブシステムからの通信完了通知を待つ */
+    switch(destination)
+    {
+	case OBC2:
+            bit_mask = 0b00000100;                   // RD2のbit_maskを作成
+            while((*reg_address & bit_mask) == 0){;} // RD2がセットされるまで待つ
+            break;
+        case COM:
+            bit_mask = 0b00000001;                   // RD0のbit_maskを作成
+            while((*reg_address & bit_mask) == 0){;} // RD0がセットされるまで待つ
+            break;
+        case POW:
+            bit_mask = 0b00000010;                   // RD1のbit_maskを作成
+            while((*reg_address & bit_mask) == 0){;} // RD1がセットされるまで待つ
+            break;
+    }
+    
     /* Slave Select -> Low */
     switch(destination)
     {
         case OBC2:
-            SS_OBC2   = 0;
+            SS_OBC2 = 0;
             break;
-        case COMMCU:
-            //SS_COMMCU = 0;
+        case COM:
+            SS_COM  = 0;
             break;
-        case POWMCU:
-            //SS_POWMCU = 0;
+        case POW:
+            SS_POW  = 0;
             break;
     }
 
-    /* Set dummy data to SSPBUF and SPI START */
+
+    /* ダミーデータをSSPBUFにセットしてSPI通信開始 */
     SSPBUF = 0x00;
 
-    /* Wait for receiving finish */
+    /* 送信完了待ち */
     while(SSPSTATbits.BF == 0)
     {
-        /* TIMEOUT (exceeds 1.0[s]) */
+        /* TIMEOUT (1[ms]を超えた時) */
         if(timeout_counter == 0)
         {
-            return SYS_TIMEOUT;
+            return;
         }
 
-        /* reset counter decrement */
-        __delay_ms(1);
+        /* 1[us]ごとにtimeout_counterをデクリメントする */
+        __delay_us(1);
         timeout_counter--;
     }
 
@@ -125,21 +140,18 @@ sys_result_t spi_master_receive(destination_t destination,
     switch(destination)
     {
         case OBC2:
-            SS_OBC2   = 1;
+            SS_OBC2 = 1;
             break;
-        case COMMCU:
-            //SS_COMMCU = 1;
+        case COM:
+            SS_COM  = 1;
             break;
-        case POWMCU:
-            //SS_POWMCU = 1;
+        case POW:
+            SS_POW  = 1;
             break;
     }
 
-    /* received data is stored */
-    *p_store_received_data = SSPBUF;
-
-    /* Return SYS_SUCCESS */
-    return SYS_SUCCESS;
+    /* 受信データを戻り値として返す */
+    return SSPBUF;
 }
 
 
@@ -148,50 +160,67 @@ sys_result_t spi_master_receive(destination_t destination,
  *     SPI Masterデータ送信関数(1Byte)
  * @param
  *     destination:通信の相手先を選択
- *     p_data     :送信データへのポインタ
+ *     data     :送信データ
  * @return
- *     SYS_SUCCESS:送信成功
- *     SYS_TIMEOUT:timeout終了
+ *     void:
  * @note
- *     1[s]で送信完了しなければTIMEOUTとなる
+ *     1[ms]で送信完了しなければTIMEOUTとなる
  *===================================================*/
-sys_result_t spi_master_send(destination_t destination,
-                             uint8_t *p_data)
+void spi_master_send(destination_t destination, uint8_t data)
 {
     uint8_t dummy;
     uint16_t timeout_counter = 1000;
+    uint8_t *reg_address = PORTD_REG_ADR;
+    uint8_t bit_mask;
 
-    /* Read data to dummy */
+    /* dummy変数にデータをリードする */
     dummy = SSPBUF;
+
+    /* 各サブシステムからの通信完了通知を待つ */
+    switch(destination)
+    {
+	case OBC2:
+            bit_mask = 0b00000100;                   // RD2のbit_maskを作成
+            while((*reg_address & bit_mask) == 0){;} // RD2がセットされるまで待つ
+            break;
+        case COM:
+            bit_mask = 0b00000001;                   // RD0のbit_maskを作成
+            while((*reg_address & bit_mask) == 0){;} // RD0がセットされるまで待つ
+            break;
+        case POW:
+            bit_mask = 0b00000010;                   // RD1のbit_maskを作成
+            while((*reg_address & bit_mask) == 0){;} // RD1がセットされるまで待つ
+            break;
+    }
     
     /* Slave Select -> Low */
     switch(destination)
     {
         case OBC2:
-            SS_OBC2   = 0;
+            SS_OBC2 = 0;
             break;
-        case COMMCU:
-            //SS_COMMCU = 0;
+        case COM:
+            SS_COM  = 0;
             break;
-        case POWMCU:
-            //SS_POWMCU = 0;
+        case POW:
+            SS_POW  = 0;
             break;
     }
 
-    /* Set dummy data to SSPBUF ,SPI START */
-    SSPBUF = *p_data;
+    /* 送信データをSSPBUFにセット SPI通信スタート */
+    SSPBUF = data;
 
-    /* Wait for receiving finish */
+    /* 送信完了待ち */
     while(SSPSTATbits.BF == 0)
     {
-        /* TIMEOUT (exceeds 1.0[s]) */
+        /* TIMEOUT (1[ms]を超えた時) */
         if(timeout_counter == 0)
         {
-            return SYS_TIMEOUT;
+            return;
         }
 
-        /* reset counter decrement */
-        __delay_ms(1);
+        /* 1[us]ごとにtimeout_counterをデクリメントする */
+        __delay_us(1);
         timeout_counter--;
     }
 
@@ -199,21 +228,18 @@ sys_result_t spi_master_send(destination_t destination,
     switch(destination)
     {
         case OBC2:
-            SS_OBC2   = 1;
+            SS_OBC2 = 1;
             break;
-        case COMMCU:
-            //SS_COMMCU = 1;
+        case COM:
+            SS_COM  = 1;
             break;
-        case POWMCU:
-            //SS_POWMCU = 1;
+        case POW:
+            SS_POW  = 1;
             break;
     }
     
-    /* Read data to dummy */
+    /* slaveから来たダミーデータを読み込んでおく */
     dummy = SSPBUF;
-
-    /* Return SYS_SUCCESS */
-    return SYS_SUCCESS;   
 }
 
 
@@ -230,11 +256,11 @@ sys_result_t spi_master_send(destination_t destination,
 void spi_master_stop(void)
 {
     /* SS pin -> LOW */
-    SS_OBC2   = 0;
-    //SS_COMMCU = 0;
-    //SS_POWMCU = 0;
+    SS_OBC2 = 0;
+    SS_COM  = 0;
+    SS_POW  = 0;
 
-    /* SPI(MSSP) disable */
+    /* SPI(MSSP)無効化 */
     SSPCONbits.SSPEN = 0;
 }
 
