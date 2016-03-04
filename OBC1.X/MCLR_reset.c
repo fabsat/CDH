@@ -64,7 +64,7 @@ void MCLR_reset(uint8_t resetted_mcu)
     nin = 0x09;
 
     /* リセット実行 */
-    *nin = 0x00;      // これだと全てリセットされてしまう。。。
+    *nin = resetted_mcu;      // 指定したMCU(RE2~0ピンのいずれかをLOWに))
     __delay_ms(10);
-    *nin = resetted_mcu;
+    *nin = 0x07;              // 全てHIGHにして再起動
 }

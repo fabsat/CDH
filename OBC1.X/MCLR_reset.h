@@ -23,11 +23,11 @@
 
 
 #define OBC2_MCLR     TRISEbits.TRISE2     //MCLRに使用するピンをRE2
-#define OBC2_RESET    0x04
+#define OBC2_RESET    0x03                 //OBC2だけをリセット(RE2ピンをLOWに)
 #define COM_MCLR      TRISEbits.TRISE1     //MCLRに使用するピンをRE1
-#define COM_RESET     0x02
+#define COM_RESET     0x05                 //COMだけをリセット(RE1ピンをLOWに)
 #define POW_MCLR      TRISEbits.TRISE0     //MCLRに使用するピンをRE0
-#define POW_RESET     0x01
+#define POW_RESET     0x06                 //POWだけをリセット(RE0ピンをLOWに)
 
 /*=====================================================
  * @brief
