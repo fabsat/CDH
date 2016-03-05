@@ -84,8 +84,6 @@ void spi_master_receive(destination_t destination, uint8_t data)
 {
     uint8_t dummy;
     uint16_t timeout_counter = 1000;
-    uint8_t *reg_address = PORTD_REG_ADR;
-    uint8_t bit_mask;
 
     /* ダミー変数にデータをリードする */
     dummy = SSPBUF;
@@ -169,8 +167,6 @@ void spi_master_send(destination_t destination, uint8_t data)
 {
     uint8_t dummy;
     uint16_t timeout_counter = 1000;
-    uint8_t *reg_address = PORTD_REG_ADR;
-    uint8_t bit_mask;
 
     /* dummy変数にデータをリードする */
     dummy = SSPBUF;
