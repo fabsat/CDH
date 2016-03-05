@@ -20,13 +20,18 @@
 #pragma config FOSC = HS, WDTE = OFF, PWRTE = ON,  BOREN = ON,  LVP = OFF
 #pragma config CPD = OFF, WRT = OFF, CP = OFF
 
+#define LED0TRIS    TRISD7
+#define LED0        PORTDbits.RD7
+#define LED1TRIS    TRIS
+#define LED1        PORT
+
+cw_t cw = CW_DATA_INIT;
 
 
-
-int main(void) {
+int main(void){
     
-    TRISD7 = 0;
-    RD7 = 0;
+    LED0TRIS = 0;
+    LED0 = 0;
 
     MCLR_init();            // MCLR_reset 初期設定
     sysprot_init();         // system_protocol 初期設定
@@ -48,6 +53,22 @@ int main(void) {
    
         RD7 = 0;
         __delay_ms(1000);
+    }
+    
+    while(1)
+    {
+        LED0 = 1;
+        __delay_ms(1000);
+        get_cw_data();
+        cw_data_set(&cw);
+        send_data_master(COM, CW, DATA_END);
+        LED0 = 0;
+        __delay_ms(1000);
+        
+        /*COM生存確認*/
+        if(COM_READY==0) 
+    
+        __delay_ms(10000);
     }
     
     

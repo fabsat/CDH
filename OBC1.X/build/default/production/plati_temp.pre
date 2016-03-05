@@ -1444,7 +1444,7 @@ typedef signed int int16_t;
 void ad_con_init(void);
 
 # 48
-double get_adcon(void);
+uint16_t get_adcon(void);
 
 # 34 "plati_temp.h"
 double get_temp(void);

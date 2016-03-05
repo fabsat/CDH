@@ -60,7 +60,7 @@ static void double_data_set(double *p_data, uint8_t data_len);
 static void uint16_to_byte_array(uint16_t *p_data, uint8_t *p_data_array);
 static void double_to_byte_array(double *p_data, uint8_t *p_data_array);
 static uint8_t send_payload(destination_t destination, uint8_t *p_payload);
-static void receive_payload(destination_t destination, uint8_t *p_payload);
+static void receive_payload(destination_t destination);
 static void packet_send_master(destination_t destination, packet_format_t *p_packet);
 static void packet_receive_master(destination_t destination, packet_format_t *p_packet);
 
@@ -70,7 +70,6 @@ static void packet_receive_master(destination_t destination, packet_format_t *p_
  *****************************************************************************************/
 /* このグローバル変数のパケットに各種データを格納していく データが送信されたら初期化される */
 static packet_format_t packet = PACKET_INIT;
-//static cw_t cw = CW_DATA_INIT; // これはmain側で値の入れ替えを行うかもしれないので変数定義はmain.cでと考える
 
 /* データの格納できる先頭インデックスを示す データが送信されたら初期化される */
 static uint8_t index_pos;
@@ -93,26 +92,27 @@ void sysprot_init(void)
 
 
 /*エラーが出る*/
-void cw_set(void)
+void get_cw_data(void)
 {
-    packet_format_t.data_type = 1;
+    uint16_t buf;
+    
     spi_master_start();
-    spi_master_receive(POW, cw_t.power1[0]);
-    spi_master_receive(POW, cw_t.power1[1]);
-    spi_master_receive(POW, cw_t.power2[0]);
-    spi_master_receive(POW, cw_t.power2[1]);
-    spi_master_receive(POW, cw_t.power3[0]);
-    spi_master_receive(POW, cw_t.power3[1]);
-    spi_master_receive(POW, cw_t.power4[0]);
-    spi_master_receive(POW, cw_t.power4[1]);
-    spi_master_receive(POW, cw_t.power5[0]);
-    spi_master_receive(POW, cw_t.power5[1]);
-    cw_t.temp = (uint16_t)get_temp();
-    cw_t.obc2 = 1;
-    cw_t.powmcu = 1;
+    cw.power1[0] = spi_master_receive(POW);
+    cw.power1[1] = spi_master_receive(POW);
+    cw.power2[0] = spi_master_receive(POW);
+    cw.power2[1] = spi_master_receive(POW);
+    cw.power3[0] = spi_master_receive(POW);
+    cw.power3[1] = spi_master_receive(POW);
+    cw.power4[0] = spi_master_receive(POW);
+    cw.power4[1] = spi_master_receive(POW);
+    cw.power5[0] = spi_master_receive(POW);
+    cw.power5[1] = spi_master_receive(POW);
+    buf = get_adcon();
+    cw.temp[0] = (uint8_t)(buf >> 8);
+    cw.temp[1] = (uint8_t)(buf & 0b00000000111111111);
+    cw.obc2 = 1;
+    cw.powmcu = 1;
 }
-
-
 
 
 /*=====================================================
@@ -193,10 +193,13 @@ void cw_data_set(cw_t *p_cw_data)
     uint8_data_set(&(p_cw_data->temp), 2);
 
     /* OBC2のステータス格納 */
-    uint8_data_set(&(p_cw_data->obc2), 1);
+    packet.payload[index_pos++] = 1;
+    packet.payload[index_pos++] = cw.obc2;          // ビットフィールドはポインタとして渡せないのでこの方法でやっています．
 
     /* POWMCUのステータス格納 */
-    uint8_data_set(&(p_cw_data->powmcu), 1);
+    packet.payload[index_pos++] = 1;
+    packet.payload[index_pos++] = cw.powmcu;
+    
 }
 
 
@@ -427,25 +430,22 @@ static uint8_t send_payload(destination_t destination, uint8_t *p_payload)
  *     受信するpayloadのバイトデータが0x00になるまで
  *     又はMAX_PAYLOAD_SIZEを送るまでSPIでデータ受信する。
  *---------------------------------------------------*/
-static void receive_payload(destination_t destination, uint8_t *p_payload)
+static void receive_payload(destination_t destination)
 {
     uint8_t i;
     uint8_t data_len;
-//    uint8_t index_pos = 0;                             // Counter variable for MAX_PAYLOAD_SIZE
-    uint8_t rec_index_pos = 0;                          // ここでカウントアップするindexはこれにして、この.cファイルにはグローバルでindex_posがあるので他の名前がいいと思います
-    
+    uint8_t rec_index_pos = 0;
+    uint8_t *p_payload = packet.payload;
+  
     /* Send Payload */
-    //while(*p_payload != 0x00 || index_pos < MAX_PAYLOAD_SIZE)           // *p_payloadが0x00の時は普通のデータ中にも出てくる可能性があると思うので次の式がいいと思います
-    while(index_pos != rec_index_pos || rec_index_pos < MAX_PAYLOAD_SIZE)    
+    while(index_pos != 0x00 || rec_index_pos < MAX_PAYLOAD_SIZE)    
     {
-        data_len = *p_payload;                         // Get data length of Received data
-        spi_master_receive(destination, p_payload++);     // Receive data length
-        //index_pos++;                                
+        data_len = spi_master_receive(destination);                         // Get data length of Received data
         rec_index_pos++;
         for(i = 0; i < data_len; i++)                  // Receive data in data length times
         {
-            spi_master_receive(destination, p_payload++);
-            //index_pos++;
+            *p_payload = spi_master_receive(destination);
+            p_payload++;
             rec_index_pos++;
         }
     }
@@ -495,16 +495,18 @@ static void packet_receive_master(destination_t destination, packet_format_t *p_
     uint8_t use_obc = 0x00;
     
     /*受信元のMCU*/
-    spi_master_receive(destination, use_obc);
+    use_obc = spi_master_receive(destination);
 
     /*受信データをdata_typeに格納*/
-    spi_master_receive(destination, &p_packet->data_type);
+    packet.data_type = spi_master_receive(destination);
 
     /*受信データをpayloadに格納*/
-    receive_payload(destination, &p_packet->payload);    
+    receive_payload(destination);    
     
     /*受信データをdata_end_commandに格納*/
-    spi_master_receive(destination, &p_packet->data_end_command);
+    packet.data_end_command = spi_master_receive(destination);
 }
+
+
 
 

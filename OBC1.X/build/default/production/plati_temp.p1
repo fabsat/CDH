@@ -1,6 +1,6 @@
 Version 3.2 HI-TECH Software Intermediate Code
 "48 AD_value.h
-[v _get_adcon `(d ~T0 @X0 0 ef ]
+[v _get_adcon `(ui ~T0 @X0 0 ef ]
 [; ;htc.h: 26: extern const char __xc8_OPTIM_SPEED;
 [; ;htc.h: 28: extern double __fpnormalize(double);
 [; ;xc8debug.h: 14: extern void __builtin_software_breakpoint(void);
@@ -1023,7 +1023,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;pic_clock.h: 30: typedef unsigned int uint16_t;
 [; ;pic_clock.h: 31: typedef signed int int16_t;
 [; ;AD_value.h: 35: void ad_con_init(void);
-[; ;AD_value.h: 48: double get_adcon(void);
+[; ;AD_value.h: 48: uint16_t get_adcon(void);
 [; ;plati_temp.h: 34: double get_temp(void);
 "35 plati_temp.c
 [v _get_pt `(d ~T0 @X0 1 sf ]
@@ -1049,7 +1049,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e = _b -U .0.0000005775 ]
 [; ;plati_temp.c: 42: r1 = (get_adcon() / (5.0 - get_adcon())) * 2400.0;
 "42
-[e = _r1 * / ( _get_adcon ..  - .5.0 ( _get_adcon ..  .2400.0 ]
+[e = _r1 * / -> ( _get_adcon ..  `d - .5.0 -> ( _get_adcon ..  `d .2400.0 ]
 [; ;plati_temp.c: 43: t1 = (r1 / 100.0 - 1.0) / a;
 "43
 [e = _t1 / - / _r1 .100.0 .1.0 _a ]

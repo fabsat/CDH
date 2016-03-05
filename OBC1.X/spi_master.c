@@ -74,13 +74,12 @@ void spi_master_start(void)
  *     SPI Masterデータ受信関数(1Byte)
  * @param
  *     destination:通信の相手先を選択
- *     data:受信したデータを格納する
  * @return
  *     void:
  * @note
  *     1[s]で受信完了しなければTIMEOUTとなる
  *===================================================*/
-void spi_master_receive(destination_t destination, uint8_t data)
+uint8_t spi_master_receive(destination_t destination)
 {
     uint8_t dummy;
     uint16_t timeout_counter = 1000;
@@ -148,7 +147,7 @@ void spi_master_receive(destination_t destination, uint8_t data)
             break;
     }
 
-    data = SSPBUF;
+    return SSPBUF;
 }
 
 

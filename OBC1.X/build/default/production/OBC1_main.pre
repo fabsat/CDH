@@ -1519,7 +1519,7 @@ uint8_t getch(void);
 void ad_con_init(void);
 
 # 48
-double get_adcon(void);
+uint16_t get_adcon(void);
 
 # 34 "plati_temp.h"
 double get_temp(void);
@@ -1560,30 +1560,32 @@ uint8_t obc2:1;
 uint8_t powmcu:1;
 } cw_t;
 
-# 119
+extern cw_t cw;
+
+# 122
 void sysprot_init(void);
 
 void cw_set(void);
 
-# 147
+# 150
 uint8_t sent_data_set(void *p_data, uint8_t data_len, uint8_t byte_of_data);
 
-# 160
+# 163
 void cw_data_set(cw_t *p_cw_data);
 
-# 175
-void send_data_master(destination_t destination, uint8_t from_MCU, data_type_t data_type, data_end_command_t data_end_command);
+# 178
+void send_data_master(destination_t destination, data_type_t data_type, data_end_command_t data_end_command);
 
 # 51 "spi_master.h"
 void spi_master_start(void);
 
-# 65
-void spi_master_receive(destination_t destination, uint8_t data);
+# 64
+uint8_t spi_master_receive(destination_t destination);
 
-# 80
+# 79
 void spi_master_send(destination_t destination, uint8_t data);
 
-# 93
+# 92
 void spi_master_stop(void);
 
 # 41 "MCLR_reset.h"
@@ -1597,20 +1599,21 @@ void MCLR_reset(uint8_t resetted_mcu);
 #pragma config FOSC = HS, WDTE = OFF, PWRTE = ON, BOREN = ON, LVP = OFF
 #pragma config CPD = OFF, WRT = OFF, CP = OFF
 
+# 28
+cw_t cw = { {0x00, 0x00}, {0x00, 0x00}, {0x00, 0x00}, {0x00, 0x00}, {0x00, 0x00}, {0x00, 0x00}, 0, 0 };
 
 
-
-int main(void) {
+int main(void){
 
 TRISD7 = 0;
-RD7 = 0;
+PORTDbits.RD7 = 0;
 
 MCLR_init();
 sysprot_init();
 uart_init();
 ad_con_init();
 
-# 40
+# 45
 if(PORTDbits.RD0==0) MCLR_reset(0x05);
 if(PORTDbits.RD1==0) MCLR_reset(0x06);
 
@@ -1622,6 +1625,22 @@ _delay((unsigned long)((1000)*(20000000/4000.0)));
 
 RD7 = 0;
 _delay((unsigned long)((1000)*(20000000/4000.0)));
+}
+
+while(1)
+{
+PORTDbits.RD7 = 1;
+_delay((unsigned long)((1000)*(20000000/4000.0)));
+get_cw_data();
+cw_data_set(&cw);
+send_data_master(COM, 0x01, DATA_END);
+PORTDbits.RD7 = 0;
+_delay((unsigned long)((1000)*(20000000/4000.0)));
+
+
+if(PORTDbits.RD0==0)
+
+_delay((unsigned long)((10000)*(20000000/4000.0)));
 }
 
 

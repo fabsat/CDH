@@ -1,0 +1,42 @@
+[p LITE_MODE AUTOSTATIC PIC14 PICREGULAR PICMID ]
+[d version 1.1 ]
+[d edition pro ]
+[d chip 16F877A ]
+[d frameptr 6 ]
+"64 C:\Users\Tetsuya\Documents\GitHub\CDH\OBC1.X\OBC1_main.c
+[e E1173 . `uc
+OBC2 0
+COM 1
+POW 2
+]
+[e E1178 . `uc
+CW_TYPE 1
+DATA_TYPE 2
+COMMAND_TYPE 3
+]
+[e E1183 . `uc
+DATA_END 16
+DATA_CONTINUE 17
+]
+"83 C:\Users\Tetsuya\Documents\GitHub\CDH\OBC1.X\spi_master.c
+[e E1099 . `uc
+OBC2 0
+COM 1
+POW 2
+]
+"100 C:\Users\Tetsuya\Documents\GitHub\CDH\OBC1.X\system_protocol.c
+[e E1099 . `uc
+OBC2 0
+COM 1
+POW 2
+]
+"221
+[e E1104 . `uc
+CW_TYPE 1
+DATA_TYPE 2
+COMMAND_TYPE 3
+]
+[e E1109 . `uc
+DATA_END 16
+DATA_CONTINUE 17
+]

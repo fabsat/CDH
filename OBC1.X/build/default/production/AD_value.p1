@@ -1065,7 +1065,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;pic_clock.h: 30: typedef unsigned int uint16_t;
 [; ;pic_clock.h: 31: typedef signed int int16_t;
 [; ;AD_value.h: 35: void ad_con_init(void);
-[; ;AD_value.h: 48: double get_adcon(void);
+[; ;AD_value.h: 48: uint16_t get_adcon(void);
 [; ;AD_value.c: 28: typedef struct
 [; ;AD_value.c: 29: {
 [; ;AD_value.c: 30: uint8_t my_adres_h;
@@ -1131,37 +1131,31 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e :UE 98 ]
 }
 "91
-[v _get_adcon `(d ~T0 @X0 1 ef ]
+[v _get_adcon `(ui ~T0 @X0 1 ef ]
 "92
 {
-[; ;AD_value.c: 91: double get_adcon(void)
+[; ;AD_value.c: 91: uint16_t get_adcon(void)
 [; ;AD_value.c: 92: {
 [e :U _get_adcon ]
 [f ]
 "94
-[v F1116 `Cui ~T0 @X0 1 s range ]
-[i F1116
--> -> 1023 `i `ui
-]
-"97
 [v _ad_value `ui ~T0 @X0 1 a ]
-[; ;AD_value.c: 94: const unsigned int range = 0x3ff;
-[; ;AD_value.c: 97: uint16_t ad_value = 0b0000000000;
+[; ;AD_value.c: 94: uint16_t ad_value = 0b0000000000;
 [e = _ad_value -> -> 0 `i `ui ]
-"98
+"95
 [v _voltage_value `d ~T0 @X0 1 a ]
-"99
+"96
 [v _my_adres `S96 ~T0 @X0 1 a ]
-[; ;AD_value.c: 98: double voltage_value;
-[; ;AD_value.c: 99: adres_t my_adres;
-[; ;AD_value.c: 102: ADCON0 = 0b10000001;
-"102
+[; ;AD_value.c: 95: double voltage_value;
+[; ;AD_value.c: 96: adres_t my_adres;
+[; ;AD_value.c: 99: ADCON0 = 0b10000001;
+"99
 [e = _ADCON0 -> -> 129 `i `uc ]
-[; ;AD_value.c: 103: ADCON0bits.GO_DONE = 1;
-"103
+[; ;AD_value.c: 100: ADCON0bits.GO_DONE = 1;
+"100
 [e = . . _ADCON0bits 3 1 -> -> 1 `i `uc ]
-[; ;AD_value.c: 106: while(ADCON0bits.GO_DONE){;}
-"106
+[; ;AD_value.c: 103: while(ADCON0bits.GO_DONE){;}
+"103
 [e $U 100  ]
 [e :U 101 ]
 {
@@ -1169,23 +1163,20 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e :U 100 ]
 [e $ != -> . . _ADCON0bits 3 1 `i -> -> -> 0 `i `Vuc `i 101  ]
 [e :U 102 ]
-[; ;AD_value.c: 109: my_adres.my_adres_h = ADRESH;
-"109
+[; ;AD_value.c: 106: my_adres.my_adres_h = ADRESH;
+"106
 [e = . _my_adres 0 _ADRESH ]
-[; ;AD_value.c: 110: my_adres.my_adres_l = ADRESL;
-"110
+[; ;AD_value.c: 107: my_adres.my_adres_l = ADRESL;
+"107
 [e = . _my_adres 1 _ADRESL ]
-[; ;AD_value.c: 111: bit_shift(&ad_value, &my_adres);
-"111
+[; ;AD_value.c: 108: bit_shift(&ad_value, &my_adres);
+"108
 [e ( _bit_shift (2 , &U _ad_value &U _my_adres ]
-[; ;AD_value.c: 114: voltage_value = ad_value * 5.0 / range;
-"114
-[e = _voltage_value / * -> _ad_value `d .5.0 -> F1116 `d ]
-[; ;AD_value.c: 116: return voltage_value;
-"116
-[e ) _voltage_value ]
+[; ;AD_value.c: 110: return ad_value;
+"110
+[e ) _ad_value ]
 [e $UE 99  ]
-[; ;AD_value.c: 117: }
-"117
+[; ;AD_value.c: 111: }
+"111
 [e :UE 99 ]
 }

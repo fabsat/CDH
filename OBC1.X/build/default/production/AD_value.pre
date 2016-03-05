@@ -1444,7 +1444,7 @@ typedef signed int int16_t;
 void ad_con_init(void);
 
 # 48
-double get_adcon(void);
+uint16_t get_adcon(void);
 
 # 28 "AD_value.c"
 typedef struct
@@ -1479,11 +1479,8 @@ const uint8_t bit_mask_for_l = 0b00000011;
 }
 
 # 91
-double get_adcon(void)
+uint16_t get_adcon(void)
 {
-
-const unsigned int range = 0x3ff;
-
 
 uint16_t ad_value = 0b0000000000;
 double voltage_value;
@@ -1501,9 +1498,6 @@ my_adres.my_adres_h = ADRESH;
 my_adres.my_adres_l = ADRESL;
 bit_shift(&ad_value, &my_adres);
 
-
-voltage_value = ad_value * 5.0 / range;
-
-return voltage_value;
+return ad_value;
 }
 
