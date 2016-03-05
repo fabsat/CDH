@@ -90,20 +90,17 @@ void spi_master_receive(destination_t destination, uint8_t data)
     /* ダミー変数にデータをリードする */
     dummy = SSPBUF;
 
-    /* 各サブシステムからの通信完了通知を待つ */
+    /* 各サブシステムからの準備完了通知を待つ */
     switch(destination)
     {
 	case OBC2:
-            bit_mask = 0b00000100;                   // RD2のbit_maskを作成
-            while((*reg_address & bit_mask) == 0){;} // RD2がセットされるまで待つ
+            while(OBC2_READY == 0){;} // OBC2_READYピンがセットされるまで待つ
             break;
         case COM:
-            bit_mask = 0b00000001;                   // RD0のbit_maskを作成
-            while((*reg_address & bit_mask) == 0){;} // RD0がセットされるまで待つ
+            while(COM_READY == 0){;}  // COM_READYピンがセットされるまで待つ
             break;
         case POW:
-            bit_mask = 0b00000010;                   // RD1のbit_maskを作成
-            while((*reg_address & bit_mask) == 0){;} // RD1がセットされるまで待つ
+            while(POW_READY == 0){;}  // POW_READYピンがリセットされるまで待つ
             break;
     }
     
@@ -178,20 +175,17 @@ void spi_master_send(destination_t destination, uint8_t data)
     /* dummy変数にデータをリードする */
     dummy = SSPBUF;
 
-    /* 各サブシステムからの通信完了通知を待つ */
+    /* 各サブシステムからの準備完了通知を待つ */
     switch(destination)
     {
 	case OBC2:
-            bit_mask = 0b00000100;                   // RD2のbit_maskを作成
-            while((*reg_address & bit_mask) == 0){;} // RD2がセットされるまで待つ
+            while(OBC2_READY == 0){;} // OBC2_READYピンがセットされるまで待つ
             break;
         case COM:
-            bit_mask = 0b00000001;                   // RD0のbit_maskを作成
-            while((*reg_address & bit_mask) == 0){;} // RD0がセットされるまで待つ
+            while(COM_READY == 0){;}  // COM_READYピンがセットされるまで待つ
             break;
         case POW:
-            bit_mask = 0b00000010;                   // RD1のbit_maskを作成
-            while((*reg_address & bit_mask) == 0){;} // RD1がセットされるまで待つ
+            while(POW_READY == 0){;}  // POW_READYピンがリセットされるまで待つ
             break;
     }
     

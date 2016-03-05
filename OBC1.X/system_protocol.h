@@ -78,8 +78,10 @@ typedef struct
 
 /* Peripheral MCU Notification Pin and I/O Setting Register */
 #define PORTD_REG_ADR         0x08
+#define OBC2_READY            PORTDbits.RD2  // ここを消したのは何か意図ある？
 #define COM_READY             PORTDbits.RD0
 #define POW_READY             PORTDbits.RD1
+#define OBC2_READY_PIN_TRIS   TRISDbits.TRISD2 // OBC2の設定が消えてたね！
 #define COM_READY_PIN_TRIS    TRISDbits.TRISD0
 #define POW_READY_PIN_TRIS    TRISDbits.TRISD1
 

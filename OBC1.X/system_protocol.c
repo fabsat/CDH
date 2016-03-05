@@ -1,12 +1,12 @@
 /******************************************************************************************
  * system_protocol.c
  * ver1.00
- * Hirofumi Hamada
+ * Hirofumi Hamada & Tetsuya Kaku
  *=========================================================================================
  * MCU間のデータ送受信プロトコルのソースファイル
  *
  *=========================================================================================
- * ・ver1.00 || 初版 || 2016/02/13 || Hirofumi Hamada
+ * ・ver1.00 || 2016/02/13 || Hirofumi Hamada
  *   初版作成
  *=========================================================================================
  * PIC16F877A
@@ -70,7 +70,7 @@ static void packet_receive_master(destination_t destination, packet_format_t *p_
  *****************************************************************************************/
 /* このグローバル変数のパケットに各種データを格納していく データが送信されたら初期化される */
 static packet_format_t packet = PACKET_INIT;
-static cw_t cw = CW_DATA_INIT;
+//static cw_t cw = CW_DATA_INIT; // これはmain側で値の入れ替えを行うかもしれないので変数定義はmain.cでと考える
 
 /* データの格納できる先頭インデックスを示す データが送信されたら初期化される */
 static uint8_t index_pos;
@@ -162,8 +162,6 @@ uint8_t sent_data_set(void *p_data, uint8_t data_len, uint8_t byte_of_data)
         default:
             return 0xff;
     }
-
-//    index_pos += (data_len * (byte_of_data + 1));         // これを入れないとindex_posが更新されないと思います．
         
     /* 残りのPayload空き容量(Byte)を返す */
     return (uint8_t)(MAX_PAYLOAD_SIZE - index_pos);
@@ -214,7 +212,7 @@ void cw_data_set(cw_t *p_cw_data)
  * @note
  *     この関数実行後にsetしたデータ内容は初期化される
  *===================================================*/
-void send_data_master(destination_t destination, uint8_t from_MCU, data_type_t data_type, data_end_command_t data_end_command)
+void send_data_master(destination_t destination, data_type_t data_type, data_end_command_t data_end_command)
 {
     packet.data_type        = (uint8_t)data_type;
     packet.data_end_command = (uint8_t)data_end_command;
@@ -454,7 +452,7 @@ static void receive_payload(destination_t destination, uint8_t *p_payload)
 }
 
 
-/*=====================================================
+/*-----------------------------------------------------
  * @brief
  *     他MCUにパケットデータを送信する(SPI Master用)
  * @param
@@ -464,11 +462,9 @@ static void receive_payload(destination_t destination, uint8_t *p_payload)
  *     void:
  * @note
  *     none
- *===================================================*/
+ *---------------------------------------------------*/
 static void packet_send_master(destination_t destination, packet_format_t *p_packet)
 {
-    //uint8_t payload_index;            //これはなんですか？
-
     /* プリアンブルを送信 */
     spi_master_send(destination, USE_MCU);
 
@@ -483,17 +479,17 @@ static void packet_send_master(destination_t destination, packet_format_t *p_pac
 }
 
 
-/*=====================================================
+/*-----------------------------------------------------
  * @brief
  *     他MCUからパケットデータを受信する(SPI Master用)
  * @param
- *     destination:送信元
+ *     destination:受信相手
  *     p_packet   :パケットへのポインタ
  * @return
  *     void:
  * @note
  *     none
- *===================================================*/
+ *---------------------------------------------------*/
 static void packet_receive_master(destination_t destination, packet_format_t *p_packet)
 {
     uint8_t use_obc = 0x00;
