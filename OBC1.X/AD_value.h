@@ -45,7 +45,7 @@ void ad_con_init(void);
  * @note
  *     AD変換する関数
  *===================================================*/
-double get_adcon(void);
+uint16_t get_adcon(void);
 
 
 #endif	/* AD_VALUE_H */

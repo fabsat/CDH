@@ -88,11 +88,8 @@ static void bit_shift(uint16_t *p_ad_value, adres_t *p_adres)
  * @note
  *     AD変換する関数
  *===================================================*/
-double get_adcon(void)
+uint16_t get_adcon(void)
 {
-    /* A/Dコンレンジ */
-    const unsigned int range = 0x3ff;
-    
     /* A/D値用変数 */
     uint16_t ad_value = 0b0000000000;
     double voltage_value;
@@ -109,10 +106,7 @@ double get_adcon(void)
     my_adres.my_adres_h = ADRESH;
     my_adres.my_adres_l = ADRESL;
     bit_shift(&ad_value, &my_adres);
-
-    /* 電圧値を計算 */
-    voltage_value = ad_value * 5.0 / range;
     
-    return voltage_value;
+    return ad_value;
 }
 
