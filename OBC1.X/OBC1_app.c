@@ -20,11 +20,29 @@
 #include "system_protocol.h"
 #include "spi_master.h"
 #include "OBC1_app.h"
+#include "MCLR_reset.h"
 
 
 static void LED_data_set(void);
 static void I2Ctemp_data_set(void);
 
+
+void COM_status(void)
+{
+    uint8_t COM_status = 0;
+    spi_master_send(COM, 0x01);
+    COM_status = spi_master_receive(COM);           // COMのステータス受け取り
+    if(COM_status == 0x00 || COM_status == 0xFF)    // COMの生存判定
+    {
+        MCLR_reset(COM_RESET);                      // COMをリセット
+    }
+}
+
+void POW_status(void)
+{
+    spi_master_send(POW, 0x01);
+    if(POW_READY==0) MCLR_reset(POW_RESET);         //POWの生存判定＆POWをリセット
+}
 
 void command(uint8_t data)
 {

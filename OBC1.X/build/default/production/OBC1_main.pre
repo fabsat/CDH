@@ -1503,6 +1503,12 @@ typedef signed char int8_t;
 typedef unsigned int uint16_t;
 typedef signed int int16_t;
 
+# 41 "MCLR_reset.h"
+void MCLR_init(void);
+
+# 55
+void MCLR_reset(uint8_t resetted_mcu);
+
 # 64 "uart_serial.h"
 void uart_init(void);
 
@@ -1590,13 +1596,9 @@ void spi_master_send(destination_t destination, uint8_t data);
 # 92
 void spi_master_stop(void);
 
-# 41 "MCLR_reset.h"
-void MCLR_init(void);
-
-# 55
-void MCLR_reset(uint8_t resetted_mcu);
-
-# 17 "OBC1_app.h"
+# 16 "OBC1_app.h"
+void COM_status(void);
+void POW_status(void);
 void command(uint8_t data);
 
 
@@ -1610,13 +1612,12 @@ int main(void){
 
 TRISDbits.TRISD7 = 0;
 PORTDbits.RD7 = 0;
-uint8_t COM_status = 0;
 
 MCLR_init();
 sysprot_init();
-uart_init();
 ad_con_init();
 spi_master_start();
+uart_init();
 
 while(1)
 {
@@ -1624,25 +1625,17 @@ PORTDbits.RD7 = 1;
 _delay((unsigned long)((1000)*(20000000/4000.0)));
 
 
-spi_master_send(COM, 0x01);
-COM_status = spi_master_receive(COM);
-if(COM_status == 0x00 || COM_status == 0xFF)
-{
-MCLR_reset(0x05);
-}
+COM_status();
 
 
-spi_master_send(POW, 0x01);
-if(PORTDbits.RD1==0) MCLR_reset(0x06);
+POW_status();
 
 
 command(COM_status);
 
 PORTDbits.RD7 = 0;
 _delay((unsigned long)((1000)*(20000000/4000.0)));
-
 }
-
 
 return 0;
 }

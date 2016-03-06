@@ -1506,13 +1506,38 @@ void spi_master_send(destination_t destination, uint8_t data);
 # 92
 void spi_master_stop(void);
 
-# 17 "OBC1_app.h"
+# 16 "OBC1_app.h"
+void COM_status(void);
+void POW_status(void);
 void command(uint8_t data);
 
-# 25 "OBC1_app.c"
+# 41 "MCLR_reset.h"
+void MCLR_init(void);
+
+# 55
+void MCLR_reset(uint8_t resetted_mcu);
+
+# 26 "OBC1_app.c"
 static void LED_data_set(void);
 static void I2Ctemp_data_set(void);
 
+
+void COM_status(void)
+{
+uint8_t COM_status = 0;
+spi_master_send(COM, 0x01);
+COM_status = spi_master_receive(COM);
+if(COM_status == 0x00 || COM_status == 0xFF)
+{
+MCLR_reset(0x05);
+}
+}
+
+void POW_status(void)
+{
+spi_master_send(POW, 0x01);
+if(PORTDbits.RD1==0) MCLR_reset(0x06);
+}
 
 void command(uint8_t data)
 {
