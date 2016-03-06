@@ -3,20 +3,11 @@
 [d edition pro ]
 [d chip 16F877A ]
 [d frameptr 6 ]
-"63 C:\Users\Tetsuya\Documents\GitHub\CDH\OBC1.X\OBC1_main.c
+"44 C:\Users\Tetsuya\Documents\GitHub\CDH\OBC1.X\OBC1_main.c
 [e E1173 . `uc
 OBC2 2
 COM 3
 POW 4
-]
-[e E1178 . `uc
-CW_TYPE 1
-DATA_TYPE 2
-COMMAND_TYPE 3
-]
-[e E1183 . `uc
-DATA_END 16
-DATA_CONTINUE 17
 ]
 "83 C:\Users\Tetsuya\Documents\GitHub\CDH\OBC1.X\spi_master.c
 [e E1099 . `uc
@@ -24,19 +15,33 @@ OBC2 2
 COM 3
 POW 4
 ]
-"100 C:\Users\Tetsuya\Documents\GitHub\CDH\OBC1.X\system_protocol.c
+"99 C:\Users\Tetsuya\Documents\GitHub\CDH\OBC1.X\system_protocol.c
 [e E1099 . `uc
 OBC2 2
 COM 3
 POW 4
 ]
-"219
+"218
 [e E1104 . `uc
 CW_TYPE 1
 DATA_TYPE 2
-COMMAND_TYPE 3
 ]
-[e E1109 . `uc
+[e E1108 . `uc
+DATA_END 16
+DATA_CONTINUE 17
+]
+"37 C:\Users\Tetsuya\Documents\GitHub\CDH\OBC1.X\OBC1_app.c
+[e E1099 . `uc
+OBC2 2
+COM 3
+POW 4
+]
+"38
+[e E1104 . `uc
+CW_TYPE 1
+DATA_TYPE 2
+]
+[e E1108 . `uc
 DATA_END 16
 DATA_CONTINUE 17
 ]
@@ -72,7 +77,13 @@ DATA_CONTINUE 17
 [v _MCLR_init MCLR_init `(v  1 e 0 0 ]
 "60
 [v _MCLR_reset MCLR_reset `(v  1 e 0 0 ]
-"31 C:\Users\Tetsuya\Documents\GitHub\CDH\OBC1.X\OBC1_main.c
+"29 C:\Users\Tetsuya\Documents\GitHub\CDH\OBC1.X\OBC1_app.c
+[v _command command `(v  1 e 0 0 ]
+"60
+[v _LED_data_set LED_data_set `(v  1 s 0 LED_data_set ]
+"66
+[v _I2Ctemp_data_set I2Ctemp_data_set `(v  1 s 0 I2Ctemp_data_set ]
+"26 C:\Users\Tetsuya\Documents\GitHub\CDH\OBC1.X\OBC1_main.c
 [v _main main `(i  1 e 2 0 ]
 "35 C:\Users\Tetsuya\Documents\GitHub\CDH\OBC1.X\plati_temp.c
 [v _get_pt get_pt `(d  1 s 3 get_pt ]
@@ -84,29 +95,33 @@ DATA_CONTINUE 17
 [v _spi_master_send spi_master_send `(v  1 e 0 0 ]
 "85 C:\Users\Tetsuya\Documents\GitHub\CDH\OBC1.X\system_protocol.c
 [v _sysprot_init sysprot_init `(v  1 e 0 0 ]
-"95
-[v _get_cw_data get_cw_data `(i  1 e 2 0 ]
-"181
+"94
+[v _get_cw_data get_cw_data `(v  1 e 0 0 ]
+"141
+[v _sent_data_set sent_data_set `(uc  1 e 1 0 ]
+"180
 [v _cw_data_set cw_data_set `(v  1 e 0 0 ]
-"218
+"217
 [v _send_data_master send_data_master `(v  1 e 0 0 ]
-"261
+"238
+[v _receive_data_master receive_data_master `(v  1 e 0 0 ]
+"260
 [v _uint8_data_set uint8_data_set `(v  1 s 0 uint8_data_set ]
-"283
+"282
 [v _uint16_data_set uint16_data_set `(v  1 s 0 uint16_data_set ]
-"312
+"311
 [v _double_data_set double_data_set `(v  1 s 0 double_data_set ]
-"341
+"340
 [v _uint16_to_byte_array uint16_to_byte_array `(v  1 s 0 uint16_to_byte_array ]
-"363
+"362
 [v _double_to_byte_array double_to_byte_array `(v  1 s 0 double_to_byte_array ]
-"398
+"397
 [v _send_payload send_payload `(uc  1 s 1 send_payload ]
-"433
+"432
 [v _receive_payload receive_payload `(v  1 s 0 receive_payload ]
-"466
+"465
 [v _packet_send_master packet_send_master `(v  1 s 0 packet_send_master ]
-"493
+"492
 [v _packet_receive_master packet_receive_master `(v  1 s 0 packet_receive_master ]
 "33 C:\Users\Tetsuya\Documents\GitHub\CDH\OBC1.X\uart_serial.c
 [v _uart_init uart_init `(v  1 e 0 0 ]
@@ -118,7 +133,7 @@ DATA_CONTINUE 17
 [v _process_10 process_10 `(v  1 s 0 process_10 ]
 "108
 [v _process_1 process_1 `(v  1 s 0 process_1 ]
-[s S138 . 1 `uc 1 RA0 1 0 :1:0 
+[s S163 . 1 `uc 1 RA0 1 0 :1:0 
 `uc 1 RA1 1 0 :1:1 
 `uc 1 RA2 1 0 :1:2 
 `uc 1 RA3 1 0 :1:3 
@@ -126,9 +141,9 @@ DATA_CONTINUE 17
 `uc 1 RA5 1 0 :1:5 
 ]
 "175 C:\Program Files (x86)\Microchip\xc8\v1.35\include\pic16f877a.h
-[u S145 . 1 `S138 1 . 1 0 ]
-[v _PORTAbits PORTAbits `VES145  1 e 1 @5 ]
-[s S389 . 1 `uc 1 RC0 1 0 :1:0 
+[u S170 . 1 `S163 1 . 1 0 ]
+[v _PORTAbits PORTAbits `VES170  1 e 1 @5 ]
+[s S414 . 1 `uc 1 RC0 1 0 :1:0 
 `uc 1 RC1 1 0 :1:1 
 `uc 1 RC2 1 0 :1:2 
 `uc 1 RC3 1 0 :1:3 
@@ -138,9 +153,9 @@ DATA_CONTINUE 17
 `uc 1 RC7 1 0 :1:7 
 ]
 "287
-[u S398 . 1 `S389 1 . 1 0 ]
-[v _PORTCbits PORTCbits `VES398  1 e 1 @7 ]
-[s S29 . 1 `uc 1 RD0 1 0 :1:0 
+[u S423 . 1 `S414 1 . 1 0 ]
+[v _PORTCbits PORTCbits `VES423  1 e 1 @7 ]
+[s S49 . 1 `uc 1 RD0 1 0 :1:0 
 `uc 1 RD1 1 0 :1:1 
 `uc 1 RD2 1 0 :1:2 
 `uc 1 RD3 1 0 :1:3 
@@ -150,24 +165,24 @@ DATA_CONTINUE 17
 `uc 1 RD7 1 0 :1:7 
 ]
 "348
-[u S38 . 1 `S29 1 . 1 0 ]
-[v _PORTDbits PORTDbits `VES38  1 e 1 @8 ]
+[u S58 . 1 `S49 1 . 1 0 ]
+[v _PORTDbits PORTDbits `VES58  1 e 1 @8 ]
 "787
 [v _SSPBUF SSPBUF `VEuc  1 e 1 @19 ]
-[s S274 . 1 `uc 1 SSPM 1 0 :4:0 
+[s S299 . 1 `uc 1 SSPM 1 0 :4:0 
 `uc 1 CKP 1 0 :1:4 
 `uc 1 SSPEN 1 0 :1:5 
 `uc 1 SSPOV 1 0 :1:6 
 `uc 1 WCOL 1 0 :1:7 
 ]
 "813
-[s S280 . 1 `uc 1 SSPM0 1 0 :1:0 
+[s S305 . 1 `uc 1 SSPM0 1 0 :1:0 
 `uc 1 SSPM1 1 0 :1:1 
 `uc 1 SSPM2 1 0 :1:2 
 `uc 1 SSPM3 1 0 :1:3 
 ]
-[u S285 . 1 `S274 1 . 1 0 `S280 1 . 1 0 ]
-[v _SSPCONbits SSPCONbits `VES285  1 e 1 @20 ]
+[u S310 . 1 `S299 1 . 1 0 `S305 1 . 1 0 ]
+[v _SSPCONbits SSPCONbits `VES310  1 e 1 @20 ]
 "937
 [v _RCSTA RCSTA `VEuc  1 e 1 @24 ]
 "1031
@@ -178,14 +193,14 @@ DATA_CONTINUE 17
 [v _ADRESH ADRESH `VEuc  1 e 1 @30 ]
 "1124
 [v _ADCON0 ADCON0 `VEuc  1 e 1 @31 ]
-[s S177 . 1 `uc 1 ADON 1 0 :1:0 
+[s S202 . 1 `uc 1 ADON 1 0 :1:0 
 `uc 1 . 1 0 :1:1 
 `uc 1 GO_nDONE 1 0 :1:2 
 `uc 1 CHS 1 0 :3:3 
 `uc 1 ADCS 1 0 :2:6 
 ]
 "1155
-[s S183 . 1 `uc 1 . 1 0 :2:0 
+[s S208 . 1 `uc 1 . 1 0 :2:0 
 `uc 1 GO 1 0 :1:2 
 `uc 1 CHS0 1 0 :1:3 
 `uc 1 CHS1 1 0 :1:4 
@@ -193,15 +208,15 @@ DATA_CONTINUE 17
 `uc 1 ADCS0 1 0 :1:6 
 `uc 1 ADCS1 1 0 :1:7 
 ]
-[s S191 . 1 `uc 1 . 1 0 :2:0 
+[s S216 . 1 `uc 1 . 1 0 :2:0 
 `uc 1 nDONE 1 0 :1:2 
 ]
-[s S194 . 1 `uc 1 . 1 0 :2:0 
+[s S219 . 1 `uc 1 . 1 0 :2:0 
 `uc 1 GO_DONE 1 0 :1:2 
 ]
-[u S197 . 1 `S177 1 . 1 0 `S183 1 . 1 0 `S191 1 . 1 0 `S194 1 . 1 0 ]
-[v _ADCON0bits ADCON0bits `VES197  1 e 1 @31 ]
-[s S155 . 1 `uc 1 TRISA0 1 0 :1:0 
+[u S222 . 1 `S202 1 . 1 0 `S208 1 . 1 0 `S216 1 . 1 0 `S219 1 . 1 0 ]
+[v _ADCON0bits ADCON0bits `VES222  1 e 1 @31 ]
+[s S180 . 1 `uc 1 TRISA0 1 0 :1:0 
 `uc 1 TRISA1 1 0 :1:1 
 `uc 1 TRISA2 1 0 :1:2 
 `uc 1 TRISA3 1 0 :1:3 
@@ -209,9 +224,9 @@ DATA_CONTINUE 17
 `uc 1 TRISA5 1 0 :1:5 
 ]
 "1303
-[u S162 . 1 `S155 1 . 1 0 ]
-[v _TRISAbits TRISAbits `VES162  1 e 1 @133 ]
-[s S253 . 1 `uc 1 TRISC0 1 0 :1:0 
+[u S187 . 1 `S180 1 . 1 0 ]
+[v _TRISAbits TRISAbits `VES187  1 e 1 @133 ]
+[s S278 . 1 `uc 1 TRISC0 1 0 :1:0 
 `uc 1 TRISC1 1 0 :1:1 
 `uc 1 TRISC2 1 0 :1:2 
 `uc 1 TRISC3 1 0 :1:3 
@@ -221,9 +236,9 @@ DATA_CONTINUE 17
 `uc 1 TRISC7 1 0 :1:7 
 ]
 "1415
-[u S262 . 1 `S253 1 . 1 0 ]
-[v _TRISCbits TRISCbits `VES262  1 e 1 @135 ]
-[s S540 . 1 `uc 1 TRISD0 1 0 :1:0 
+[u S287 . 1 `S278 1 . 1 0 ]
+[v _TRISCbits TRISCbits `VES287  1 e 1 @135 ]
+[s S28 . 1 `uc 1 TRISD0 1 0 :1:0 
 `uc 1 TRISD1 1 0 :1:1 
 `uc 1 TRISD2 1 0 :1:2 
 `uc 1 TRISD3 1 0 :1:3 
@@ -233,9 +248,9 @@ DATA_CONTINUE 17
 `uc 1 TRISD7 1 0 :1:7 
 ]
 "1476
-[u S549 . 1 `S540 1 . 1 0 ]
-[v _TRISDbits TRISDbits `VES549  1 e 1 @136 ]
-[s S473 . 1 `uc 1 TRISE0 1 0 :1:0 
+[u S37 . 1 `S28 1 . 1 0 ]
+[v _TRISDbits TRISDbits `VES37  1 e 1 @136 ]
+[s S498 . 1 `uc 1 TRISE0 1 0 :1:0 
 `uc 1 TRISE1 1 0 :1:1 
 `uc 1 TRISE2 1 0 :1:2 
 `uc 1 . 1 0 :1:3 
@@ -245,9 +260,9 @@ DATA_CONTINUE 17
 `uc 1 IBF 1 0 :1:7 
 ]
 "1537
-[u S482 . 1 `S473 1 . 1 0 ]
-[v _TRISEbits TRISEbits `VES482  1 e 1 @137 ]
-[s S300 . 1 `uc 1 BF 1 0 :1:0 
+[u S507 . 1 `S498 1 . 1 0 ]
+[v _TRISEbits TRISEbits `VES507  1 e 1 @137 ]
+[s S325 . 1 `uc 1 BF 1 0 :1:0 
 `uc 1 UA 1 0 :1:1 
 `uc 1 R_nW 1 0 :1:2 
 `uc 1 S 1 0 :1:3 
@@ -257,39 +272,39 @@ DATA_CONTINUE 17
 `uc 1 SMP 1 0 :1:7 
 ]
 "1836
-[s S309 . 1 `uc 1 . 1 0 :2:0 
+[s S334 . 1 `uc 1 . 1 0 :2:0 
 `uc 1 R 1 0 :1:2 
 `uc 1 . 1 0 :2:3 
 `uc 1 D 1 0 :1:5 
 ]
-[s S314 . 1 `uc 1 . 1 0 :2:0 
+[s S339 . 1 `uc 1 . 1 0 :2:0 
 `uc 1 I2C_READ 1 0 :1:2 
 `uc 1 I2C_START 1 0 :1:3 
 `uc 1 I2C_STOP 1 0 :1:4 
 `uc 1 I2C_DATA 1 0 :1:5 
 ]
-[s S320 . 1 `uc 1 . 1 0 :2:0 
+[s S345 . 1 `uc 1 . 1 0 :2:0 
 `uc 1 nW 1 0 :1:2 
 `uc 1 . 1 0 :2:3 
 `uc 1 nA 1 0 :1:5 
 ]
-[s S325 . 1 `uc 1 . 1 0 :2:0 
+[s S350 . 1 `uc 1 . 1 0 :2:0 
 `uc 1 nWRITE 1 0 :1:2 
 `uc 1 . 1 0 :2:3 
 `uc 1 nADDRESS 1 0 :1:5 
 ]
-[s S330 . 1 `uc 1 . 1 0 :2:0 
+[s S355 . 1 `uc 1 . 1 0 :2:0 
 `uc 1 R_W 1 0 :1:2 
 `uc 1 . 1 0 :2:3 
 `uc 1 D_A 1 0 :1:5 
 ]
-[s S335 . 1 `uc 1 . 1 0 :2:0 
+[s S360 . 1 `uc 1 . 1 0 :2:0 
 `uc 1 READ_WRITE 1 0 :1:2 
 `uc 1 . 1 0 :2:3 
 `uc 1 DATA_ADDRESS 1 0 :1:5 
 ]
-[u S340 . 1 `S300 1 . 1 0 `S309 1 . 1 0 `S314 1 . 1 0 `S320 1 . 1 0 `S325 1 . 1 0 `S330 1 . 1 0 `S335 1 . 1 0 ]
-[v _SSPSTATbits SSPSTATbits `VES340  1 e 1 @148 ]
+[u S365 . 1 `S325 1 . 1 0 `S334 1 . 1 0 `S339 1 . 1 0 `S345 1 . 1 0 `S350 1 . 1 0 `S355 1 . 1 0 `S360 1 . 1 0 ]
+[v _SSPSTATbits SSPSTATbits `VES365  1 e 1 @148 ]
 "1950
 [v _TXSTA TXSTA `VEuc  1 e 1 @152 ]
 "2030
@@ -300,26 +315,24 @@ DATA_CONTINUE 17
 [v _ADCON1 ADCON1 `VEuc  1 e 1 @159 ]
 "2559
 [v _RCIF RCIF `VEb  1 e 0 @101 ]
-"2577
-[v _RD7 RD7 `VEb  1 e 0 @71 ]
-"2733
-[v _TRISD7 TRISD7 `VEb  1 e 0 @1095 ]
 "2755
 [v _TXIF TXIF `VEb  1 e 0 @100 ]
 [s S19 . 13 `[2]uc 1 power1 2 0 `[2]uc 1 power2 2 2 `[2]uc 1 power3 2 4 `[2]uc 1 power4 2 6 `[2]uc 1 power5 2 8 `[2]uc 1 temp 2 10 `uc 1 obc2 1 12 :1:0 
 `uc 1 powmcu 1 12 :1:1 
 ]
-"28 C:\Users\Tetsuya\Documents\GitHub\CDH\OBC1.X\OBC1_main.c
+"24 C:\Users\Tetsuya\Documents\GitHub\CDH\OBC1.X\OBC1_main.c
 [v _cw cw `S19  1 e 13 0 ]
-[s S536 . 32 `uc 1 data_type 1 0 `[30]uc 1 payload 30 1 `uc 1 data_end_command 1 31 ]
+[s S561 . 32 `uc 1 data_type 1 0 `[30]uc 1 payload 30 1 `uc 1 data_end_command 1 31 ]
 "72 C:\Users\Tetsuya\Documents\GitHub\CDH\OBC1.X\system_protocol.c
-[v _packet packet `S536  1 s 32 packet ]
+[v _packet packet `S561  1 s 32 packet ]
 "75
 [v _index_pos index_pos `uc  1 s 1 index_pos ]
-"31 C:\Users\Tetsuya\Documents\GitHub\CDH\OBC1.X\OBC1_main.c
+"26 C:\Users\Tetsuya\Documents\GitHub\CDH\OBC1.X\OBC1_main.c
 [v _main main `(i  1 e 2 0 ]
 {
-"75
+"30
+[v main@COM_status COM_status `uc  1 a 1 22 ]
+"65
 } 0
 "33 C:\Users\Tetsuya\Documents\GitHub\CDH\OBC1.X\uart_serial.c
 [v _uart_init uart_init `(v  1 e 0 0 ]
@@ -331,44 +344,52 @@ DATA_CONTINUE 17
 {
 "91
 } 0
-"218
+"29 C:\Users\Tetsuya\Documents\GitHub\CDH\OBC1.X\OBC1_app.c
+[v _command command `(v  1 e 0 0 ]
+{
+[v command@data data `uc  1 a 1 wreg ]
+[v command@data data `uc  1 a 1 wreg ]
+[v command@data data `uc  1 a 1 18 ]
+"58
+} 0
+"217 C:\Users\Tetsuya\Documents\GitHub\CDH\OBC1.X\system_protocol.c
 [v _send_data_master send_data_master `(v  1 e 0 0 ]
 {
 [v send_data_master@destination destination `E1099  1 a 1 wreg ]
 [v send_data_master@destination destination `E1099  1 a 1 wreg ]
 [v send_data_master@data_type data_type `E1104  1 p 1 1 ]
-[v send_data_master@data_end_command data_end_command `E1109  1 p 1 2 ]
-"220
+[v send_data_master@data_end_command data_end_command `E1108  1 p 1 2 ]
+"219
 [v send_data_master@destination destination `E1099  1 a 1 4 ]
-"224
+"223
 } 0
-"466
+"465
 [v _packet_send_master packet_send_master `(v  1 s 0 packet_send_master ]
 {
 [v packet_send_master@destination destination `E1099  1 a 1 wreg ]
 [v packet_send_master@destination destination `E1099  1 a 1 wreg ]
-[s S536 . 32 `uc 1 data_type 1 0 `[30]uc 1 payload 30 1 `uc 1 data_end_command 1 31 ]
-[v packet_send_master@p_packet p_packet `*.4S536  1 p 1 12 ]
-"469
+[s S561 . 32 `uc 1 data_type 1 0 `[30]uc 1 payload 30 1 `uc 1 data_end_command 1 31 ]
+[v packet_send_master@p_packet p_packet `*.4S561  1 p 1 12 ]
+"468
 [v packet_send_master@destination destination `E1099  1 a 1 0 ]
-"479
+"478
 } 0
-"398
+"397
 [v _send_payload send_payload `(uc  1 s 1 send_payload ]
 {
 [v send_payload@destination destination `E1099  1 a 1 wreg ]
-"401
-[v send_payload@index_pos index_pos `uc  1 a 1 10 ]
 "400
+[v send_payload@index_pos index_pos `uc  1 a 1 10 ]
+"399
 [v send_payload@i i `uc  1 a 1 9 ]
-"401
+"400
 [v send_payload@data_len data_len `uc  1 a 1 8 ]
-"398
+"397
 [v send_payload@destination destination `E1099  1 a 1 wreg ]
 [v send_payload@p_payload p_payload `*.4uc  1 p 1 6 ]
-"402
+"401
 [v send_payload@destination destination `E1099  1 a 1 11 ]
-"418
+"417
 } 0
 "165 C:\Users\Tetsuya\Documents\GitHub\CDH\OBC1.X\spi_master.c
 [v _spi_master_send spi_master_send `(v  1 e 0 0 ]
@@ -385,19 +406,177 @@ DATA_CONTINUE 17
 [v spi_master_send@destination destination `E1099  1 a 1 5 ]
 "234
 } 0
-"95 C:\Users\Tetsuya\Documents\GitHub\CDH\OBC1.X\system_protocol.c
-[v _get_cw_data get_cw_data `(i  1 e 2 0 ]
+"94 C:\Users\Tetsuya\Documents\GitHub\CDH\OBC1.X\system_protocol.c
+[v _get_cw_data get_cw_data `(v  1 e 0 0 ]
 {
-"97
+"96
 [v get_cw_data@buf buf `ui  1 a 2 0 ]
-"115
+"114
 } 0
 "36 C:\Users\Tetsuya\Documents\GitHub\CDH\OBC1.X\spi_master.c
 [v _spi_master_start spi_master_start `(v  1 e 0 0 ]
 {
 "69
 } 0
-"82
+"91 C:\Users\Tetsuya\Documents\GitHub\CDH\OBC1.X\AD_value.c
+[v _get_adcon get_adcon `(ui  1 e 2 0 ]
+{
+"94
+[v get_adcon@ad_value ad_value `ui  1 a 2 11 ]
+[s S198 . 2 `uc 1 my_adres_h 1 0 `uc 1 my_adres_l 1 1 ]
+"96
+[v get_adcon@my_adres my_adres `S198  1 a 2 9 ]
+"111
+} 0
+"71
+[v _bit_shift bit_shift `(v  1 s 0 bit_shift ]
+{
+[v bit_shift@p_ad_value p_ad_value `*.1ui  1 a 1 wreg ]
+[v bit_shift@p_ad_value p_ad_value `*.1ui  1 a 1 wreg ]
+[s S198 . 2 `uc 1 my_adres_h 1 0 `uc 1 my_adres_l 1 1 ]
+[v bit_shift@p_adres p_adres `*.1S198  1 p 1 0 ]
+"73
+[v bit_shift@bit_mask_for_l bit_mask_for_l `DCCuc  1 s 1 bit_mask_for_l ]
+"75
+[v bit_shift@p_ad_value p_ad_value `*.1ui  1 a 1 5 ]
+"78
+} 0
+"180 C:\Users\Tetsuya\Documents\GitHub\CDH\OBC1.X\system_protocol.c
+[v _cw_data_set cw_data_set `(v  1 e 0 0 ]
+{
+[s S19 . 13 `[2]uc 1 power1 2 0 `[2]uc 1 power2 2 2 `[2]uc 1 power3 2 4 `[2]uc 1 power4 2 6 `[2]uc 1 power5 2 8 `[2]uc 1 temp 2 10 `uc 1 obc2 1 12 :1:0 
+`uc 1 powmcu 1 12 :1:1 
+]
+[v cw_data_set@p_cw_data p_cw_data `*.4S19  1 a 1 wreg ]
+[v cw_data_set@p_cw_data p_cw_data `*.4S19  1 a 1 wreg ]
+"185
+"180
+[v cw_data_set@p_cw_data p_cw_data `*.4S19  1 a 1 5 ]
+"202
+} 0
+"60 C:\Users\Tetsuya\Documents\GitHub\CDH\OBC1.X\OBC1_app.c
+[v _LED_data_set LED_data_set `(v  1 s 0 LED_data_set ]
+{
+"63
+} 0
+"141 C:\Users\Tetsuya\Documents\GitHub\CDH\OBC1.X\system_protocol.c
+[v _sent_data_set sent_data_set `(uc  1 e 1 0 ]
+{
+[v sent_data_set@p_data p_data `*.39v  1 p 2 6 ]
+[v sent_data_set@data_len data_len `uc  1 p 1 8 ]
+[v sent_data_set@byte_of_data byte_of_data `uc  1 p 1 9 ]
+"167
+} 0
+"260
+[v _uint8_data_set uint8_data_set `(v  1 s 0 uint8_data_set ]
+{
+[v uint8_data_set@p_data p_data `*.39uc  1 p 2 0 ]
+[v uint8_data_set@data_len data_len `uc  1 p 1 2 ]
+"268
+} 0
+"282
+[v _uint16_data_set uint16_data_set `(v  1 s 0 uint16_data_set ]
+{
+"284
+[v uint16_data_set@buf buf `[3]uc  1 a 3 10 ]
+"285
+[v uint16_data_set@i i `uc  1 a 1 13 ]
+"282
+[v uint16_data_set@p_data p_data `*.39ui  1 p 2 6 ]
+[v uint16_data_set@data_len data_len `uc  1 p 1 8 ]
+"297
+} 0
+"340
+[v _uint16_to_byte_array uint16_to_byte_array `(v  1 s 0 uint16_to_byte_array ]
+{
+[v uint16_to_byte_array@p_data p_data `*.39ui  1 p 2 0 ]
+[v uint16_to_byte_array@p_data_array p_data_array `*.1uc  1 p 1 2 ]
+"342
+[v uint16_to_byte_array@bit_mask bit_mask `DCCui  1 s 2 bit_mask ]
+"348
+} 0
+"311
+[v _double_data_set double_data_set `(v  1 s 0 double_data_set ]
+{
+"313
+[v double_data_set@buf buf `[5]uc  1 a 5 0 ]
+"314
+[v double_data_set@i i `uc  1 a 1 5 ]
+"311
+[v double_data_set@p_data p_data `*.39d  1 p 2 10 ]
+[v double_data_set@data_len data_len `uc  1 p 1 12 ]
+"326
+} 0
+"362
+[v _double_to_byte_array double_to_byte_array `(v  1 s 0 double_to_byte_array ]
+{
+[u S693 . 4 `d 1 data 3 0 `[4]uc 1 array 4 0 ]
+"369
+[v double_to_byte_array@converter converter `S693  1 a 4 5 ]
+"364
+[v double_to_byte_array@i i `uc  1 a 1 9 ]
+"362
+[v double_to_byte_array@p_data p_data `*.39d  1 p 2 0 ]
+[v double_to_byte_array@p_data_array p_data_array `*.4uc  1 p 1 2 ]
+"382
+} 0
+"15 C:\Program Files (x86)\Microchip\xc8\v1.35\sources\common\Umul16.c
+[v ___wmul __wmul `(ui  1 e 2 0 ]
+{
+"17
+[v ___wmul@product product `ui  1 a 2 4 ]
+"15
+[v ___wmul@multiplier multiplier `ui  1 p 2 0 ]
+[v ___wmul@multiplicand multiplicand `ui  1 p 2 2 ]
+"53
+} 0
+"66 C:\Users\Tetsuya\Documents\GitHub\CDH\OBC1.X\OBC1_app.c
+[v _I2Ctemp_data_set I2Ctemp_data_set `(v  1 s 0 I2Ctemp_data_set ]
+{
+"69
+} 0
+"238 C:\Users\Tetsuya\Documents\GitHub\CDH\OBC1.X\system_protocol.c
+[v _receive_data_master receive_data_master `(v  1 e 0 0 ]
+{
+[v receive_data_master@destination destination `E1099  1 a 1 wreg ]
+[v receive_data_master@destination destination `E1099  1 a 1 wreg ]
+"240
+[v receive_data_master@destination destination `E1099  1 a 1 2 ]
+"241
+} 0
+"492
+[v _packet_receive_master packet_receive_master `(v  1 s 0 packet_receive_master ]
+{
+[v packet_receive_master@destination destination `E1099  1 a 1 wreg ]
+"494
+[v packet_receive_master@use_obc use_obc `uc  1 a 1 0 ]
+"492
+[v packet_receive_master@destination destination `E1099  1 a 1 wreg ]
+[s S561 . 32 `uc 1 data_type 1 0 `[30]uc 1 payload 30 1 `uc 1 data_end_command 1 31 ]
+[v packet_receive_master@p_packet p_packet `*.4S561  1 p 1 11 ]
+"494
+[v packet_receive_master@destination destination `E1099  1 a 1 1 ]
+"507
+} 0
+"432
+[v _receive_payload receive_payload `(v  1 s 0 receive_payload ]
+{
+[v receive_payload@destination destination `E1099  1 a 1 wreg ]
+"436
+[v receive_payload@rec_index_pos rec_index_pos `uc  1 a 1 9 ]
+"437
+[v receive_payload@p_payload p_payload `*.4uc  1 a 1 8 ]
+"434
+[v receive_payload@i i `uc  1 a 1 7 ]
+"435
+[v receive_payload@data_len data_len `uc  1 a 1 6 ]
+"432
+[v receive_payload@destination destination `E1099  1 a 1 wreg ]
+"436
+[v receive_payload@destination destination `E1099  1 a 1 10 ]
+"451
+} 0
+"82 C:\Users\Tetsuya\Documents\GitHub\CDH\OBC1.X\spi_master.c
 [v _spi_master_receive spi_master_receive `(uc  1 e 1 0 ]
 {
 [v spi_master_receive@destination destination `E1099  1 a 1 wreg ]
@@ -410,51 +589,6 @@ DATA_CONTINUE 17
 "85
 [v spi_master_receive@destination destination `E1099  1 a 1 4 ]
 "151
-} 0
-"91 C:\Users\Tetsuya\Documents\GitHub\CDH\OBC1.X\AD_value.c
-[v _get_adcon get_adcon `(ui  1 e 2 0 ]
-{
-"94
-[v get_adcon@ad_value ad_value `ui  1 a 2 11 ]
-[s S173 . 2 `uc 1 my_adres_h 1 0 `uc 1 my_adres_l 1 1 ]
-"96
-[v get_adcon@my_adres my_adres `S173  1 a 2 9 ]
-"111
-} 0
-"71
-[v _bit_shift bit_shift `(v  1 s 0 bit_shift ]
-{
-[v bit_shift@p_ad_value p_ad_value `*.1ui  1 a 1 wreg ]
-[v bit_shift@p_ad_value p_ad_value `*.1ui  1 a 1 wreg ]
-[s S173 . 2 `uc 1 my_adres_h 1 0 `uc 1 my_adres_l 1 1 ]
-[v bit_shift@p_adres p_adres `*.1S173  1 p 1 0 ]
-"73
-[v bit_shift@bit_mask_for_l bit_mask_for_l `DCCuc  1 s 1 bit_mask_for_l ]
-"75
-[v bit_shift@p_ad_value p_ad_value `*.1ui  1 a 1 5 ]
-"78
-} 0
-"181 C:\Users\Tetsuya\Documents\GitHub\CDH\OBC1.X\system_protocol.c
-[v _cw_data_set cw_data_set `(v  1 e 0 0 ]
-{
-[s S19 . 13 `[2]uc 1 power1 2 0 `[2]uc 1 power2 2 2 `[2]uc 1 power3 2 4 `[2]uc 1 power4 2 6 `[2]uc 1 power5 2 8 `[2]uc 1 temp 2 10 `uc 1 obc2 1 12 :1:0 
-`uc 1 powmcu 1 12 :1:1 
-]
-[v cw_data_set@p_cw_data p_cw_data `*.4S19  1 a 1 wreg ]
-[v cw_data_set@p_cw_data p_cw_data `*.4S19  1 a 1 wreg ]
-"186
-"181
-[v cw_data_set@p_cw_data p_cw_data `*.4S19  1 a 1 4 ]
-"203
-} 0
-"261
-[v _uint8_data_set uint8_data_set `(v  1 s 0 uint8_data_set ]
-{
-[v uint8_data_set@p_data p_data `*.4uc  1 a 1 wreg ]
-[v uint8_data_set@p_data p_data `*.4uc  1 a 1 wreg ]
-[v uint8_data_set@data_len data_len `uc  1 p 1 0 ]
-[v uint8_data_set@p_data p_data `*.4uc  1 a 1 2 ]
-"269
 } 0
 "49 C:\Users\Tetsuya\Documents\GitHub\CDH\OBC1.X\AD_value.c
 [v _ad_con_init ad_con_init `(v  1 e 0 0 ]

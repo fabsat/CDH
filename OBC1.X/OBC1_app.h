@@ -8,10 +8,10 @@
 #ifndef OBC1_APP_H
 #define	OBC1_APP_H
 
-#define LED0TRIS    TRISD7
+#define LED0TRIS    TRISDbits.TRISD7
 #define LED0        PORTDbits.RD7
-#define LED1TRIS    TRIS
-#define LED1        PORT
+#define LED1TRIS    TRISDbits.TRISD6
+#define LED1        PORTDbits.RD6
 
 
 void command(uint8_t data);

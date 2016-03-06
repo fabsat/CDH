@@ -1,5 +1,5 @@
 
-# 1 "spi_master.c"
+# 1 "OBC1_app.c"
 
 # 26 "C:\Program Files (x86)\Microchip\xc8\v1.35\include\htc.h"
 extern const char __xc8_OPTIM_SPEED;
@@ -1506,194 +1506,52 @@ void spi_master_send(destination_t destination, uint8_t data);
 # 92
 void spi_master_stop(void);
 
-# 36 "spi_master.c"
-void spi_master_start(void)
+# 17 "OBC1_app.h"
+void command(uint8_t data);
+
+# 25 "OBC1_app.c"
+static void LED_data_set(void);
+static void I2Ctemp_data_set(void);
+
+
+void command(uint8_t data)
 {
 
-TRISCbits.TRISC3 = 0;
-TRISCbits.TRISC5 = 0;
-TRISCbits.TRISC4 = 1;
+switch(data)
+{
+case (0x03):
+get_cw_data();
+cw_data_set(&cw);
+spi_master_send(COM, 0x11);
+send_data_master(COM, 0x01, DATA_END);
+break;
 
+case (0x01):
+PORTDbits.RD6 = 1;
+_delay((unsigned long)((100)*(20000000/4000.0)));
+PORTDbits.RD6 = 0;
+_delay((unsigned long)((100)*(20000000/4000.0)));
+LED_data_set();
+spi_master_send(COM, 0x11);
+send_data_master(COM, (0x01), DATA_END);
+break;
 
-TRISCbits.TRISC2 = 0;
-TRISCbits.TRISC0 = 0;
-TRISCbits.TRISC1 = 0;
-
-
-SSPCONbits.SSPEN = 0;
-
-
-SSPSTATbits.SMP = 0;
-SSPCONbits.CKP = 0;
-SSPSTATbits.CKE = 0;
-
-
-SSPCONbits.SSPM3 = 0;
-SSPCONbits.SSPM2 = 0;
-SSPCONbits.SSPM1 = 0;
-SSPCONbits.SSPM0 = 0;
-
-
-PORTCbits.RC2 = 1;
-PORTCbits.RC0 = 1;
-PORTCbits.RC1 = 1;
-
-
-SSPCONbits.SSPEN = 1;
+case (0x02):
+spi_master_send(OBC2, 0x01);
+I2Ctemp_data_set();
+spi_master_send(COM, 0x11);
+send_data_master(COM, 0x02, DATA_END);
+break;
+}
 }
 
-# 82
-uint8_t spi_master_receive(destination_t destination)
+static void LED_data_set(void)
 {
-uint8_t dummy;
-uint16_t timeout_counter = 1000;
-
-
-dummy = SSPBUF;
-
-
-switch(destination)
-{
-case OBC2:
-while(PORTDbits.RD2 == 0){;}
-break;
-case COM:
-while(PORTDbits.RD0 == 0){;}
-break;
-case POW:
-while(PORTDbits.RD1 == 0){;}
-break;
+sent_data_set(0x01, 1, 1);
 }
 
 
-switch(destination)
+static void I2Ctemp_data_set(void)
 {
-case OBC2:
-PORTCbits.RC2 = 0;
-break;
-case COM:
-PORTCbits.RC0 = 0;
-break;
-case POW:
-PORTCbits.RC1 = 0;
-break;
-}
-
-
-
-SSPBUF = 0x00;
-
-
-while(SSPSTATbits.BF == 0)
-{
-
-if(timeout_counter == 0)
-{
-return;
-}
-
-
-_delay((unsigned long)((1)*(20000000/4000000.0)));
-timeout_counter--;
-}
-
-
-switch(destination)
-{
-case OBC2:
-PORTCbits.RC2 = 1;
-break;
-case COM:
-PORTCbits.RC0 = 1;
-break;
-case POW:
-PORTCbits.RC1 = 1;
-break;
-}
-
-return SSPBUF;
-}
-
-# 165
-void spi_master_send(destination_t destination, uint8_t data)
-{
-uint8_t dummy;
-uint16_t timeout_counter = 1000;
-
-
-dummy = SSPBUF;
-
-
-switch(destination)
-{
-case OBC2:
-while(PORTDbits.RD2 == 0){;}
-break;
-case COM:
-while(PORTDbits.RD0 == 0){;}
-break;
-case POW:
-while(PORTDbits.RD1 == 0){;}
-break;
-}
-
-
-switch(destination)
-{
-case OBC2:
-PORTCbits.RC2 = 0;
-break;
-case COM:
-PORTCbits.RC0 = 0;
-break;
-case POW:
-PORTCbits.RC1 = 0;
-break;
-}
-
-
-SSPBUF = data;
-
-
-while(SSPSTATbits.BF == 0)
-{
-
-if(timeout_counter == 0)
-{
-return;
-}
-
-
-_delay((unsigned long)((1)*(20000000/4000000.0)));
-timeout_counter--;
-}
-
-
-switch(destination)
-{
-case OBC2:
-PORTCbits.RC2 = 1;
-break;
-case COM:
-PORTCbits.RC0 = 1;
-break;
-case POW:
-PORTCbits.RC1 = 1;
-break;
-}
-
-
-dummy = SSPBUF;
-}
-
-# 247
-void spi_master_stop(void)
-{
-
-PORTCbits.RC2 = 0;
-PORTCbits.RC0 = 0;
-PORTCbits.RC1 = 0;
-
-
-SSPCONbits.SSPEN = 0;
+receive_data_master(OBC2);
 }

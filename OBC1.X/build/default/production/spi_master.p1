@@ -1100,30 +1100,30 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;system_protocol.h: 24: {
 [; ;system_protocol.h: 25: CW_TYPE = 0x01,
 [; ;system_protocol.h: 26: DATA_TYPE,
-[; ;system_protocol.h: 27: COMMAND_TYPE,
-[; ;system_protocol.h: 28: } data_type_t;
-[; ;system_protocol.h: 40: typedef enum
-[; ;system_protocol.h: 41: {
-[; ;system_protocol.h: 42: DATA_END = 0b00010000,
-[; ;system_protocol.h: 43: DATA_CONTINUE,
-[; ;system_protocol.h: 44: } data_end_command_t;
-[; ;system_protocol.h: 52: typedef struct
-[; ;system_protocol.h: 53: {
-[; ;system_protocol.h: 54: uint8_t power1[2];
-[; ;system_protocol.h: 55: uint8_t power2[2];
-[; ;system_protocol.h: 56: uint8_t power3[2];
-[; ;system_protocol.h: 57: uint8_t power4[2];
-[; ;system_protocol.h: 58: uint8_t power5[2];
-[; ;system_protocol.h: 59: uint8_t temp[2];
-[; ;system_protocol.h: 60: uint8_t obc2:1;
-[; ;system_protocol.h: 61: uint8_t powmcu:1;
-[; ;system_protocol.h: 62: } cw_t;
-[; ;system_protocol.h: 64: extern cw_t cw;
-[; ;system_protocol.h: 105: void sysprot_init(void);
-[; ;system_protocol.h: 107: void cw_set(void);
-[; ;system_protocol.h: 133: uint8_t sent_data_set(void *p_data, uint8_t data_len, uint8_t byte_of_data);
-[; ;system_protocol.h: 146: void cw_data_set(cw_t *p_cw_data);
-[; ;system_protocol.h: 161: void send_data_master(destination_t destination, data_type_t data_type, data_end_command_t data_end_command);
+[; ;system_protocol.h: 27: } data_type_t;
+[; ;system_protocol.h: 39: typedef enum
+[; ;system_protocol.h: 40: {
+[; ;system_protocol.h: 41: DATA_END = 0b00010000,
+[; ;system_protocol.h: 42: DATA_CONTINUE,
+[; ;system_protocol.h: 43: } data_end_command_t;
+[; ;system_protocol.h: 51: typedef struct
+[; ;system_protocol.h: 52: {
+[; ;system_protocol.h: 53: uint8_t power1[2];
+[; ;system_protocol.h: 54: uint8_t power2[2];
+[; ;system_protocol.h: 55: uint8_t power3[2];
+[; ;system_protocol.h: 56: uint8_t power4[2];
+[; ;system_protocol.h: 57: uint8_t power5[2];
+[; ;system_protocol.h: 58: uint8_t temp[2];
+[; ;system_protocol.h: 59: uint8_t obc2:1;
+[; ;system_protocol.h: 60: uint8_t powmcu:1;
+[; ;system_protocol.h: 61: } cw_t;
+[; ;system_protocol.h: 63: extern cw_t cw;
+[; ;system_protocol.h: 104: void sysprot_init(void);
+[; ;system_protocol.h: 106: void cw_set(void);
+[; ;system_protocol.h: 132: uint8_t sent_data_set(void *p_data, uint8_t data_len, uint8_t byte_of_data);
+[; ;system_protocol.h: 145: void cw_data_set(cw_t *p_cw_data);
+[; ;system_protocol.h: 160: void send_data_master(destination_t destination, data_type_t data_type, data_end_command_t data_end_command);
+[; ;system_protocol.h: 163: void receive_data_master(destination_t destination);
 [; ;spi_master.h: 51: void spi_master_start(void);
 [; ;spi_master.h: 64: uint8_t spi_master_receive(destination_t destination);
 [; ;spi_master.h: 79: void spi_master_send(destination_t destination, uint8_t data);
