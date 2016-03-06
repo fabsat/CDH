@@ -15,7 +15,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _PORTDbits `VS12 ~T0 @X0 0 e@8 ]
 "41 MCLR_reset.h
 [v _MCLR_init `(v ~T0 @X0 0 ef ]
-"122 system_protocol.h
+"105 system_protocol.h
 [v _sysprot_init `(v ~T0 @X0 0 ef ]
 "64 uart_serial.h
 [v _uart_init `(v ~T0 @X0 0 ef ]
@@ -29,18 +29,18 @@ Version 3.2 HI-TECH Software Intermediate Code
 "150 C:\Program Files (x86)\Microchip\xc8\v1.35\include\pic.h
 [v __delay `JF1091 ~T0 @X0 0 e ]
 [p i __delay ]
-"62 OBC1_main.c
+"61 OBC1_main.c
 [v _get_cw_data `(i ~T0 @X0 0 ef ]
-"163 system_protocol.h
+"146 system_protocol.h
 [v _cw_data_set `(v ~T0 @X0 0 ef1`*S97 ]
-"64 OBC1_main.c
-[c E1173 0 1 2 .. ]
+"63 OBC1_main.c
+[c E1173 2 3 4 .. ]
 [n E1173 . OBC2 COM POW  ]
 [c E1178 1 2 3 .. ]
 [n E1178 . CW_TYPE DATA_TYPE COMMAND_TYPE  ]
 [c E1183 16 17 .. ]
 [n E1183 . DATA_END DATA_CONTINUE  ]
-"178 system_protocol.h
+"161 system_protocol.h
 [v _send_data_master `(v ~T0 @X0 0 ef3`E1173`E1178`E1183 ]
 [; ;htc.h: 26: extern const char __xc8_OPTIM_SPEED;
 [; ;htc.h: 28: extern double __fpnormalize(double);
@@ -1102,7 +1102,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;plati_temp.h: 34: double get_temp(void);
 [; ;system_protocol.h: 10: typedef enum
 [; ;system_protocol.h: 11: {
-[; ;system_protocol.h: 12: OBC2,
+[; ;system_protocol.h: 12: OBC2 = 0x02,
 [; ;system_protocol.h: 13: COM,
 [; ;system_protocol.h: 14: POW,
 [; ;system_protocol.h: 15: } destination_t;
@@ -1129,11 +1129,11 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;system_protocol.h: 61: uint8_t powmcu:1;
 [; ;system_protocol.h: 62: } cw_t;
 [; ;system_protocol.h: 64: extern cw_t cw;
-[; ;system_protocol.h: 122: void sysprot_init(void);
-[; ;system_protocol.h: 124: void cw_set(void);
-[; ;system_protocol.h: 150: uint8_t sent_data_set(void *p_data, uint8_t data_len, uint8_t byte_of_data);
-[; ;system_protocol.h: 163: void cw_data_set(cw_t *p_cw_data);
-[; ;system_protocol.h: 178: void send_data_master(destination_t destination, data_type_t data_type, data_end_command_t data_end_command);
+[; ;system_protocol.h: 105: void sysprot_init(void);
+[; ;system_protocol.h: 107: void cw_set(void);
+[; ;system_protocol.h: 133: uint8_t sent_data_set(void *p_data, uint8_t data_len, uint8_t byte_of_data);
+[; ;system_protocol.h: 146: void cw_data_set(cw_t *p_cw_data);
+[; ;system_protocol.h: 161: void send_data_master(destination_t destination, data_type_t data_type, data_end_command_t data_end_command);
 [; ;spi_master.h: 51: void spi_master_start(void);
 [; ;spi_master.h: 64: uint8_t spi_master_receive(destination_t destination);
 [; ;spi_master.h: 79: void spi_master_send(destination_t destination, uint8_t data);
@@ -1219,75 +1219,75 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e $ ! == -> . . _PORTDbits 0 1 `i -> 0 `i 100  ]
 [e ( _MCLR_reset (1 -> -> 6 `i `uc ]
 [e :U 100 ]
-[; ;OBC1_main.c: 49: while(1){
-"49
+[; ;OBC1_main.c: 48: while(1){
+"48
 [e :U 102 ]
 {
-[; ;OBC1_main.c: 50: RD7 = 1;
-"50
+[; ;OBC1_main.c: 49: RD7 = 1;
+"49
 [e = _RD7 -> -> 1 `i `b ]
-[; ;OBC1_main.c: 52: _delay((unsigned long)((1000)*(20000000/4000.0)));
-"52
+[; ;OBC1_main.c: 51: _delay((unsigned long)((1000)*(20000000/4000.0)));
+"51
 [e ( __delay (1 -> * -> -> 1000 `i `d / -> -> 20000000 `l `d .4000.0 `ul ]
-[; ;OBC1_main.c: 54: RD7 = 0;
-"54
+[; ;OBC1_main.c: 53: RD7 = 0;
+"53
 [e = _RD7 -> -> 0 `i `b ]
-[; ;OBC1_main.c: 55: _delay((unsigned long)((1000)*(20000000/4000.0)));
-"55
+[; ;OBC1_main.c: 54: _delay((unsigned long)((1000)*(20000000/4000.0)));
+"54
 [e ( __delay (1 -> * -> -> 1000 `i `d / -> -> 20000000 `l `d .4000.0 `ul ]
-"56
+"55
 }
 [e :U 101 ]
-"49
+"48
 [e $U 102  ]
 [e :U 103 ]
-[; ;OBC1_main.c: 56: }
-[; ;OBC1_main.c: 58: while(1)
-"58
+[; ;OBC1_main.c: 55: }
+[; ;OBC1_main.c: 57: while(1)
+"57
 [e :U 105 ]
-[; ;OBC1_main.c: 59: {
-"59
+[; ;OBC1_main.c: 58: {
+"58
 {
-[; ;OBC1_main.c: 60: PORTDbits.RD7 = 1;
-"60
+[; ;OBC1_main.c: 59: PORTDbits.RD7 = 1;
+"59
 [e = . . _PORTDbits 0 7 -> -> 1 `i `uc ]
-[; ;OBC1_main.c: 61: _delay((unsigned long)((1000)*(20000000/4000.0)));
+[; ;OBC1_main.c: 60: _delay((unsigned long)((1000)*(20000000/4000.0)));
+"60
+[e ( __delay (1 -> * -> -> 1000 `i `d / -> -> 20000000 `l `d .4000.0 `ul ]
+[; ;OBC1_main.c: 61: get_cw_data();
 "61
-[e ( __delay (1 -> * -> -> 1000 `i `d / -> -> 20000000 `l `d .4000.0 `ul ]
-[; ;OBC1_main.c: 62: get_cw_data();
-"62
 [e ( _get_cw_data ..  ]
-[; ;OBC1_main.c: 63: cw_data_set(&cw);
-"63
+[; ;OBC1_main.c: 62: cw_data_set(&cw);
+"62
 [e ( _cw_data_set (1 &U _cw ]
-[; ;OBC1_main.c: 64: send_data_master(COM, 0x01, DATA_END);
-"64
+[; ;OBC1_main.c: 63: send_data_master(COM, 0x01, DATA_END);
+"63
 [e ( _send_data_master (3 , , . `E1173 1 -> -> 1 `i `E1178 . `E1183 0 ]
-[; ;OBC1_main.c: 65: PORTDbits.RD7 = 0;
-"65
+[; ;OBC1_main.c: 64: PORTDbits.RD7 = 0;
+"64
 [e = . . _PORTDbits 0 7 -> -> 0 `i `uc ]
-[; ;OBC1_main.c: 66: _delay((unsigned long)((1000)*(20000000/4000.0)));
-"66
+[; ;OBC1_main.c: 65: _delay((unsigned long)((1000)*(20000000/4000.0)));
+"65
 [e ( __delay (1 -> * -> -> 1000 `i `d / -> -> 20000000 `l `d .4000.0 `ul ]
-[; ;OBC1_main.c: 69: if(PORTDbits.RD0==0)
-"69
+[; ;OBC1_main.c: 68: if(PORTDbits.RD0==0)
+"68
 [e $ ! == -> . . _PORTDbits 0 0 `i -> 0 `i 107  ]
-[; ;OBC1_main.c: 71: _delay((unsigned long)((10000)*(20000000/4000.0)));
-"71
+[; ;OBC1_main.c: 70: _delay((unsigned long)((10000)*(20000000/4000.0)));
+"70
 [e ( __delay (1 -> * -> -> 10000 `i `d / -> -> 20000000 `l `d .4000.0 `ul ]
 [e :U 107 ]
-"72
+"71
 }
 [e :U 104 ]
-"58
+"57
 [e $U 105  ]
 [e :U 106 ]
-[; ;OBC1_main.c: 72: }
-[; ;OBC1_main.c: 75: return 0;
-"75
+[; ;OBC1_main.c: 71: }
+[; ;OBC1_main.c: 74: return 0;
+"74
 [e ) -> 0 `i ]
 [e $UE 98  ]
-[; ;OBC1_main.c: 76: }
-"76
+[; ;OBC1_main.c: 75: }
+"75
 [e :UE 98 ]
 }

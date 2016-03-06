@@ -45,17 +45,17 @@ OBJECTDIR=build/${CND_CONF}/${IMAGE_TYPE}
 DISTDIR=dist/${CND_CONF}/${IMAGE_TYPE}
 
 # Source Files Quoted if spaced
-SOURCEFILES_QUOTED_IF_SPACED=OBC1_main.c plati_temp.c AD_value.c spi_master.c MCLR_reset.c uart_serial.c system_protocol.c uint8_to_string.c
+SOURCEFILES_QUOTED_IF_SPACED=OBC1_main.c plati_temp.c AD_value.c spi_master.c MCLR_reset.c uart_serial.c system_protocol.c uint8_to_string.c OBC1_app.c
 
 # Object Files Quoted if spaced
-OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/OBC1_main.p1 ${OBJECTDIR}/plati_temp.p1 ${OBJECTDIR}/AD_value.p1 ${OBJECTDIR}/spi_master.p1 ${OBJECTDIR}/MCLR_reset.p1 ${OBJECTDIR}/uart_serial.p1 ${OBJECTDIR}/system_protocol.p1 ${OBJECTDIR}/uint8_to_string.p1
-POSSIBLE_DEPFILES=${OBJECTDIR}/OBC1_main.p1.d ${OBJECTDIR}/plati_temp.p1.d ${OBJECTDIR}/AD_value.p1.d ${OBJECTDIR}/spi_master.p1.d ${OBJECTDIR}/MCLR_reset.p1.d ${OBJECTDIR}/uart_serial.p1.d ${OBJECTDIR}/system_protocol.p1.d ${OBJECTDIR}/uint8_to_string.p1.d
+OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/OBC1_main.p1 ${OBJECTDIR}/plati_temp.p1 ${OBJECTDIR}/AD_value.p1 ${OBJECTDIR}/spi_master.p1 ${OBJECTDIR}/MCLR_reset.p1 ${OBJECTDIR}/uart_serial.p1 ${OBJECTDIR}/system_protocol.p1 ${OBJECTDIR}/uint8_to_string.p1 ${OBJECTDIR}/OBC1_app.p1
+POSSIBLE_DEPFILES=${OBJECTDIR}/OBC1_main.p1.d ${OBJECTDIR}/plati_temp.p1.d ${OBJECTDIR}/AD_value.p1.d ${OBJECTDIR}/spi_master.p1.d ${OBJECTDIR}/MCLR_reset.p1.d ${OBJECTDIR}/uart_serial.p1.d ${OBJECTDIR}/system_protocol.p1.d ${OBJECTDIR}/uint8_to_string.p1.d ${OBJECTDIR}/OBC1_app.p1.d
 
 # Object Files
-OBJECTFILES=${OBJECTDIR}/OBC1_main.p1 ${OBJECTDIR}/plati_temp.p1 ${OBJECTDIR}/AD_value.p1 ${OBJECTDIR}/spi_master.p1 ${OBJECTDIR}/MCLR_reset.p1 ${OBJECTDIR}/uart_serial.p1 ${OBJECTDIR}/system_protocol.p1 ${OBJECTDIR}/uint8_to_string.p1
+OBJECTFILES=${OBJECTDIR}/OBC1_main.p1 ${OBJECTDIR}/plati_temp.p1 ${OBJECTDIR}/AD_value.p1 ${OBJECTDIR}/spi_master.p1 ${OBJECTDIR}/MCLR_reset.p1 ${OBJECTDIR}/uart_serial.p1 ${OBJECTDIR}/system_protocol.p1 ${OBJECTDIR}/uint8_to_string.p1 ${OBJECTDIR}/OBC1_app.p1
 
 # Source Files
-SOURCEFILES=OBC1_main.c plati_temp.c AD_value.c spi_master.c MCLR_reset.c uart_serial.c system_protocol.c uint8_to_string.c
+SOURCEFILES=OBC1_main.c plati_temp.c AD_value.c spi_master.c MCLR_reset.c uart_serial.c system_protocol.c uint8_to_string.c OBC1_app.c
 
 
 CFLAGS=
@@ -145,6 +145,14 @@ ${OBJECTDIR}/uint8_to_string.p1: uint8_to_string.c  nbproject/Makefile-${CND_CON
 	@-${MV} ${OBJECTDIR}/uint8_to_string.d ${OBJECTDIR}/uint8_to_string.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/uint8_to_string.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
+${OBJECTDIR}/OBC1_app.p1: OBC1_app.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/OBC1_app.p1.d 
+	@${RM} ${OBJECTDIR}/OBC1_app.p1 
+	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  -D__DEBUG=1 --debugger=pickit3  --double=24 --float=24 --opt=default,+asm,+asmfile,-speed,+space,-debug --addrqual=ignore --mode=free -P -N255 --warn=0 --asmlist --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-osccal,-resetbits,-download,-stackcall,+clib --output=-mcof,+elf:multilocs --stack=compiled:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/OBC1_app.p1  OBC1_app.c 
+	@-${MV} ${OBJECTDIR}/OBC1_app.d ${OBJECTDIR}/OBC1_app.p1.d 
+	@${FIXDEPS} ${OBJECTDIR}/OBC1_app.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
+	
 else
 ${OBJECTDIR}/OBC1_main.p1: OBC1_main.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}" 
@@ -209,6 +217,14 @@ ${OBJECTDIR}/uint8_to_string.p1: uint8_to_string.c  nbproject/Makefile-${CND_CON
 	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  --double=24 --float=24 --opt=default,+asm,+asmfile,-speed,+space,-debug --addrqual=ignore --mode=free -P -N255 --warn=0 --asmlist --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-osccal,-resetbits,-download,-stackcall,+clib --output=-mcof,+elf:multilocs --stack=compiled:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/uint8_to_string.p1  uint8_to_string.c 
 	@-${MV} ${OBJECTDIR}/uint8_to_string.d ${OBJECTDIR}/uint8_to_string.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/uint8_to_string.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
+	
+${OBJECTDIR}/OBC1_app.p1: OBC1_app.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/OBC1_app.p1.d 
+	@${RM} ${OBJECTDIR}/OBC1_app.p1 
+	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G  --double=24 --float=24 --opt=default,+asm,+asmfile,-speed,+space,-debug --addrqual=ignore --mode=free -P -N255 --warn=0 --asmlist --summary=default,-psect,-class,+mem,-hex,-file --output=default,-inhx032 --runtime=default,+clear,+init,-keep,-no_startup,-osccal,-resetbits,-download,-stackcall,+clib --output=-mcof,+elf:multilocs --stack=compiled:auto:auto "--errformat=%f:%l: error: (%n) %s" "--warnformat=%f:%l: warning: (%n) %s" "--msgformat=%f:%l: advisory: (%n) %s"    -o${OBJECTDIR}/OBC1_app.p1  OBC1_app.c 
+	@-${MV} ${OBJECTDIR}/OBC1_app.d ${OBJECTDIR}/OBC1_app.p1.d 
+	@${FIXDEPS} ${OBJECTDIR}/OBC1_app.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
 endif
 

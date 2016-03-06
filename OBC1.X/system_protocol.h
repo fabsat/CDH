@@ -24,7 +24,6 @@ typedef enum
 {
     CW_TYPE = 0x01,
     DATA_TYPE,
-    COMMAND_TYPE,
 } data_type_t;
 
 #define COMMAND 0x03
@@ -34,7 +33,7 @@ typedef enum
 /* コマンド一覧 */
 #define LED_BLINK     (0x01)
 #define GET_I2C_TEMP  (0x02)
-
+#define GET_CW_DATA   (0x03)
 
 /* データ終了コマンド一覧 */
 typedef enum
@@ -161,6 +160,7 @@ void cw_data_set(cw_t *p_cw_data);
 void send_data_master(destination_t destination,  data_type_t data_type, data_end_command_t data_end_command);
 
 
+void receive_data_master(destination_t destination);
 
 #endif	/* _DATA_SEND_RECEIVE_PROTOCOL_H */
 

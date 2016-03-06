@@ -53,7 +53,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 "287
 [v _PORTCbits `VS10 ~T0 @X0 0 e@7 ]
 "83 spi_master.c
-[c E1099 0 1 2 .. ]
+[c E1099 2 3 4 .. ]
 [n E1099 . OBC2 COM POW  ]
 "787 C:\Program Files (x86)\Microchip\xc8\v1.35\include\pic16f877a.h
 [v _SSPBUF `Vuc ~T0 @X0 0 e@19 ]
@@ -1092,7 +1092,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;pic_clock.h: 31: typedef signed int int16_t;
 [; ;system_protocol.h: 10: typedef enum
 [; ;system_protocol.h: 11: {
-[; ;system_protocol.h: 12: OBC2,
+[; ;system_protocol.h: 12: OBC2 = 0x02,
 [; ;system_protocol.h: 13: COM,
 [; ;system_protocol.h: 14: POW,
 [; ;system_protocol.h: 15: } destination_t;
@@ -1119,11 +1119,11 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;system_protocol.h: 61: uint8_t powmcu:1;
 [; ;system_protocol.h: 62: } cw_t;
 [; ;system_protocol.h: 64: extern cw_t cw;
-[; ;system_protocol.h: 122: void sysprot_init(void);
-[; ;system_protocol.h: 124: void cw_set(void);
-[; ;system_protocol.h: 150: uint8_t sent_data_set(void *p_data, uint8_t data_len, uint8_t byte_of_data);
-[; ;system_protocol.h: 163: void cw_data_set(cw_t *p_cw_data);
-[; ;system_protocol.h: 178: void send_data_master(destination_t destination, data_type_t data_type, data_end_command_t data_end_command);
+[; ;system_protocol.h: 105: void sysprot_init(void);
+[; ;system_protocol.h: 107: void cw_set(void);
+[; ;system_protocol.h: 133: uint8_t sent_data_set(void *p_data, uint8_t data_len, uint8_t byte_of_data);
+[; ;system_protocol.h: 146: void cw_data_set(cw_t *p_cw_data);
+[; ;system_protocol.h: 161: void send_data_master(destination_t destination, data_type_t data_type, data_end_command_t data_end_command);
 [; ;spi_master.h: 51: void spi_master_start(void);
 [; ;spi_master.h: 64: uint8_t spi_master_receive(destination_t destination);
 [; ;spi_master.h: 79: void spi_master_send(destination_t destination, uint8_t data);

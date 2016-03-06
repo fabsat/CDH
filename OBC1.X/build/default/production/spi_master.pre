@@ -1443,7 +1443,7 @@ typedef signed int int16_t;
 # 10 "system_protocol.h"
 typedef enum
 {
-OBC2,
+OBC2 = 0x02,
 COM,
 POW,
 } destination_t;
@@ -1478,18 +1478,18 @@ uint8_t powmcu:1;
 
 extern cw_t cw;
 
-# 122
+# 105
 void sysprot_init(void);
 
 void cw_set(void);
 
-# 150
+# 133
 uint8_t sent_data_set(void *p_data, uint8_t data_len, uint8_t byte_of_data);
 
-# 163
+# 146
 void cw_data_set(cw_t *p_cw_data);
 
-# 178
+# 161
 void send_data_master(destination_t destination, data_type_t data_type, data_end_command_t data_end_command);
 
 # 51 "spi_master.h"

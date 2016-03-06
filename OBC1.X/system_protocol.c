@@ -91,7 +91,6 @@ void sysprot_init(void)
 }
 
 
-/*エラーが出る*/
 void get_cw_data(void)
 {
     uint16_t buf;
@@ -236,7 +235,7 @@ void send_data_master(destination_t destination, data_type_t data_type, data_end
  * @note
  *     この関数実行後にsetしたデータ内容は初期化される
  *===================================================*/
-void receive_data_master(destination_t destination, uint8_t from_MCU)
+void receive_data_master(destination_t destination)
 {   
     packet_receive_master(destination, &packet);
 }
