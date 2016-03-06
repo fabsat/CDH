@@ -9,12 +9,12 @@
 /* データ転送の相手先 */
 typedef enum
 {
-    OBC2,
+    OBC2 = 0x02,
     COM,
     POW,
 } destination_t;
 
-#define USE_MCU 0x00        // 使用しているマイコンがOBC1=0x00, OBC2=0x01, COM=0x02, POW=0x03
+#define USE_MCU 0x01        // 使用しているマイコンがOBC1=0x01, OBC2=0x02, COM=0x03, POW=0x04
 
 /********************************************************************************
  *                          パケット関連の各種定義                                *
@@ -85,23 +85,6 @@ extern cw_t cw;
 #define OBC2_READY_PIN_TRIS   TRISDbits.TRISD2 // OBC2の設定が消えてたね！
 #define COM_READY_PIN_TRIS    TRISDbits.TRISD0
 #define POW_READY_PIN_TRIS    TRISDbits.TRISD1
-
-
-/* Macro for checking TIMEOUT */
-#define WAIT_OR_TIMEOUT(destination_notification) \
-do                                                \
-{                                                 \
-    timeout_counter = 1000;                       \
-    while(destination_notification == 0)          \
-    {                                             \
-        if(timeout_counter == 0)                  \
-        {                                         \
-            return SYS_TIMEOUT;                   \
-        }                                         \
-        __delay_ms(1);                            \
-        timeout_counter--;                        \
-    }                                             \
-} while(0)
 
 
 
