@@ -1,5 +1,5 @@
 
-# 1 "spi.c"
+# 1 "uint8_to_string.c"
 
 # 26 "C:\Program Files (x86)\Microchip\xc8\v1.35\include\htc.h"
 extern const char __xc8_OPTIM_SPEED;
@@ -1434,199 +1434,98 @@ extern unsigned char __resetbits;
 extern __bit __powerdown;
 extern __bit __timeout;
 
-# 4 "C:\Program Files (x86)\Microchip\xc8\v1.35\include\__size_t.h"
-typedef unsigned size_t;
-
-# 7 "C:\Program Files (x86)\Microchip\xc8\v1.35\include\stdarg.h"
-typedef void * va_list[1];
-
-#pragma intrinsic(__va_start)
-extern void * __va_start(void);
-
-#pragma intrinsic(__va_arg)
-extern void * __va_arg(void *, ...);
-
-# 43 "C:\Program Files (x86)\Microchip\xc8\v1.35\include\stdio.h"
-struct __prbuf
-{
-char * ptr;
-void (* func)(char);
-};
-
-# 25 "C:\Program Files (x86)\Microchip\xc8\v1.35\include\errno.h"
-extern int errno;
-
-# 12 "C:\Program Files (x86)\Microchip\xc8\v1.35\include\conio.h"
-extern void init_uart(void);
-
-extern char getch(void);
-extern char getche(void);
-extern void putch(char);
-extern void ungetch(char);
-
-extern __bit kbhit(void);
-
-# 23
-extern char * cgets(char *);
-extern void cputs(const char *);
-
-# 88 "C:\Program Files (x86)\Microchip\xc8\v1.35\include\stdio.h"
-extern int cprintf(char *, ...);
-#pragma printf_check(cprintf)
-
-
-
-extern int _doprnt(struct __prbuf *, const register char *, register va_list);
-
-
-# 180
-#pragma printf_check(vprintf) const
-#pragma printf_check(vsprintf) const
-
-extern char * gets(char *);
-extern int puts(const char *);
-extern int scanf(const char *, ...) __attribute__((unsupported("scanf() is not supported by this compiler")));
-extern int sscanf(const char *, const char *, ...) __attribute__((unsupported("sscanf() is not supported by this compiler")));
-extern int vprintf(const char *, va_list) __attribute__((unsupported("vprintf() is not supported by this compiler")));
-extern int vsprintf(char *, const char *, va_list) __attribute__((unsupported("vsprintf() is not supported by this compiler")));
-extern int vscanf(const char *, va_list ap) __attribute__((unsupported("vscanf() is not supported by this compiler")));
-extern int vsscanf(const char *, const char *, va_list) __attribute__((unsupported("vsscanf() is not supported by this compiler")));
-
-#pragma printf_check(printf) const
-#pragma printf_check(sprintf) const
-extern int sprintf(char *, const char *, ...);
-extern int printf(const char *, ...);
-
 # 24 "pic_clock.h"
 typedef unsigned char uint8_t;
 typedef signed char int8_t;
 typedef unsigned int uint16_t;
 typedef signed int int16_t;
 
-# 27 "spi.h"
-typedef enum
+# 23 "uint8_to_string.h"
+void uint8_to_string(uint8_t num, uint8_t *p_str_buf, uint8_t buf_size);
+
+# 17 "uint8_to_string.c"
+static void process_100(uint8_t num, uint8_t *p_str_buf, uint8_t *p_flag);
+static void process_10(uint8_t num, uint8_t *p_str_buf, uint8_t *p_flag);
+static void process_1(uint8_t num, uint8_t *p_str_buf, uint8_t *p_flag);
+
+# 36
+void uint8_to_string(uint8_t num, uint8_t *p_str_buf, uint8_t buf_size)
 {
-SPI_ISR_ENABLE,
-SPI_ISR_DISABLE,
-} spi_isr_set_t;
+uint8_t flag = 0;
 
-# 49
-void spi_slave_init(spi_isr_set_t spi_isr);
 
-# 66
-char spi_send_receive(char data);
-
-# 79
-void spi_interrupt(void);
-
-# 39 "uart_serial.h"
-void uart_init();
-void putch(unsigned char byte);
-void put_string(unsigned char *str);
-unsigned char getch();
-unsigned char getche();
-
-# 26 "spi.c"
-static void spi_reset(void);
-
-# 42
-void spi_slave_init(spi_isr_set_t spi_isr)
+if(buf_size < 4)
 {
-
-TRISC3 = 1;
-TRISC4 = 1;
-TRISC5 = 0;
-TRISA5 = 1;
-ADCON0bits.ADON = 0;
-ADCON1bits.PCFG3 = 0;
-ADCON1bits.PCFG2 = 1;
-ADCON1bits.PCFG1 = 1;
-
-
-SSPCONbits.SSPEN = 0;
-
-
-SSPSTATbits.SMP = 0;
-SSPCONbits.CKP = 0;
-SSPSTATbits.CKE = 0;
-
-
-SSPCONbits.SSPM3 = 0;
-SSPCONbits.SSPM2 = 1;
-SSPCONbits.SSPM1 = 0;
-SSPCONbits.SSPM0 = 0;
-
-
-if(spi_isr == SPI_ISR_ENABLE)
-{
-PIR1bits.SSPIF = 0;
-PIE1bits.SSPIE = 1;
-INTCONbits.PEIE = 1;
-INTCONbits.GIE = 1;
+return;
 }
 
 
-SSPCONbits.SSPEN = 1;
-}
-
-# 92
-void spi_interrupt(void)
+if(100 <= num && num <= 255)
 {
-char data;
-
-data = SSPBUF;
-
-putch(data);
+process_100(num, p_str_buf, &flag);
 }
-
-# 117
-char spi_send_receive(char data)
+else if(10 <= num && num <= 99)
 {
-char received_data;
-unsigned char timeout_counter = 0;
-unsigned char reset_counter = 0xFF;
-
-
-SSPBUF = data;
-
-
-while(SSPSTATbits.BF == 0)
+process_10(num, p_str_buf, &flag);
+}
+else if(0 <= num && num <= 9)
 {
-printf("into while\r\n");
+process_1(num, p_str_buf, &flag);
+}
+}
 
-if(reset_counter == 0x00 && timeout_counter < 2)
+# 65
+static void process_100(uint8_t num, uint8_t *p_str_buf, uint8_t *p_flag)
 {
-spi_reset();
-timeout_counter++;
-continue;
-}
 
-
-if(timeout_counter == 2)
+if(0 <= num && num <= 199)
 {
-return -1;
+p_str_buf[*p_flag] = 0x30 + 1;
+(*p_flag)++;
 }
-
-
-reset_counter--;
-}
-
-
-received_data = SSPBUF;
-SSPBUF = 0xFF;
-
-return received_data;
-}
-
-# 166
-static void spi_reset(void)
+else if(200 <= num && num <= 255)
 {
-unsigned char dummy;
-
-SSPEN = 0;
-SSPEN = 1;
-dummy = SSPBUF;
-SSPIF = 0;
-SSPEN = 0;
-SSPEN = 1;
+p_str_buf[*p_flag] = 0x30 + 2;
+(*p_flag)++;
 }
+
+
+process_10((num % 100), p_str_buf, p_flag);
+}
+
+# 87
+static void process_10(uint8_t num, uint8_t *p_str_buf, uint8_t *p_flag)
+{
+uint8_t divide = num / 10;
+uint8_t val = 0x30;
+uint8_t i;
+
+
+for(i = 0; i < divide; i++)
+{
+val++;
+}
+
+p_str_buf[*p_flag] = val;
+(*p_flag)++;
+
+process_1((num % 10), p_str_buf, p_flag);
+}
+
+# 109
+static void process_1(uint8_t num, uint8_t *p_str_buf, uint8_t *p_flag)
+{
+uint8_t i;
+uint8_t val = 0x30;
+
+for(i = 0; i < num; i++)
+{
+val++;
+}
+
+p_str_buf[*p_flag] = val;
+(*p_flag)++;
+
+p_str_buf[*p_flag] = '\0';
+}
+

@@ -1434,6 +1434,12 @@ extern unsigned char __resetbits;
 extern __bit __powerdown;
 extern __bit __timeout;
 
+# 24 "pic_clock.h"
+typedef unsigned char uint8_t;
+typedef signed char int8_t;
+typedef unsigned int uint16_t;
+typedef signed int int16_t;
+
 # 39 "uart_serial.h"
 void uart_init();
 void putch(unsigned char byte);

@@ -1,7 +1,7 @@
 Version 3.2 HI-TECH Software Intermediate Code
 "43 spi.c
-[c E1157 0 1 .. ]
-[n E1157 . SPI_ISR_ENABLE SPI_ISR_DISABLE  ]
+[c E1161 0 1 .. ]
+[n E1161 . SPI_ISR_ENABLE SPI_ISR_DISABLE  ]
 "2709 C:\Program Files (x86)\Microchip\xc8\v1.35\include\pic16f877a.h
 [v _TRISC3 `Vb ~T0 @X0 0 e@1083 ]
 "2711
@@ -1161,6 +1161,10 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;stdio.h: 190: extern int vsscanf(const char *, const char *, va_list) __attribute__((unsupported("vsscanf() is not supported by this compiler")));
 [; ;stdio.h: 194: extern int sprintf(char *, const char *, ...);
 [; ;stdio.h: 195: extern int printf(const char *, ...);
+[; ;pic_clock.h: 24: typedef unsigned char uint8_t;
+[; ;pic_clock.h: 25: typedef signed char int8_t;
+[; ;pic_clock.h: 26: typedef unsigned int uint16_t;
+[; ;pic_clock.h: 27: typedef signed int int16_t;
 [; ;spi.h: 27: typedef enum
 [; ;spi.h: 28: {
 [; ;spi.h: 29: SPI_ISR_ENABLE,
@@ -1176,14 +1180,14 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;uart_serial.h: 43: unsigned char getche();
 [; ;spi.c: 26: static void spi_reset(void);
 "42 spi.c
-[v _spi_slave_init `(v ~T0 @X0 1 ef1`E1157 ]
+[v _spi_slave_init `(v ~T0 @X0 1 ef1`E1161 ]
 "43
 {
 [; ;spi.c: 42: void spi_slave_init(spi_isr_set_t spi_isr)
 [; ;spi.c: 43: {
 [e :U _spi_slave_init ]
 "42
-[v _spi_isr `E1157 ~T0 @X0 1 r1 ]
+[v _spi_isr `E1161 ~T0 @X0 1 r1 ]
 "43
 [f ]
 [; ;spi.c: 45: TRISC3 = 1;
@@ -1236,7 +1240,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e = . . _SSPCONbits 1 0 -> -> 0 `i `uc ]
 [; ;spi.c: 69: if(spi_isr == SPI_ISR_ENABLE)
 "69
-[e $ ! == -> _spi_isr `i -> . `E1157 0 `i 98  ]
+[e $ ! == -> _spi_isr `i -> . `E1161 0 `i 98  ]
 [; ;spi.c: 70: {
 "70
 {

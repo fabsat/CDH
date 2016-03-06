@@ -1,5 +1,5 @@
 
-# 1 "spi.c"
+# 1 "system_protocol.c"
 
 # 26 "C:\Program Files (x86)\Microchip\xc8\v1.35\include\htc.h"
 extern const char __xc8_OPTIM_SPEED;
@@ -1434,199 +1434,361 @@ extern unsigned char __resetbits;
 extern __bit __powerdown;
 extern __bit __timeout;
 
-# 4 "C:\Program Files (x86)\Microchip\xc8\v1.35\include\__size_t.h"
-typedef unsigned size_t;
-
-# 7 "C:\Program Files (x86)\Microchip\xc8\v1.35\include\stdarg.h"
-typedef void * va_list[1];
-
-#pragma intrinsic(__va_start)
-extern void * __va_start(void);
-
-#pragma intrinsic(__va_arg)
-extern void * __va_arg(void *, ...);
-
-# 43 "C:\Program Files (x86)\Microchip\xc8\v1.35\include\stdio.h"
-struct __prbuf
-{
-char * ptr;
-void (* func)(char);
-};
-
-# 25 "C:\Program Files (x86)\Microchip\xc8\v1.35\include\errno.h"
-extern int errno;
-
-# 12 "C:\Program Files (x86)\Microchip\xc8\v1.35\include\conio.h"
-extern void init_uart(void);
-
-extern char getch(void);
-extern char getche(void);
-extern void putch(char);
-extern void ungetch(char);
-
-extern __bit kbhit(void);
-
-# 23
-extern char * cgets(char *);
-extern void cputs(const char *);
-
-# 88 "C:\Program Files (x86)\Microchip\xc8\v1.35\include\stdio.h"
-extern int cprintf(char *, ...);
-#pragma printf_check(cprintf)
-
-
-
-extern int _doprnt(struct __prbuf *, const register char *, register va_list);
-
-
-# 180
-#pragma printf_check(vprintf) const
-#pragma printf_check(vsprintf) const
-
-extern char * gets(char *);
-extern int puts(const char *);
-extern int scanf(const char *, ...) __attribute__((unsupported("scanf() is not supported by this compiler")));
-extern int sscanf(const char *, const char *, ...) __attribute__((unsupported("sscanf() is not supported by this compiler")));
-extern int vprintf(const char *, va_list) __attribute__((unsupported("vprintf() is not supported by this compiler")));
-extern int vsprintf(char *, const char *, va_list) __attribute__((unsupported("vsprintf() is not supported by this compiler")));
-extern int vscanf(const char *, va_list ap) __attribute__((unsupported("vscanf() is not supported by this compiler")));
-extern int vsscanf(const char *, const char *, va_list) __attribute__((unsupported("vsscanf() is not supported by this compiler")));
-
-#pragma printf_check(printf) const
-#pragma printf_check(sprintf) const
-extern int sprintf(char *, const char *, ...);
-extern int printf(const char *, ...);
-
 # 24 "pic_clock.h"
 typedef unsigned char uint8_t;
 typedef signed char int8_t;
 typedef unsigned int uint16_t;
 typedef signed int int16_t;
 
-# 27 "spi.h"
+# 10 "system_protocol.h"
 typedef enum
 {
-SPI_ISR_ENABLE,
-SPI_ISR_DISABLE,
-} spi_isr_set_t;
+OBC2 = 0x02,
+COM,
+POW,
+} destination_t;
 
-# 49
-void spi_slave_init(spi_isr_set_t spi_isr);
+# 23
+typedef enum
+{
+CW_TYPE = 0x01,
+DATA_TYPE,
+} data_type_t;
 
-# 66
-char spi_send_receive(char data);
+# 39
+typedef enum
+{
+DATA_END = 0b00010000,
+DATA_CONTINUE,
+} data_end_command_t;
+
+# 51
+typedef struct
+{
+uint8_t power1[2];
+uint8_t power2[2];
+uint8_t power3[2];
+uint8_t power4[2];
+uint8_t power5[2];
+uint8_t temp[2];
+uint8_t obc2:1;
+uint8_t powmcu:1;
+} cw_t;
+
+extern cw_t cw;
+
+# 104
+void sysprot_init(void);
+
+void cw_set(void);
+
+# 132
+uint8_t sent_data_set(void *p_data, uint8_t data_len, uint8_t byte_of_data);
+
+# 145
+void cw_data_set(cw_t *p_cw_data);
+
+# 160
+void send_data_master(destination_t destination, data_type_t data_type, data_end_command_t data_end_command);
+
+
+void receive_data_master(destination_t destination);
+
+# 51 "spi_master.h"
+void spi_master_start(void);
+
+# 64
+uint8_t spi_master_receive(destination_t destination);
 
 # 79
-void spi_interrupt(void);
-
-# 39 "uart_serial.h"
-void uart_init();
-void putch(unsigned char byte);
-void put_string(unsigned char *str);
-unsigned char getch();
-unsigned char getche();
-
-# 26 "spi.c"
-static void spi_reset(void);
-
-# 42
-void spi_slave_init(spi_isr_set_t spi_isr)
-{
-
-TRISC3 = 1;
-TRISC4 = 1;
-TRISC5 = 0;
-TRISA5 = 1;
-ADCON0bits.ADON = 0;
-ADCON1bits.PCFG3 = 0;
-ADCON1bits.PCFG2 = 1;
-ADCON1bits.PCFG1 = 1;
-
-
-SSPCONbits.SSPEN = 0;
-
-
-SSPSTATbits.SMP = 0;
-SSPCONbits.CKP = 0;
-SSPSTATbits.CKE = 0;
-
-
-SSPCONbits.SSPM3 = 0;
-SSPCONbits.SSPM2 = 1;
-SSPCONbits.SSPM1 = 0;
-SSPCONbits.SSPM0 = 0;
-
-
-if(spi_isr == SPI_ISR_ENABLE)
-{
-PIR1bits.SSPIF = 0;
-PIE1bits.SSPIE = 1;
-INTCONbits.PEIE = 1;
-INTCONbits.GIE = 1;
-}
-
-
-SSPCONbits.SSPEN = 1;
-}
+void spi_master_send(destination_t destination, uint8_t data);
 
 # 92
-void spi_interrupt(void)
+void spi_master_stop(void);
+
+# 35 "system_protocol.c"
+typedef struct
 {
-char data;
+uint8_t data_type;
+uint8_t payload[30];
+uint8_t data_end_command;
+} packet_format_t;
 
-data = SSPBUF;
+# 54
+static void uint8_data_set(uint8_t *p_data, uint8_t data_len);
+static void uint16_data_set(uint16_t *p_data, uint8_t data_len);
+static void double_data_set(double *p_data, uint8_t data_len);
+static void uint16_to_byte_array(uint16_t *p_data, uint8_t *p_data_array);
+static void double_to_byte_array(double *p_data, uint8_t *p_data_array);
+static uint8_t send_payload(destination_t destination, uint8_t *p_payload);
+static void receive_payload(destination_t destination);
+static void packet_send_master(destination_t destination, packet_format_t *p_packet);
+static void packet_receive_master(destination_t destination, packet_format_t *p_packet);
 
-putch(data);
-}
+# 69
+static packet_format_t packet = { 0x00, {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}, 0x00 };
 
-# 117
-char spi_send_receive(char data)
+
+static uint8_t index_pos;
+
+# 82
+void sysprot_init(void)
 {
-char received_data;
-unsigned char timeout_counter = 0;
-unsigned char reset_counter = 0xFF;
+TRISDbits.TRISD0 = 1;
+TRISDbits.TRISD1 = 1;
 
 
-SSPBUF = data;
-
-
-while(SSPSTATbits.BF == 0)
-{
-printf("into while\r\n");
-
-if(reset_counter == 0x00 && timeout_counter < 2)
-{
-spi_reset();
-timeout_counter++;
-continue;
-}
-
-
-if(timeout_counter == 2)
-{
-return -1;
-}
-
-
-reset_counter--;
 }
 
 
-received_data = SSPBUF;
-SSPBUF = 0xFF;
-
-return received_data;
-}
-
-# 166
-static void spi_reset(void)
+void get_cw_data(void)
 {
-unsigned char dummy;
+uint16_t buf;
 
-SSPEN = 0;
-SSPEN = 1;
-dummy = SSPBUF;
-SSPIF = 0;
-SSPEN = 0;
-SSPEN = 1;
+spi_master_start();
+cw.power1[0] = spi_master_receive(POW);
+cw.power1[1] = spi_master_receive(POW);
+cw.power2[0] = spi_master_receive(POW);
+cw.power2[1] = spi_master_receive(POW);
+cw.power3[0] = spi_master_receive(POW);
+cw.power3[1] = spi_master_receive(POW);
+cw.power4[0] = spi_master_receive(POW);
+cw.power4[1] = spi_master_receive(POW);
+cw.power5[0] = spi_master_receive(POW);
+cw.power5[1] = spi_master_receive(POW);
+buf = get_adcon();
+cw.temp[0] = (uint8_t)(buf >> 8);
+cw.temp[1] = (uint8_t)(buf & 0b00000000111111111);
+cw.obc2 = 1;
+cw.powmcu = 1;
 }
+
+# 138
+uint8_t sent_data_set(void *p_data, uint8_t data_len, uint8_t byte_of_data)
+{
+
+if((30 - index_pos) - (data_len * (byte_of_data + 1)) < 0)
+{
+return 0xff;
+}
+
+
+switch(byte_of_data)
+{
+case 1:
+uint8_data_set((uint8_t *)p_data, data_len);
+break;
+case 2:
+uint16_data_set((uint16_t *)p_data, data_len);
+break;
+case 4:
+double_data_set((double *)p_data, data_len);
+break;
+default:
+return 0xff;
+}
+
+
+return (uint8_t)(30 - index_pos);
+}
+
+# 177
+void cw_data_set(cw_t *p_cw_data)
+{
+uint8_t i;
+
+
+uint8_data_set(&(p_cw_data->power1), 2);
+uint8_data_set(&(p_cw_data->power2), 2);
+uint8_data_set(&(p_cw_data->power3), 2);
+uint8_data_set(&(p_cw_data->power4), 2);
+uint8_data_set(&(p_cw_data->power5), 2);
+
+
+uint8_data_set(&(p_cw_data->temp), 2);
+
+
+packet.payload[index_pos++] = 1;
+packet.payload[index_pos++] = cw.obc2;
+
+
+packet.payload[index_pos++] = 1;
+packet.payload[index_pos++] = cw.powmcu;
+
+}
+
+# 214
+void send_data_master(destination_t destination, data_type_t data_type, data_end_command_t data_end_command)
+{
+packet.data_type = (uint8_t)data_type;
+packet.data_end_command = (uint8_t)data_end_command;
+
+packet_send_master(destination, &packet);
+}
+
+# 235
+void receive_data_master(destination_t destination)
+{
+packet_receive_master(destination, &packet);
+}
+
+# 257
+static void uint8_data_set(uint8_t *p_data, uint8_t data_len)
+{
+while(data_len)
+{
+packet.payload[index_pos++] = 1;
+packet.payload[index_pos++] = *p_data++;
+data_len--;
+}
+}
+
+# 279
+static void uint16_data_set(uint16_t *p_data, uint8_t data_len)
+{
+uint8_t buf[3];
+uint8_t i;
+
+while(data_len)
+{
+uint16_to_byte_array(p_data++, buf);
+
+for(i = 0; i < 3; i++)
+{
+packet.payload[index_pos++] = buf[i];
+}
+data_len--;
+}
+}
+
+# 308
+static void double_data_set(double *p_data, uint8_t data_len)
+{
+uint8_t buf[5];
+uint8_t i;
+
+while(data_len)
+{
+double_to_byte_array(p_data++, buf);
+
+for(i = 0; i < 5; i++)
+{
+packet.payload[index_pos++] = buf[i];
+}
+data_len--;
+}
+}
+
+# 337
+static void uint16_to_byte_array(uint16_t *p_data, uint8_t *p_data_array)
+{
+const uint16_t bit_mask = 0b0000000011111111;
+
+
+p_data_array[0] = 2;
+p_data_array[1] = (uint8_t)(*p_data >> 8);
+p_data_array[2] = (uint8_t)(*p_data & bit_mask);
+}
+
+# 359
+static void double_to_byte_array(double *p_data, uint8_t *p_data_array)
+{
+uint8_t i;
+union
+{
+double data;
+uint8_t array[4];
+} converter;
+
+
+converter.data = *p_data;
+
+
+p_data_array[0] = 4;
+
+
+for(i = 0; i < 4; i++)
+{
+p_data_array[i + 1] = converter.array[i];
+}
+}
+
+# 394
+static uint8_t send_payload(destination_t destination, uint8_t *p_payload)
+{
+uint8_t i;
+uint8_t data_len;
+uint8_t index_pos = 0;
+
+
+while(*p_payload != 0x00 || index_pos < 30)
+{
+data_len = *p_payload;
+spi_master_send(destination, p_payload++);
+index_pos++;
+for(i = 0; i < data_len; i++)
+{
+spi_master_send(destination, p_payload++);
+index_pos++;
+}
+}
+
+return index_pos;
+}
+
+# 429
+static void receive_payload(destination_t destination)
+{
+uint8_t i;
+uint8_t data_len;
+uint8_t rec_index_pos = 0;
+uint8_t *p_payload = packet.payload;
+
+
+while(index_pos != 0x00 || rec_index_pos < 30)
+{
+data_len = spi_master_receive(destination);
+rec_index_pos++;
+for(i = 0; i < data_len; i++)
+{
+*p_payload = spi_master_receive(destination);
+p_payload++;
+rec_index_pos++;
+}
+}
+}
+
+# 462
+static void packet_send_master(destination_t destination, packet_format_t *p_packet)
+{
+
+spi_master_send(destination, 0x01);
+
+
+spi_master_send(destination, &p_packet->data_type);
+
+
+send_payload(destination, &p_packet->payload);
+
+
+spi_master_send(destination, &p_packet->data_end_command);
+}
+
+# 489
+static void packet_receive_master(destination_t destination, packet_format_t *p_packet)
+{
+uint8_t use_obc = 0x00;
+
+
+use_obc = spi_master_receive(destination);
+
+
+packet.data_type = spi_master_receive(destination);
+
+
+receive_payload(destination);
+
+
+packet.data_end_command = spi_master_receive(destination);
+}
+

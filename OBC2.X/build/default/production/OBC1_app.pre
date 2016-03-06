@@ -1,5 +1,5 @@
 
-# 1 "spi.c"
+# 1 "OBC1_app.c"
 
 # 26 "C:\Program Files (x86)\Microchip\xc8\v1.35\include\htc.h"
 extern const char __xc8_OPTIM_SPEED;
@@ -1434,199 +1434,149 @@ extern unsigned char __resetbits;
 extern __bit __powerdown;
 extern __bit __timeout;
 
-# 4 "C:\Program Files (x86)\Microchip\xc8\v1.35\include\__size_t.h"
-typedef unsigned size_t;
-
-# 7 "C:\Program Files (x86)\Microchip\xc8\v1.35\include\stdarg.h"
-typedef void * va_list[1];
-
-#pragma intrinsic(__va_start)
-extern void * __va_start(void);
-
-#pragma intrinsic(__va_arg)
-extern void * __va_arg(void *, ...);
-
-# 43 "C:\Program Files (x86)\Microchip\xc8\v1.35\include\stdio.h"
-struct __prbuf
-{
-char * ptr;
-void (* func)(char);
-};
-
-# 25 "C:\Program Files (x86)\Microchip\xc8\v1.35\include\errno.h"
-extern int errno;
-
-# 12 "C:\Program Files (x86)\Microchip\xc8\v1.35\include\conio.h"
-extern void init_uart(void);
-
-extern char getch(void);
-extern char getche(void);
-extern void putch(char);
-extern void ungetch(char);
-
-extern __bit kbhit(void);
-
-# 23
-extern char * cgets(char *);
-extern void cputs(const char *);
-
-# 88 "C:\Program Files (x86)\Microchip\xc8\v1.35\include\stdio.h"
-extern int cprintf(char *, ...);
-#pragma printf_check(cprintf)
-
-
-
-extern int _doprnt(struct __prbuf *, const register char *, register va_list);
-
-
-# 180
-#pragma printf_check(vprintf) const
-#pragma printf_check(vsprintf) const
-
-extern char * gets(char *);
-extern int puts(const char *);
-extern int scanf(const char *, ...) __attribute__((unsupported("scanf() is not supported by this compiler")));
-extern int sscanf(const char *, const char *, ...) __attribute__((unsupported("sscanf() is not supported by this compiler")));
-extern int vprintf(const char *, va_list) __attribute__((unsupported("vprintf() is not supported by this compiler")));
-extern int vsprintf(char *, const char *, va_list) __attribute__((unsupported("vsprintf() is not supported by this compiler")));
-extern int vscanf(const char *, va_list ap) __attribute__((unsupported("vscanf() is not supported by this compiler")));
-extern int vsscanf(const char *, const char *, va_list) __attribute__((unsupported("vsscanf() is not supported by this compiler")));
-
-#pragma printf_check(printf) const
-#pragma printf_check(sprintf) const
-extern int sprintf(char *, const char *, ...);
-extern int printf(const char *, ...);
-
 # 24 "pic_clock.h"
 typedef unsigned char uint8_t;
 typedef signed char int8_t;
 typedef unsigned int uint16_t;
 typedef signed int int16_t;
 
-# 27 "spi.h"
+# 10 "system_protocol.h"
 typedef enum
 {
-SPI_ISR_ENABLE,
-SPI_ISR_DISABLE,
-} spi_isr_set_t;
+OBC2 = 0x02,
+COM,
+POW,
+} destination_t;
 
-# 49
-void spi_slave_init(spi_isr_set_t spi_isr);
+# 23
+typedef enum
+{
+CW_TYPE = 0x01,
+DATA_TYPE,
+} data_type_t;
 
-# 66
-char spi_send_receive(char data);
+# 39
+typedef enum
+{
+DATA_END = 0b00010000,
+DATA_CONTINUE,
+} data_end_command_t;
+
+# 51
+typedef struct
+{
+uint8_t power1[2];
+uint8_t power2[2];
+uint8_t power3[2];
+uint8_t power4[2];
+uint8_t power5[2];
+uint8_t temp[2];
+uint8_t obc2:1;
+uint8_t powmcu:1;
+} cw_t;
+
+extern cw_t cw;
+
+# 104
+void sysprot_init(void);
+
+void cw_set(void);
+
+# 132
+uint8_t sent_data_set(void *p_data, uint8_t data_len, uint8_t byte_of_data);
+
+# 145
+void cw_data_set(cw_t *p_cw_data);
+
+# 160
+void send_data_master(destination_t destination, data_type_t data_type, data_end_command_t data_end_command);
+
+
+void receive_data_master(destination_t destination);
+
+# 51 "spi_master.h"
+void spi_master_start(void);
+
+# 64
+uint8_t spi_master_receive(destination_t destination);
 
 # 79
-void spi_interrupt(void);
-
-# 39 "uart_serial.h"
-void uart_init();
-void putch(unsigned char byte);
-void put_string(unsigned char *str);
-unsigned char getch();
-unsigned char getche();
-
-# 26 "spi.c"
-static void spi_reset(void);
-
-# 42
-void spi_slave_init(spi_isr_set_t spi_isr)
-{
-
-TRISC3 = 1;
-TRISC4 = 1;
-TRISC5 = 0;
-TRISA5 = 1;
-ADCON0bits.ADON = 0;
-ADCON1bits.PCFG3 = 0;
-ADCON1bits.PCFG2 = 1;
-ADCON1bits.PCFG1 = 1;
-
-
-SSPCONbits.SSPEN = 0;
-
-
-SSPSTATbits.SMP = 0;
-SSPCONbits.CKP = 0;
-SSPSTATbits.CKE = 0;
-
-
-SSPCONbits.SSPM3 = 0;
-SSPCONbits.SSPM2 = 1;
-SSPCONbits.SSPM1 = 0;
-SSPCONbits.SSPM0 = 0;
-
-
-if(spi_isr == SPI_ISR_ENABLE)
-{
-PIR1bits.SSPIF = 0;
-PIE1bits.SSPIE = 1;
-INTCONbits.PEIE = 1;
-INTCONbits.GIE = 1;
-}
-
-
-SSPCONbits.SSPEN = 1;
-}
+void spi_master_send(destination_t destination, uint8_t data);
 
 # 92
-void spi_interrupt(void)
+void spi_master_stop(void);
+
+# 16 "OBC1_app.h"
+void COM_status(void);
+void POW_status(void);
+void command(uint8_t data);
+
+# 41 "MCLR_reset.h"
+void MCLR_init(void);
+
+# 55
+void MCLR_reset(uint8_t resetted_mcu);
+
+# 26 "OBC1_app.c"
+static void LED_data_set(void);
+static void I2Ctemp_data_set(void);
+
+
+void COM_status(void)
 {
-char data;
-
-data = SSPBUF;
-
-putch(data);
+uint8_t COM_status = 0;
+spi_master_send(COM, 0x01);
+COM_status = spi_master_receive(COM);
+if(COM_status == 0x00 || COM_status == 0xFF)
+{
+MCLR_reset(0x05);
+}
 }
 
-# 117
-char spi_send_receive(char data)
+void POW_status(void)
 {
-char received_data;
-unsigned char timeout_counter = 0;
-unsigned char reset_counter = 0xFF;
+spi_master_send(POW, 0x01);
+if(PORTDbits.RD1==0) MCLR_reset(0x06);
+}
 
-
-SSPBUF = data;
-
-
-while(SSPSTATbits.BF == 0)
+void command(uint8_t data)
 {
-printf("into while\r\n");
-
-if(reset_counter == 0x00 && timeout_counter < 2)
+switch(data)
 {
-spi_reset();
-timeout_counter++;
-continue;
+case (0x03):
+get_cw_data();
+cw_data_set(&cw);
+spi_master_send(COM, 0x11);
+send_data_master(COM, 0x01, DATA_END);
+break;
+
+case (0x01):
+PORTDbits.RD6 = 1;
+_delay((unsigned long)((100)*(20000000/4000.0)));
+PORTDbits.RD6 = 0;
+_delay((unsigned long)((100)*(20000000/4000.0)));
+LED_data_set();
+spi_master_send(COM, 0x11);
+send_data_master(COM, (0x01), DATA_END);
+break;
+
+case (0x02):
+spi_master_send(OBC2, 0x01);
+I2Ctemp_data_set();
+spi_master_send(COM, 0x11);
+send_data_master(COM, 0x02, DATA_END);
+break;
+}
 }
 
 
-if(timeout_counter == 2)
+static void LED_data_set(void)
 {
-return -1;
+sent_data_set(0x01, 1, 1);
 }
 
-
-reset_counter--;
-}
-
-
-received_data = SSPBUF;
-SSPBUF = 0xFF;
-
-return received_data;
-}
-
-# 166
-static void spi_reset(void)
+static void I2Ctemp_data_set(void)
 {
-unsigned char dummy;
-
-SSPEN = 0;
-SSPEN = 1;
-dummy = SSPBUF;
-SSPIF = 0;
-SSPEN = 0;
-SSPEN = 1;
+receive_data_master(OBC2);
 }
+
