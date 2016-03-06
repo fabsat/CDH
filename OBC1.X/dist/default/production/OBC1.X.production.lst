@@ -1,7 +1,7 @@
 
 
 Microchip Technology PIC LITE Macro Assembler V1.35 build -356382666 
-                                                                                               Sun Mar 06 20:13:35 2016
+                                                                                               Sun Mar 06 21:56:30 2016
 
 Microchip Technology Omniscient Code Generator v1.35 (Free mode) build 201507080246
      1                           	processor	16F877A
@@ -1362,21 +1362,21 @@ Microchip Technology Omniscient Code Generator v1.35 (Free mode) build 201507080
   1356  070A  1303               	bcf	3,6	;RP1=0, select bank0
   1357  070B  00E0               	movwf	command@data
   1358                           
-  1359                           ;OBC1_app.c: 50: switch(data)
+  1359                           ;OBC1_app.c: 49: switch(data)
   1360  070C  2F95               	goto	l1705
   1361  070D                     l1689:	
-  1362                           ;OBC1_app.c: 51: {
-  1363                           ;OBC1_app.c: 52: case (0x03):
+  1362                           ;OBC1_app.c: 50: {
+  1363                           ;OBC1_app.c: 51: case (0x03):
   1364                           
   1365                           
-  1366                           ;OBC1_app.c: 53: get_cw_data();
+  1366                           ;OBC1_app.c: 52: get_cw_data();
   1367  070D  120A  118A  2679  120A  118A  	fcall	_get_cw_data
   1368                           
-  1369                           ;OBC1_app.c: 54: cw_data_set(&cw);
+  1369                           ;OBC1_app.c: 53: cw_data_set(&cw);
   1370  0712  3041               	movlw	(low (_cw| 0))& (0+255)
   1371  0713  120A  118A  25F9  120A  118A  	fcall	_cw_data_set
   1372                           
-  1373                           ;OBC1_app.c: 55: spi_master_send(COM, 0x11);
+  1373                           ;OBC1_app.c: 54: spi_master_send(COM, 0x11);
   1374  0718  3011               	movlw	17
   1375  0719  1283               	bcf	3,5	;RP0=0, select bank0
   1376  071A  1303               	bcf	3,6	;RP1=0, select bank0
@@ -1386,7 +1386,7 @@ Microchip Technology Omniscient Code Generator v1.35 (Free mode) build 201507080
   1380  071E  3003               	movlw	3
   1381  071F  120A  118A  2536  120A  118A  	fcall	_spi_master_send
   1382                           
-  1383                           ;OBC1_app.c: 56: send_data_master(COM, 0x01, DATA_END);
+  1383                           ;OBC1_app.c: 55: send_data_master(COM, 0x01, DATA_END);
   1384  0724  1283               	bcf	3,5	;RP0=0, select bank0
   1385  0725  1303               	bcf	3,6	;RP1=0, select bank0
   1386  0726  01CF               	clrf	send_data_master@data_type
@@ -1398,16 +1398,16 @@ Microchip Technology Omniscient Code Generator v1.35 (Free mode) build 201507080
   1392  072C  3003               	movlw	3
   1393  072D  120A  118A  2232   	fcall	_send_data_master
   1394                           
-  1395                           ;OBC1_app.c: 57: break;
+  1395                           ;OBC1_app.c: 56: break;
   1396  0730  0008               	return
   1397  0731                     l383:	
-  1398                           ;OBC1_app.c: 59: case (0x01):
+  1398                           ;OBC1_app.c: 58: case (0x01):
   1399                           
   1400                           
-  1401                           ;OBC1_app.c: 60: PORTDbits.RD6 = 1;
+  1401                           ;OBC1_app.c: 59: PORTDbits.RD6 = 1;
   1402  0731  1708               	bsf	8,6	;volatile
   1403                           
-  1404                           ;OBC1_app.c: 61: _delay((unsigned long)((100)*(20000000/4000.0)));
+  1404                           ;OBC1_app.c: 60: _delay((unsigned long)((100)*(20000000/4000.0)));
   1405  0732  3003               	movlw	3
   1406  0733  00DF               	movwf	??_command+2
   1407  0734  308A               	movlw	138
@@ -1423,12 +1423,12 @@ Microchip Technology Omniscient Code Generator v1.35 (Free mode) build 201507080
   1417  073D  2F38               	goto	u917
   1418  073E  2F3F               	nop2
   1419                           
-  1420                           ;OBC1_app.c: 62: PORTDbits.RD6 = 0;
+  1420                           ;OBC1_app.c: 61: PORTDbits.RD6 = 0;
   1421  073F  1283               	bcf	3,5	;RP0=0, select bank0
   1422  0740  1303               	bcf	3,6	;RP1=0, select bank0
   1423  0741  1308               	bcf	8,6	;volatile
   1424                           
-  1425                           ;OBC1_app.c: 63: _delay((unsigned long)((100)*(20000000/4000.0)));
+  1425                           ;OBC1_app.c: 62: _delay((unsigned long)((100)*(20000000/4000.0)));
   1426  0742  3003               	movlw	3
   1427  0743  00DF               	movwf	??_command+2
   1428  0744  308A               	movlw	138
@@ -1444,10 +1444,10 @@ Microchip Technology Omniscient Code Generator v1.35 (Free mode) build 201507080
   1438  074D  2F48               	goto	u927
   1439  074E  2F4F               	nop2
   1440                           
-  1441                           ;OBC1_app.c: 64: LED_data_set();
+  1441                           ;OBC1_app.c: 63: LED_data_set();
   1442  074F  120A  118A  2203  120A  118A  	fcall	_LED_data_set
   1443                           
-  1444                           ;OBC1_app.c: 65: spi_master_send(COM, 0x11);
+  1444                           ;OBC1_app.c: 64: spi_master_send(COM, 0x11);
   1445  0754  3011               	movlw	17
   1446  0755  1283               	bcf	3,5	;RP0=0, select bank0
   1447  0756  1303               	bcf	3,6	;RP1=0, select bank0
@@ -1457,7 +1457,7 @@ Microchip Technology Omniscient Code Generator v1.35 (Free mode) build 201507080
   1451  075A  3003               	movlw	3
   1452  075B  120A  118A  2536  120A  118A  	fcall	_spi_master_send
   1453                           
-  1454                           ;OBC1_app.c: 66: send_data_master(COM, (0x01), DATA_END);
+  1454                           ;OBC1_app.c: 65: send_data_master(COM, (0x01), DATA_END);
   1455  0760  1283               	bcf	3,5	;RP0=0, select bank0
   1456  0761  1303               	bcf	3,6	;RP1=0, select bank0
   1457  0762  01CF               	clrf	send_data_master@data_type
@@ -1469,22 +1469,22 @@ Microchip Technology Omniscient Code Generator v1.35 (Free mode) build 201507080
   1463  0768  3003               	movlw	3
   1464  0769  120A  118A  2232   	fcall	_send_data_master
   1465                           
-  1466                           ;OBC1_app.c: 67: break;
+  1466                           ;OBC1_app.c: 66: break;
   1467  076C  0008               	return
   1468  076D                     l1701:	
-  1469                           ;OBC1_app.c: 69: case (0x02):
+  1469                           ;OBC1_app.c: 68: case (0x02):
   1470                           
   1471                           
-  1472                           ;OBC1_app.c: 70: spi_master_send(OBC2, 0x01);
+  1472                           ;OBC1_app.c: 69: spi_master_send(OBC2, 0x01);
   1473  076D  01F0               	clrf	spi_master_send@data
   1474  076E  0AF0               	incf	spi_master_send@data,f
   1475  076F  3002               	movlw	2
   1476  0770  120A  118A  2536  120A  118A  	fcall	_spi_master_send
   1477                           
-  1478                           ;OBC1_app.c: 71: I2Ctemp_data_set();
+  1478                           ;OBC1_app.c: 70: I2Ctemp_data_set();
   1479  0775  120A  118A  21CE  120A  118A  	fcall	_I2Ctemp_data_set
   1480                           
-  1481                           ;OBC1_app.c: 72: spi_master_send(COM, 0x11);
+  1481                           ;OBC1_app.c: 71: spi_master_send(COM, 0x11);
   1482  077A  3011               	movlw	17
   1483  077B  1283               	bcf	3,5	;RP0=0, select bank0
   1484  077C  1303               	bcf	3,6	;RP1=0, select bank0
@@ -1494,7 +1494,7 @@ Microchip Technology Omniscient Code Generator v1.35 (Free mode) build 201507080
   1488  0780  3003               	movlw	3
   1489  0781  120A  118A  2536  120A  118A  	fcall	_spi_master_send
   1490                           
-  1491                           ;OBC1_app.c: 73: send_data_master(COM, 0x02, DATA_END);
+  1491                           ;OBC1_app.c: 72: send_data_master(COM, 0x02, DATA_END);
   1492  0786  3002               	movlw	2
   1493  0787  1283               	bcf	3,5	;RP0=0, select bank0
   1494  0788  1303               	bcf	3,6	;RP1=0, select bank0
@@ -1508,9 +1508,9 @@ Microchip Technology Omniscient Code Generator v1.35 (Free mode) build 201507080
   1502  0790  3003               	movlw	3
   1503  0791  120A  118A  2232   	fcall	_send_data_master
   1504                           
-  1505                           ;OBC1_app.c: 75: }
+  1505                           ;OBC1_app.c: 74: }
   1506                           
-  1507                           ;OBC1_app.c: 74: break;
+  1507                           ;OBC1_app.c: 73: break;
   1508  0794  0008               	return
   1509  0795                     l1705:	
   1510  0795  1283               	bcf	3,5	;RP0=0, select bank0
@@ -3290,7 +3290,7 @@ Microchip Technology Omniscient Code Generator v1.35 (Free mode) build 201507080
   3284  01CE                     __ptext20:	
   3285 ;; *************** function _I2Ctemp_data_set *****************
   3286 ;; Defined at:
-  3287 ;;		line 84 in file "OBC1_app.c"
+  3287 ;;		line 83 in file "OBC1_app.c"
   3288 ;; Parameters:    Size  Location     Type
   3289 ;;		None
   3290 ;; Auto vars:     Size  Location     Type
@@ -3322,7 +3322,7 @@ Microchip Technology Omniscient Code Generator v1.35 (Free mode) build 201507080
   3316                           ;psect for function _I2Ctemp_data_set
   3317  01CE                     _I2Ctemp_data_set:	
   3318                           
-  3319                           ;OBC1_app.c: 86: receive_data_master(OBC2);
+  3319                           ;OBC1_app.c: 85: receive_data_master(OBC2);
   3320                           
   3321                           ;incstack = 0
   3322                           ; Regs used in _I2Ctemp_data_set: [wreg-fsr0h+status,2+status,0+pclath+cstack]
@@ -4834,7 +4834,7 @@ DATA                 0      0      52      12        0.0%
 
 
 Microchip Technology PIC Macro Assembler V1.35 build -356382666 
-Symbol Table                                                                                   Sun Mar 06 20:13:35 2016
+Symbol Table                                                                                   Sun Mar 06 21:56:30 2016
 
                                    pc 0002                           __CFG_CP$OFF 0000  
                          _SSPSTATbits 0094                                    l65 02A5  

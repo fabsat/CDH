@@ -17,6 +17,5 @@ void COM_status(void);
 void POW_status(void);
 void command(uint8_t data);
 
-
 #endif	/* OBC1_APP_H */
 

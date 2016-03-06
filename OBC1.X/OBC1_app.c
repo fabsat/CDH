@@ -46,7 +46,6 @@ void POW_status(void)
 
 void command(uint8_t data)
 {
-    
     switch(data)
     {
         case GET_CW_DATA:
@@ -55,7 +54,7 @@ void command(uint8_t data)
             spi_master_send(COM, 0x11);
             send_data_master(COM, CW, DATA_END);
             break;
-
+            
         case LED_BLINK:
             LED1 = 1;
             __delay_ms(100);
@@ -75,11 +74,11 @@ void command(uint8_t data)
     }
 }
 
+
 static void LED_data_set(void)
 {
     sent_data_set(0x01, 1, 1);
 }
-
 
 static void I2Ctemp_data_set(void)
 {

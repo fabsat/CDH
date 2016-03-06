@@ -1541,7 +1541,6 @@ if(PORTDbits.RD1==0) MCLR_reset(0x06);
 
 void command(uint8_t data)
 {
-
 switch(data)
 {
 case (0x03):
@@ -1570,11 +1569,11 @@ break;
 }
 }
 
+
 static void LED_data_set(void)
 {
 sent_data_set(0x01, 1, 1);
 }
-
 
 static void I2Ctemp_data_set(void)
 {
