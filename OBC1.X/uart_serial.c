@@ -71,8 +71,8 @@ void putch(uint8_t byte)
  *===================================================*/
 void put_string(uint8_t *str)
 {   
-    while(*str != '\0') data = putch(*str++);
-    data = putch('\0');
+    while(*str != '\0') putch(*str++);
+    putch('\0');
 }
 
 
