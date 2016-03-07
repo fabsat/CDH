@@ -70,12 +70,9 @@ void putch(uint8_t byte)
  *     none
  *===================================================*/
 void put_string(uint8_t *str)
-{
-    while(*str != '\0')
-    {
-        putch(*str++);
-    }
-    putch('\0');
+{   
+    while(*str != '\0') data = putch(*str++);
+    data = putch('\0');
 }
 
 
@@ -83,19 +80,20 @@ void put_string(uint8_t *str)
  * @brief
  *     1Byte受信
  * @param
- *     void:
+ *     data:受信したデータ
  * @return
- *     RCREG:受信データ
+ *     0xFF:受信失敗
+ *     0x00:受信成功
  * @note
  *     none
  *===================================================*/
-uint8_t getch(void)
+uint8_t getch(uint8_t data)
 {
-    while(!RCIF)
-    {
-        ;
-    }
- 
-    return RCREG;
+    int count = 0;
+    while(!RCIF && count <= 100) count++;       // カウントが100まで受信待ち
+    data = RCREG;
+    
+    if(count >= 100) return 0xFF;
+    else             return 0;
 }
 
