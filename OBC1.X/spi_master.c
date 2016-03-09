@@ -41,7 +41,6 @@ void spi_master_start(void)
     TRISCbits.TRISC4 = 1;    // RC4 is SDI -> INPUT
     
     /* SS pin configure OUTPUT */
-    SS_OBC2_TRIS = 0;      // RC1 is SS  -> OUTPUT
     SS_COM_TRIS  = 0;
     SS_POW_TRIS  = 0;
 
@@ -60,7 +59,6 @@ void spi_master_start(void)
     SSPCONbits.SSPM0 = 0;
 
     /* SS_PIN set HIGH */
-    SS_OBC2 = 1;
     SS_COM  = 1;
     SS_POW  = 1;
    
@@ -90,10 +88,7 @@ uint8_t spi_master_receive(destination_t destination)
     /* 各サブシステムからの準備完了通知を待つ */
     switch(destination)
     {
-	case OBC2:
-            while(OBC2_READY == 0){;} // OBC2_READYピンがセットされるまで待つ
-            break;
-        case COM:
+	    case COM:
             while(COM_READY == 0){;}  // COM_READYピンがセットされるまで待つ
             break;
         case POW:
@@ -104,9 +99,6 @@ uint8_t spi_master_receive(destination_t destination)
     /* Slave Select -> Low */
     switch(destination)
     {
-        case OBC2:
-            SS_OBC2 = 0;
-            break;
         case COM:
             SS_COM  = 0;
             break;
@@ -136,9 +128,6 @@ uint8_t spi_master_receive(destination_t destination)
     /* Slave Select -> High */
     switch(destination)
     {
-        case OBC2:
-            SS_OBC2 = 1;
-            break;
         case COM:
             SS_COM  = 1;
             break;
@@ -173,10 +162,7 @@ void spi_master_send(destination_t destination, uint8_t data)
     /* 各サブシステムからの準備完了通知を待つ */
     switch(destination)
     {
-	case OBC2:
-            while(OBC2_READY == 0){;} // OBC2_READYピンがセットされるまで待つ
-            break;
-        case COM:
+	    case COM:
             while(COM_READY == 0){;}  // COM_READYピンがセットされるまで待つ
             break;
         case POW:
@@ -187,9 +173,6 @@ void spi_master_send(destination_t destination, uint8_t data)
     /* Slave Select -> Low */
     switch(destination)
     {
-        case OBC2:
-            SS_OBC2 = 0;
-            break;
         case COM:
             SS_COM  = 0;
             break;
@@ -218,9 +201,6 @@ void spi_master_send(destination_t destination, uint8_t data)
     /* Slave Select -> High */
     switch(destination)
     {
-        case OBC2:
-            SS_OBC2 = 1;
-            break;
         case COM:
             SS_COM  = 1;
             break;
@@ -247,10 +227,10 @@ void spi_master_send(destination_t destination, uint8_t data)
 void spi_master_stop(void)
 {
     /* SS pin -> LOW */
-    SS_OBC2 = 0;
     SS_COM  = 0;
     SS_POW  = 0;
 
     /* SPI(MSSP)無効化 */
     SSPCONbits.SSPEN = 0;
 }
+
