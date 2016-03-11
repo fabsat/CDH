@@ -27,12 +27,15 @@ int main(void){
     
     LED0TRIS = 0;
     LED0 = 0;
+    LED1TRIS = 0;
+    LED1 = 0;
     
     MCLR_init();            // MCLR_reset 初期設定
     sysprot_init();         // system_protocol 初期設定
     ad_con_init();            // AD変換の初期設定
     spi_master_start();
     uart_init();
+    __delay_ms(1000);
     
     while(1)
     {
@@ -40,13 +43,13 @@ int main(void){
         __delay_ms(1000);
 
         /*COMのステータス確認*/
-        COM_status();
+        uint8_t COM_stat = COM_status();
 
         /*POWのステータス確認*/
         POW_status();
         
         /*OBC1作業関数*/
-        command(COM_status);
+        command(COM_stat);
 
         LED0 = 0;
         __delay_ms(1000);   
@@ -54,4 +57,3 @@ int main(void){
     
     return 0;
 }
-

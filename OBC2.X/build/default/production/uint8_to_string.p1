@@ -1,9 +1,9 @@
 Version 3.2 HI-TECH Software Intermediate Code
-"17 uint8_to_string.c
+"16 uint8_to_string.c
 [v _process_100 `(v ~T0 @X0 0 sf3`uc`*uc`*uc ]
-"18
+"17
 [v _process_10 `(v ~T0 @X0 0 sf3`uc`*uc`*uc ]
-"19
+"18
 [v _process_1 `(v ~T0 @X0 0 sf3`uc`*uc`*uc ]
 [; ;htc.h: 26: extern const char __xc8_OPTIM_SPEED;
 [; ;htc.h: 28: extern double __fpnormalize(double);
@@ -1027,251 +1027,251 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;pic_clock.h: 26: typedef unsigned int uint16_t;
 [; ;pic_clock.h: 27: typedef signed int int16_t;
 [; ;uint8_to_string.h: 23: void uint8_to_string(uint8_t num, uint8_t *p_str_buf, uint8_t buf_size);
-[; ;uint8_to_string.c: 17: static void process_100(uint8_t num, uint8_t *p_str_buf, uint8_t *p_flag);
-[; ;uint8_to_string.c: 18: static void process_10(uint8_t num, uint8_t *p_str_buf, uint8_t *p_flag);
-[; ;uint8_to_string.c: 19: static void process_1(uint8_t num, uint8_t *p_str_buf, uint8_t *p_flag);
-"36 uint8_to_string.c
+[; ;uint8_to_string.c: 16: static void process_100(uint8_t num, uint8_t *p_str_buf, uint8_t *p_flag);
+[; ;uint8_to_string.c: 17: static void process_10(uint8_t num, uint8_t *p_str_buf, uint8_t *p_flag);
+[; ;uint8_to_string.c: 18: static void process_1(uint8_t num, uint8_t *p_str_buf, uint8_t *p_flag);
+"35 uint8_to_string.c
 [v _uint8_to_string `(v ~T0 @X0 1 ef3`uc`*uc`uc ]
-"37
-{
-[; ;uint8_to_string.c: 36: void uint8_to_string(uint8_t num, uint8_t *p_str_buf, uint8_t buf_size)
-[; ;uint8_to_string.c: 37: {
-[e :U _uint8_to_string ]
 "36
+{
+[; ;uint8_to_string.c: 35: void uint8_to_string(uint8_t num, uint8_t *p_str_buf, uint8_t buf_size)
+[; ;uint8_to_string.c: 36: {
+[e :U _uint8_to_string ]
+"35
 [v _num `uc ~T0 @X0 1 r1 ]
 [v _p_str_buf `*uc ~T0 @X0 1 r2 ]
 [v _buf_size `uc ~T0 @X0 1 r3 ]
-"37
+"36
 [f ]
-"38
+"37
 [v _flag `uc ~T0 @X0 1 a ]
-[; ;uint8_to_string.c: 38: uint8_t flag = 0;
+[; ;uint8_to_string.c: 37: uint8_t flag = 0;
 [e = _flag -> -> 0 `i `uc ]
-[; ;uint8_to_string.c: 41: if(buf_size < 4)
-"41
+[; ;uint8_to_string.c: 40: if(buf_size < 4)
+"40
 [e $ ! < -> _buf_size `i -> 4 `i 97  ]
-[; ;uint8_to_string.c: 42: {
-"42
+[; ;uint8_to_string.c: 41: {
+"41
 {
-[; ;uint8_to_string.c: 43: return;
-"43
+[; ;uint8_to_string.c: 42: return;
+"42
 [e $UE 96  ]
-"44
+"43
 }
 [e :U 97 ]
-[; ;uint8_to_string.c: 44: }
-[; ;uint8_to_string.c: 47: if(100 <= num && num <= 255)
-"47
+[; ;uint8_to_string.c: 43: }
+[; ;uint8_to_string.c: 46: if(100 <= num && num <= 255)
+"46
 [e $ ! && <= -> 100 `i -> _num `i <= -> _num `i -> 255 `i 98  ]
-[; ;uint8_to_string.c: 48: {
+[; ;uint8_to_string.c: 47: {
+"47
+{
+[; ;uint8_to_string.c: 48: process_100(num, p_str_buf, &flag);
 "48
-{
-[; ;uint8_to_string.c: 49: process_100(num, p_str_buf, &flag);
-"49
 [e ( _process_100 (3 , , _num _p_str_buf &U _flag ]
-"50
+"49
 }
-[; ;uint8_to_string.c: 50: }
+[; ;uint8_to_string.c: 49: }
 [e $U 99  ]
-"51
+"50
 [e :U 98 ]
-[; ;uint8_to_string.c: 51: else if(10 <= num && num <= 99)
+[; ;uint8_to_string.c: 50: else if(10 <= num && num <= 99)
 [e $ ! && <= -> 10 `i -> _num `i <= -> _num `i -> 99 `i 100  ]
-[; ;uint8_to_string.c: 52: {
+[; ;uint8_to_string.c: 51: {
+"51
+{
+[; ;uint8_to_string.c: 52: process_10(num, p_str_buf, &flag);
 "52
-{
-[; ;uint8_to_string.c: 53: process_10(num, p_str_buf, &flag);
-"53
 [e ( _process_10 (3 , , _num _p_str_buf &U _flag ]
-"54
+"53
 }
-[; ;uint8_to_string.c: 54: }
+[; ;uint8_to_string.c: 53: }
 [e $U 101  ]
-"55
+"54
 [e :U 100 ]
-[; ;uint8_to_string.c: 55: else if(0 <= num && num <= 9)
+[; ;uint8_to_string.c: 54: else if(0 <= num && num <= 9)
 [e $ ! && <= -> 0 `i -> _num `i <= -> _num `i -> 9 `i 102  ]
-[; ;uint8_to_string.c: 56: {
-"56
+[; ;uint8_to_string.c: 55: {
+"55
 {
-[; ;uint8_to_string.c: 57: process_1(num, p_str_buf, &flag);
-"57
+[; ;uint8_to_string.c: 56: process_1(num, p_str_buf, &flag);
+"56
 [e ( _process_1 (3 , , _num _p_str_buf &U _flag ]
-"58
+"57
 }
 [e :U 102 ]
-"59
+"58
 [e :U 101 ]
 [e :U 99 ]
+[; ;uint8_to_string.c: 57: }
 [; ;uint8_to_string.c: 58: }
-[; ;uint8_to_string.c: 59: }
 [e :UE 96 ]
 }
-"65
+"64
 [v _process_100 `(v ~T0 @X0 1 sf3`uc`*uc`*uc ]
-"66
-{
-[; ;uint8_to_string.c: 65: static void process_100(uint8_t num, uint8_t *p_str_buf, uint8_t *p_flag)
-[; ;uint8_to_string.c: 66: {
-[e :U _process_100 ]
 "65
+{
+[; ;uint8_to_string.c: 64: static void process_100(uint8_t num, uint8_t *p_str_buf, uint8_t *p_flag)
+[; ;uint8_to_string.c: 65: {
+[e :U _process_100 ]
+"64
 [v _num `uc ~T0 @X0 1 r1 ]
 [v _p_str_buf `*uc ~T0 @X0 1 r2 ]
 [v _p_flag `*uc ~T0 @X0 1 r3 ]
-"66
+"65
 [f ]
-[; ;uint8_to_string.c: 68: if(0 <= num && num <= 199)
-"68
+[; ;uint8_to_string.c: 67: if(0 <= num && num <= 199)
+"67
 [e $ ! && <= -> 0 `i -> _num `i <= -> _num `i -> 199 `i 104  ]
-[; ;uint8_to_string.c: 69: {
+[; ;uint8_to_string.c: 68: {
+"68
+{
+[; ;uint8_to_string.c: 69: p_str_buf[*p_flag] = 0x30 + 1;
 "69
-{
-[; ;uint8_to_string.c: 70: p_str_buf[*p_flag] = 0x30 + 1;
-"70
 [e = *U + _p_str_buf * -> *U _p_flag `ux -> -> # *U _p_str_buf `ui `ux -> + -> 48 `i -> 1 `i `uc ]
-[; ;uint8_to_string.c: 71: (*p_flag)++;
+[; ;uint8_to_string.c: 70: (*p_flag)++;
+"70
+[e ++ *U _p_flag -> -> 1 `i `uc ]
 "71
-[e ++ *U _p_flag -> -> 1 `i `uc ]
-"72
 }
-[; ;uint8_to_string.c: 72: }
+[; ;uint8_to_string.c: 71: }
 [e $U 105  ]
-"73
+"72
 [e :U 104 ]
-[; ;uint8_to_string.c: 73: else if(200 <= num && num <= 255)
+[; ;uint8_to_string.c: 72: else if(200 <= num && num <= 255)
 [e $ ! && <= -> 200 `i -> _num `i <= -> _num `i -> 255 `i 106  ]
-[; ;uint8_to_string.c: 74: {
-"74
+[; ;uint8_to_string.c: 73: {
+"73
 {
-[; ;uint8_to_string.c: 75: p_str_buf[*p_flag] = 0x30 + 2;
-"75
+[; ;uint8_to_string.c: 74: p_str_buf[*p_flag] = 0x30 + 2;
+"74
 [e = *U + _p_str_buf * -> *U _p_flag `ux -> -> # *U _p_str_buf `ui `ux -> + -> 48 `i -> 2 `i `uc ]
-[; ;uint8_to_string.c: 76: (*p_flag)++;
-"76
+[; ;uint8_to_string.c: 75: (*p_flag)++;
+"75
 [e ++ *U _p_flag -> -> 1 `i `uc ]
-"77
+"76
 }
 [e :U 106 ]
-"80
+"79
 [e :U 105 ]
-[; ;uint8_to_string.c: 77: }
-[; ;uint8_to_string.c: 80: process_10((num % 100), p_str_buf, p_flag);
+[; ;uint8_to_string.c: 76: }
+[; ;uint8_to_string.c: 79: process_10((num % 100), p_str_buf, p_flag);
 [e ( _process_10 (3 , , -> % -> _num `i -> 100 `i `uc _p_str_buf _p_flag ]
-[; ;uint8_to_string.c: 81: }
-"81
+[; ;uint8_to_string.c: 80: }
+"80
 [e :UE 103 ]
 }
-"87
+"86
 [v _process_10 `(v ~T0 @X0 1 sf3`uc`*uc`*uc ]
-"88
-{
-[; ;uint8_to_string.c: 87: static void process_10(uint8_t num, uint8_t *p_str_buf, uint8_t *p_flag)
-[; ;uint8_to_string.c: 88: {
-[e :U _process_10 ]
 "87
+{
+[; ;uint8_to_string.c: 86: static void process_10(uint8_t num, uint8_t *p_str_buf, uint8_t *p_flag)
+[; ;uint8_to_string.c: 87: {
+[e :U _process_10 ]
+"86
 [v _num `uc ~T0 @X0 1 r1 ]
 [v _p_str_buf `*uc ~T0 @X0 1 r2 ]
 [v _p_flag `*uc ~T0 @X0 1 r3 ]
-"88
+"87
 [f ]
-"89
+"88
 [v _divide `uc ~T0 @X0 1 a ]
-[; ;uint8_to_string.c: 89: uint8_t divide = num / 10;
+[; ;uint8_to_string.c: 88: uint8_t divide = num / 10;
 [e = _divide -> / -> _num `i -> 10 `i `uc ]
-"90
+"89
 [v _val `uc ~T0 @X0 1 a ]
-[; ;uint8_to_string.c: 90: uint8_t val = 0x30;
+[; ;uint8_to_string.c: 89: uint8_t val = 0x30;
 [e = _val -> -> 48 `i `uc ]
-"91
+"90
 [v _i `uc ~T0 @X0 1 a ]
-[; ;uint8_to_string.c: 91: uint8_t i;
-[; ;uint8_to_string.c: 94: for(i = 0; i < divide; i++)
-"94
+[; ;uint8_to_string.c: 90: uint8_t i;
+[; ;uint8_to_string.c: 93: for(i = 0; i < divide; i++)
+"93
 {
 [e = _i -> -> 0 `i `uc ]
 [e $U 111  ]
-"95
-[e :U 108 ]
-[; ;uint8_to_string.c: 95: {
-{
-[; ;uint8_to_string.c: 96: val++;
-"96
-[e ++ _val -> -> 1 `i `uc ]
-"97
-}
 "94
+[e :U 108 ]
+[; ;uint8_to_string.c: 94: {
+{
+[; ;uint8_to_string.c: 95: val++;
+"95
+[e ++ _val -> -> 1 `i `uc ]
+"96
+}
+"93
 [e ++ _i -> -> 1 `i `uc ]
 [e :U 111 ]
 [e $ < -> _i `i -> _divide `i 108  ]
 [e :U 109 ]
-"97
+"96
 }
-[; ;uint8_to_string.c: 97: }
-[; ;uint8_to_string.c: 99: p_str_buf[*p_flag] = val;
-"99
+[; ;uint8_to_string.c: 96: }
+[; ;uint8_to_string.c: 98: p_str_buf[*p_flag] = val;
+"98
 [e = *U + _p_str_buf * -> *U _p_flag `ux -> -> # *U _p_str_buf `ui `ux _val ]
-[; ;uint8_to_string.c: 100: (*p_flag)++;
-"100
+[; ;uint8_to_string.c: 99: (*p_flag)++;
+"99
 [e ++ *U _p_flag -> -> 1 `i `uc ]
-[; ;uint8_to_string.c: 102: process_1((num % 10), p_str_buf, p_flag);
-"102
+[; ;uint8_to_string.c: 101: process_1((num % 10), p_str_buf, p_flag);
+"101
 [e ( _process_1 (3 , , -> % -> _num `i -> 10 `i `uc _p_str_buf _p_flag ]
-[; ;uint8_to_string.c: 103: }
-"103
+[; ;uint8_to_string.c: 102: }
+"102
 [e :UE 107 ]
 }
-"109
+"108
 [v _process_1 `(v ~T0 @X0 1 sf3`uc`*uc`*uc ]
-"110
-{
-[; ;uint8_to_string.c: 109: static void process_1(uint8_t num, uint8_t *p_str_buf, uint8_t *p_flag)
-[; ;uint8_to_string.c: 110: {
-[e :U _process_1 ]
 "109
+{
+[; ;uint8_to_string.c: 108: static void process_1(uint8_t num, uint8_t *p_str_buf, uint8_t *p_flag)
+[; ;uint8_to_string.c: 109: {
+[e :U _process_1 ]
+"108
 [v _num `uc ~T0 @X0 1 r1 ]
 [v _p_str_buf `*uc ~T0 @X0 1 r2 ]
 [v _p_flag `*uc ~T0 @X0 1 r3 ]
-"110
+"109
 [f ]
-"111
+"110
 [v _i `uc ~T0 @X0 1 a ]
-"112
+"111
 [v _val `uc ~T0 @X0 1 a ]
-[; ;uint8_to_string.c: 111: uint8_t i;
-[; ;uint8_to_string.c: 112: uint8_t val = 0x30;
+[; ;uint8_to_string.c: 110: uint8_t i;
+[; ;uint8_to_string.c: 111: uint8_t val = 0x30;
 [e = _val -> -> 48 `i `uc ]
-[; ;uint8_to_string.c: 114: for(i = 0; i < num; i++)
-"114
+[; ;uint8_to_string.c: 113: for(i = 0; i < num; i++)
+"113
 {
 [e = _i -> -> 0 `i `uc ]
 [e $U 116  ]
-"115
-[e :U 113 ]
-[; ;uint8_to_string.c: 115: {
-{
-[; ;uint8_to_string.c: 116: val++;
-"116
-[e ++ _val -> -> 1 `i `uc ]
-"117
-}
 "114
+[e :U 113 ]
+[; ;uint8_to_string.c: 114: {
+{
+[; ;uint8_to_string.c: 115: val++;
+"115
+[e ++ _val -> -> 1 `i `uc ]
+"116
+}
+"113
 [e ++ _i -> -> 1 `i `uc ]
 [e :U 116 ]
 [e $ < -> _i `i -> _num `i 113  ]
 [e :U 114 ]
-"117
+"116
 }
-[; ;uint8_to_string.c: 117: }
-[; ;uint8_to_string.c: 119: p_str_buf[*p_flag] = val;
-"119
+[; ;uint8_to_string.c: 116: }
+[; ;uint8_to_string.c: 118: p_str_buf[*p_flag] = val;
+"118
 [e = *U + _p_str_buf * -> *U _p_flag `ux -> -> # *U _p_str_buf `ui `ux _val ]
-[; ;uint8_to_string.c: 120: (*p_flag)++;
-"120
+[; ;uint8_to_string.c: 119: (*p_flag)++;
+"119
 [e ++ *U _p_flag -> -> 1 `i `uc ]
-[; ;uint8_to_string.c: 122: p_str_buf[*p_flag] = '\0';
-"122
+[; ;uint8_to_string.c: 121: p_str_buf[*p_flag] = '\0';
+"121
 [e = *U + _p_str_buf * -> *U _p_flag `ux -> -> # *U _p_str_buf `ui `ux -> -> 0 `ui `uc ]
-[; ;uint8_to_string.c: 123: }
-"123
+[; ;uint8_to_string.c: 122: }
+"122
 [e :UE 112 ]
 }

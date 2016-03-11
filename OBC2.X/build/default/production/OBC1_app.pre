@@ -1480,34 +1480,35 @@ extern cw_t cw;
 # 104
 void sysprot_init(void);
 
-void cw_set(void);
-
-# 132
+# 130
 uint8_t sent_data_set(void *p_data, uint8_t data_len, uint8_t byte_of_data);
 
-# 145
+# 143
 void cw_data_set(cw_t *p_cw_data);
 
-# 160
+# 155
+void get_cw_data(void);
+
+# 169
 void send_data_master(destination_t destination, data_type_t data_type, data_end_command_t data_end_command);
 
 
 void receive_data_master(destination_t destination);
 
-# 51 "spi_master.h"
+# 49 "spi_master.h"
 void spi_master_start(void);
 
-# 64
+# 62
 uint8_t spi_master_receive(destination_t destination);
 
-# 79
+# 77
 void spi_master_send(destination_t destination, uint8_t data);
 
-# 92
+# 90
 void spi_master_stop(void);
 
 # 16 "OBC1_app.h"
-void COM_status(void);
+uint8_t COM_status(void);
 void POW_status(void);
 void command(uint8_t data);
 
@@ -1517,20 +1518,37 @@ void MCLR_init(void);
 # 55
 void MCLR_reset(uint8_t resetted_mcu);
 
-# 26 "OBC1_app.c"
+# 23 "uint8_to_string.h"
+void uint8_to_string(uint8_t num, uint8_t *p_str_buf, uint8_t buf_size);
+
+# 65 "uart_serial.h"
+void uart_init(void);
+
+# 78
+void putch(uint8_t byte);
+
+# 92
+void put_string(uint8_t *str);
+
+# 107
+uint8_t getch(void);
+
+# 27 "OBC1_app.c"
 static void LED_data_set(void);
 static void I2Ctemp_data_set(void);
 
 
-void COM_status(void)
+
+uint8_t COM_status(void)
 {
-uint8_t COM_status = 0;
+uint8_t COM_stat = 0;
 spi_master_send(COM, 0x01);
-COM_status = spi_master_receive(COM);
-if(COM_status == 0x00 || COM_status == 0xFF)
+COM_stat = spi_master_receive(COM);
+if(COM_stat == 0x00 || COM_stat == 0xFF)
 {
 MCLR_reset(0x05);
 }
+return COM_stat;
 }
 
 void POW_status(void)
@@ -1561,10 +1579,9 @@ send_data_master(COM, (0x01), DATA_END);
 break;
 
 case (0x02):
-spi_master_send(OBC2, 0x01);
+putch(0x01);
 I2Ctemp_data_set();
-spi_master_send(COM, 0x11);
-send_data_master(COM, 0x02, DATA_END);
+send_data_master(COM, (0x02), DATA_END);
 break;
 }
 }
@@ -1575,8 +1592,12 @@ static void LED_data_set(void)
 sent_data_set(0x01, 1, 1);
 }
 
+
 static void I2Ctemp_data_set(void)
 {
-receive_data_master(OBC2);
+uint8_t I2CTEMP_data[2];
+I2CTEMP_data[0] = getch();
+I2CTEMP_data[1] = getch();
+sent_data_set(I2CTEMP_data, 2, 1);
 }
 

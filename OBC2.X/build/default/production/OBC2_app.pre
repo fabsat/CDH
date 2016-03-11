@@ -1480,41 +1480,185 @@ extern cw_t cw;
 # 104
 void sysprot_init(void);
 
-void cw_set(void);
-
-# 132
+# 130
 uint8_t sent_data_set(void *p_data, uint8_t data_len, uint8_t byte_of_data);
 
-# 145
+# 143
 void cw_data_set(cw_t *p_cw_data);
 
-# 160
+# 155
+void get_cw_data(void);
+
+# 169
 void send_data_master(destination_t destination, data_type_t data_type, data_end_command_t data_end_command);
 
 
 void receive_data_master(destination_t destination);
 
-# 51 "spi_master.h"
-void spi_master_start(void);
+# 30 "C:\Program Files (x86)\Microchip\xc8\v1.35\include\math.h"
+extern double fabs(double);
+extern double floor(double);
+extern double ceil(double);
+extern double modf(double, double *);
+extern double sqrt(double);
+extern double atof(const char *);
+extern double sin(double) ;
+extern double cos(double) ;
+extern double tan(double) ;
+extern double asin(double) ;
+extern double acos(double) ;
+extern double atan(double);
+extern double atan2(double, double) ;
+extern double log(double);
+extern double log10(double);
+extern double pow(double, double) ;
+extern double exp(double) ;
+extern double sinh(double) ;
+extern double cosh(double) ;
+extern double tanh(double);
+extern double eval_poly(double, const double *, int);
+extern double frexp(double, int *);
+extern double ldexp(double, int);
+extern double fmod(double, double);
+extern double trunc(double);
+extern double round(double);
 
-# 64
-uint8_t spi_master_receive(destination_t destination);
+# 4 "C:\Program Files (x86)\Microchip\xc8\v1.35\include\__size_t.h"
+typedef unsigned size_t;
 
-# 79
-void spi_master_send(destination_t destination, uint8_t data);
+# 7 "C:\Program Files (x86)\Microchip\xc8\v1.35\include\stdarg.h"
+typedef void * va_list[1];
+
+#pragma intrinsic(__va_start)
+extern void * __va_start(void);
+
+#pragma intrinsic(__va_arg)
+extern void * __va_arg(void *, ...);
+
+# 43 "C:\Program Files (x86)\Microchip\xc8\v1.35\include\stdio.h"
+struct __prbuf
+{
+char * ptr;
+void (* func)(char);
+};
+
+# 25 "C:\Program Files (x86)\Microchip\xc8\v1.35\include\errno.h"
+extern int errno;
+
+# 12 "C:\Program Files (x86)\Microchip\xc8\v1.35\include\conio.h"
+extern void init_uart(void);
+
+extern char getch(void);
+extern char getche(void);
+extern void putch(char);
+extern void ungetch(char);
+
+extern __bit kbhit(void);
+
+# 23
+extern char * cgets(char *);
+extern void cputs(const char *);
+
+# 88 "C:\Program Files (x86)\Microchip\xc8\v1.35\include\stdio.h"
+extern int cprintf(char *, ...);
+#pragma printf_check(cprintf)
+
+
+
+extern int _doprnt(struct __prbuf *, const register char *, register va_list);
+
+
+# 180
+#pragma printf_check(vprintf) const
+#pragma printf_check(vsprintf) const
+
+extern char * gets(char *);
+extern int puts(const char *);
+extern int scanf(const char *, ...) __attribute__((unsupported("scanf() is not supported by this compiler")));
+extern int sscanf(const char *, const char *, ...) __attribute__((unsupported("sscanf() is not supported by this compiler")));
+extern int vprintf(const char *, va_list) __attribute__((unsupported("vprintf() is not supported by this compiler")));
+extern int vsprintf(char *, const char *, va_list) __attribute__((unsupported("vsprintf() is not supported by this compiler")));
+extern int vscanf(const char *, va_list ap) __attribute__((unsupported("vscanf() is not supported by this compiler")));
+extern int vsscanf(const char *, const char *, va_list) __attribute__((unsupported("vsscanf() is not supported by this compiler")));
+
+#pragma printf_check(printf) const
+#pragma printf_check(sprintf) const
+extern int sprintf(char *, const char *, ...);
+extern int printf(const char *, ...);
+
+# 27 "i2c.h"
+void I2C_init(void);
+void I2C_Start(void);
+void I2C_Stop(void);
+unsigned char I2C_Out(unsigned char data);
+void I2C_Send(unsigned char slave_adr, unsigned char data);
+unsigned char I2C_Rcv(unsigned char Ack);
+void I2C_GetData(unsigned char slave_adr, unsigned char *Buffer, unsigned char CNT);
+
+# 39 "tempADT.h"
+unsigned char ADT_Begin(void);
+unsigned char ADT_ActionMode(unsigned char mode);
+unsigned char ADT_Receive(char reg_adrs, unsigned char *data, unsigned char kosu);
+unsigned char ADT_Send(char reg_adrs, unsigned char *data, unsigned char kosu);
+void ADT_Read(uint8_t *temp);
+
+# 23 "uint8_to_string.h"
+void uint8_to_string(uint8_t num, uint8_t *p_str_buf, uint8_t buf_size);
+
+# 65 "uart_serial.h"
+void uart_init(void);
+
+# 78
+void putch(uint8_t byte);
 
 # 92
+void put_string(uint8_t *str);
+
+# 107
+uint8_t getch(void);
+
+# 49 "spi_master.h"
+void spi_master_start(void);
+
+# 62
+uint8_t spi_master_receive(destination_t destination);
+
+# 77
+void spi_master_send(destination_t destination, uint8_t data);
+
+# 90
 void spi_master_stop(void);
 
-# 35 "OBC2_app.h"
+# 33 "OBC2_app.h"
 void OBC1_RESET_init(void);
 
-# 48
+# 46
 void OBC1_reset(void);
 
-# 34 "OBC2_app.c"
+# 59
+void OBC1(void);
+
+# 71
+void interrupt I2Ctemp(void);
+
+# 85
+void interrupt_able(void);
+
+# 98
+void interrupt_disable(void);
+
+# 110
+void trans_I2Ctemp(void);
+
+# 16 "OBC1_app.h"
+uint8_t COM_status(void);
+void POW_status(void);
+void command(uint8_t data);
+
+# 37 "OBC2_app.c"
 void OBC1_RESET_init(void)
 {
+TRISDbits.TRISD2 = 1;
 uint8_t *nin;
 nin = 0x09;
 
@@ -1525,7 +1669,7 @@ TRISEbits.TRISE0 = 0;
 *nin = 0x01;
 }
 
-# 56
+# 60
 void OBC1_reset(void)
 {
 uint8_t *nin;
@@ -1535,5 +1679,58 @@ nin = 0x09;
 *nin = 0;
 _delay((unsigned long)((10)*(20000000/4000.0)));
 *nin = 0x01;
+}
+
+# 82
+void interrupt_able(void)
+{
+
+INTCONbits.PEIE = 1;
+INTCONbits.GIE = 1;
+}
+
+# 101
+void interrupt_disable(void)
+{
+
+INTCONbits.PEIE = 0;
+INTCONbits.GIE = 0;
+}
+
+# 120
+void OBC1(void)
+{
+MCLR_init();
+sysprot_init();
+spi_master_start();
+uart_init();
+uint8_t COM_s;
+
+while(1)
+{
+PORTDbits.RD7 = 1;
+_delay((unsigned long)((1000)*(20000000/4000.0)));
+
+
+COM_s = COM_status();
+
+
+POW_status();
+
+
+command(COM_s);
+
+PORTDbits.RD7 = 0;
+_delay((unsigned long)((1000)*(20000000/4000.0)));
+}
+}
+
+
+void trans_I2Ctemp()
+{
+uint8_t data[2];
+ADT_Read(data);
+put_string(data[0]);
+put_string(data[1]);
 }
 

@@ -10,7 +10,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [n S60 . . ]
 "1476
 [v _TRISDbits `VS60 ~T0 @X0 0 e@136 ]
-"51 spi_master.h
+"49 spi_master.h
 [v _spi_master_start `(v ~T0 @X0 0 ef ]
 "52 system_protocol.h
 [s S96 `uc -> 2 `i `uc -> 2 `i `uc -> 2 `i `uc -> 2 `i `uc -> 2 `i `uc -> 2 `i :1 `uc 1 :1 `uc 1 ]
@@ -20,7 +20,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 "99 system_protocol.c
 [c E1099 2 3 4 .. ]
 [n E1099 . OBC2 COM POW  ]
-"64 spi_master.h
+"62 spi_master.h
 [v _spi_master_receive `(uc ~T0 @X0 0 ef1`E1099 ]
 "48 AD_value.h
 [v _get_adcon `(ui ~T0 @X0 0 ef ]
@@ -43,7 +43,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _uint16_to_byte_array `(v ~T0 @X0 0 sf2`*ui`*uc ]
 "61
 [v _double_to_byte_array `(v ~T0 @X0 0 sf2`*d`*uc ]
-"79 spi_master.h
+"77 spi_master.h
 [v _spi_master_send `(v ~T0 @X0 0 ef2`E1099`uc ]
 [; ;htc.h: 26: extern const char __xc8_OPTIM_SPEED;
 [; ;htc.h: 28: extern double __fpnormalize(double);
@@ -1100,10 +1100,10 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;system_protocol.h: 145: void cw_data_set(cw_t *p_cw_data);
 [; ;system_protocol.h: 160: void send_data_master(destination_t destination, data_type_t data_type, data_end_command_t data_end_command);
 [; ;system_protocol.h: 163: void receive_data_master(destination_t destination);
-[; ;spi_master.h: 51: void spi_master_start(void);
-[; ;spi_master.h: 64: uint8_t spi_master_receive(destination_t destination);
-[; ;spi_master.h: 79: void spi_master_send(destination_t destination, uint8_t data);
-[; ;spi_master.h: 92: void spi_master_stop(void);
+[; ;spi_master.h: 49: void spi_master_start(void);
+[; ;spi_master.h: 62: uint8_t spi_master_receive(destination_t destination);
+[; ;spi_master.h: 77: void spi_master_send(destination_t destination, uint8_t data);
+[; ;spi_master.h: 90: void spi_master_stop(void);
 [; ;AD_value.h: 35: void ad_con_init(void);
 [; ;AD_value.h: 48: uint16_t get_adcon(void);
 [; ;plati_temp.h: 34: double get_temp(void);

@@ -19,7 +19,8 @@
 #include "pic_clock.h"
 #include "system_protocol.h"
 #include "spi_master.h"
-
+#include "tempADT.h"
+#include "uart_serial.h"
 
 
 
@@ -103,7 +104,7 @@ void get_cw_data(void)
     cw.power4[1] = spi_master_receive(POW);
     cw.power5[0] = spi_master_receive(POW);
     cw.power5[1] = spi_master_receive(POW);
-    buf = get_adcon();
+    //buf = get_adcon();
     cw.temp[0] = (uint8_t)(buf >> 8);
     cw.temp[1] = (uint8_t)(buf & 0b00000000111111111);
     cw.obc2 = 1;
@@ -502,6 +503,8 @@ static void packet_receive_master(destination_t destination, packet_format_t *p_
     /*受信データをdata_end_commandに格納*/
     packet.data_end_command = spi_master_receive(destination);
 }
+
+
 
 
 

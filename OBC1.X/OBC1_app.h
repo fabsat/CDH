@@ -12,9 +12,8 @@
 #define LED0        PORTDbits.RD7
 #define LED1TRIS    TRISDbits.TRISD6
 #define LED1        PORTDbits.RD6
-#define OBC1_STATUS PORTDbits.RD2
 
-void COM_status(void);
+uint8_t COM_status(void);
 void POW_status(void);
 void command(uint8_t data);
 

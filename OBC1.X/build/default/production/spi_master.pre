@@ -1494,16 +1494,16 @@ void send_data_master(destination_t destination, data_type_t data_type, data_end
 
 void receive_data_master(destination_t destination);
 
-# 51 "spi_master.h"
+# 49 "spi_master.h"
 void spi_master_start(void);
 
-# 64
+# 62
 uint8_t spi_master_receive(destination_t destination);
 
-# 79
+# 77
 void spi_master_send(destination_t destination, uint8_t data);
 
-# 92
+# 90
 void spi_master_stop(void);
 
 # 36 "spi_master.c"
@@ -1515,7 +1515,6 @@ TRISCbits.TRISC5 = 0;
 TRISCbits.TRISC4 = 1;
 
 
-TRISCbits.TRISC2 = 0;
 TRISCbits.TRISC0 = 0;
 TRISCbits.TRISC1 = 0;
 
@@ -1534,7 +1533,6 @@ SSPCONbits.SSPM1 = 0;
 SSPCONbits.SSPM0 = 0;
 
 
-PORTCbits.RC2 = 1;
 PORTCbits.RC0 = 1;
 PORTCbits.RC1 = 1;
 
@@ -1542,7 +1540,7 @@ PORTCbits.RC1 = 1;
 SSPCONbits.SSPEN = 1;
 }
 
-# 82
+# 80
 uint8_t spi_master_receive(destination_t destination)
 {
 uint8_t dummy;
@@ -1554,9 +1552,6 @@ dummy = SSPBUF;
 
 switch(destination)
 {
-case OBC2:
-while(PORTDbits.RD2 == 0){;}
-break;
 case COM:
 while(PORTDbits.RD0 == 0){;}
 break;
@@ -1568,9 +1563,6 @@ break;
 
 switch(destination)
 {
-case OBC2:
-PORTCbits.RC2 = 0;
-break;
 case COM:
 PORTCbits.RC0 = 0;
 break;
@@ -1600,9 +1592,6 @@ timeout_counter--;
 
 switch(destination)
 {
-case OBC2:
-PORTCbits.RC2 = 1;
-break;
 case COM:
 PORTCbits.RC0 = 1;
 break;
@@ -1614,7 +1603,7 @@ break;
 return SSPBUF;
 }
 
-# 165
+# 154
 void spi_master_send(destination_t destination, uint8_t data)
 {
 uint8_t dummy;
@@ -1626,9 +1615,6 @@ dummy = SSPBUF;
 
 switch(destination)
 {
-case OBC2:
-while(PORTDbits.RD2 == 0){;}
-break;
 case COM:
 while(PORTDbits.RD0 == 0){;}
 break;
@@ -1640,9 +1626,6 @@ break;
 
 switch(destination)
 {
-case OBC2:
-PORTCbits.RC2 = 0;
-break;
 case COM:
 PORTCbits.RC0 = 0;
 break;
@@ -1671,9 +1654,6 @@ timeout_counter--;
 
 switch(destination)
 {
-case OBC2:
-PORTCbits.RC2 = 1;
-break;
 case COM:
 PORTCbits.RC0 = 1;
 break;
@@ -1686,14 +1666,14 @@ break;
 dummy = SSPBUF;
 }
 
-# 247
+# 227
 void spi_master_stop(void)
 {
 
-PORTCbits.RC2 = 0;
 PORTCbits.RC0 = 0;
 PORTCbits.RC1 = 0;
 
 
 SSPCONbits.SSPEN = 0;
 }
+

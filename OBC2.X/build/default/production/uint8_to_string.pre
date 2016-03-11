@@ -1443,12 +1443,12 @@ typedef signed int int16_t;
 # 23 "uint8_to_string.h"
 void uint8_to_string(uint8_t num, uint8_t *p_str_buf, uint8_t buf_size);
 
-# 17 "uint8_to_string.c"
+# 16 "uint8_to_string.c"
 static void process_100(uint8_t num, uint8_t *p_str_buf, uint8_t *p_flag);
 static void process_10(uint8_t num, uint8_t *p_str_buf, uint8_t *p_flag);
 static void process_1(uint8_t num, uint8_t *p_str_buf, uint8_t *p_flag);
 
-# 36
+# 35
 void uint8_to_string(uint8_t num, uint8_t *p_str_buf, uint8_t buf_size)
 {
 uint8_t flag = 0;
@@ -1474,7 +1474,7 @@ process_1(num, p_str_buf, &flag);
 }
 }
 
-# 65
+# 64
 static void process_100(uint8_t num, uint8_t *p_str_buf, uint8_t *p_flag)
 {
 
@@ -1493,7 +1493,7 @@ p_str_buf[*p_flag] = 0x30 + 2;
 process_10((num % 100), p_str_buf, p_flag);
 }
 
-# 87
+# 86
 static void process_10(uint8_t num, uint8_t *p_str_buf, uint8_t *p_flag)
 {
 uint8_t divide = num / 10;
@@ -1512,7 +1512,7 @@ p_str_buf[*p_flag] = val;
 process_1((num % 10), p_str_buf, p_flag);
 }
 
-# 109
+# 108
 static void process_1(uint8_t num, uint8_t *p_str_buf, uint8_t *p_flag)
 {
 uint8_t i;

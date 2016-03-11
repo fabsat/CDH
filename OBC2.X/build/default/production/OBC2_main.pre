@@ -1503,28 +1503,20 @@ typedef signed char int8_t;
 typedef unsigned int uint16_t;
 typedef signed int int16_t;
 
-# 39 "uart_serial.h"
-void uart_init();
-void putch(unsigned char byte);
-void put_string(unsigned char *str);
-unsigned char getch();
-unsigned char getche();
+# 23 "uint8_to_string.h"
+void uint8_to_string(uint8_t num, uint8_t *p_str_buf, uint8_t buf_size);
 
-# 27 "spi.h"
-typedef enum
-{
-SPI_ISR_ENABLE,
-SPI_ISR_DISABLE,
-} spi_isr_set_t;
+# 65 "uart_serial.h"
+void uart_init(void);
 
-# 49
-void spi_slave_init(spi_isr_set_t spi_isr);
+# 78
+void putch(uint8_t byte);
 
-# 66
-char spi_send_receive(char data);
+# 92
+void put_string(uint8_t *str);
 
-# 79
-void spi_interrupt(void);
+# 107
+uint8_t getch(void);
 
 # 27 "i2c.h"
 void I2C_init(void);
@@ -1568,13 +1560,33 @@ unsigned char ADT_Begin(void);
 unsigned char ADT_ActionMode(unsigned char mode);
 unsigned char ADT_Receive(char reg_adrs, unsigned char *data, unsigned char kosu);
 unsigned char ADT_Send(char reg_adrs, unsigned char *data, unsigned char kosu);
-long ADT_Read(double *temp);
+void ADT_Read(uint8_t *temp);
 
-# 35 "OBC2_app.h"
+# 16 "OBC1_app.h"
+uint8_t COM_status(void);
+void POW_status(void);
+void command(uint8_t data);
+
+# 33 "OBC2_app.h"
 void OBC1_RESET_init(void);
 
-# 48
+# 46
 void OBC1_reset(void);
+
+# 59
+void OBC1(void);
+
+# 71
+void interrupt I2Ctemp(void);
+
+# 85
+void interrupt_able(void);
+
+# 98
+void interrupt_disable(void);
+
+# 110
+void trans_I2Ctemp(void);
 
 # 10 "system_protocol.h"
 typedef enum
@@ -1616,97 +1628,82 @@ extern cw_t cw;
 # 104
 void sysprot_init(void);
 
-void cw_set(void);
-
-# 132
+# 130
 uint8_t sent_data_set(void *p_data, uint8_t data_len, uint8_t byte_of_data);
 
-# 145
+# 143
 void cw_data_set(cw_t *p_cw_data);
 
-# 160
+# 155
+void get_cw_data(void);
+
+# 169
 void send_data_master(destination_t destination, data_type_t data_type, data_end_command_t data_end_command);
 
 
 void receive_data_master(destination_t destination);
 
-# 51 "spi_master.h"
+# 49 "spi_master.h"
 void spi_master_start(void);
 
-# 64
+# 62
 uint8_t spi_master_receive(destination_t destination);
 
-# 79
+# 77
 void spi_master_send(destination_t destination, uint8_t data);
 
-# 92
+# 90
 void spi_master_stop(void);
 
 
-# 20 "OBC2_main.c"
+# 19 "OBC2_main.c"
 #pragma config FOSC = HS, WDTE = OFF, PWRTE = ON, BOREN = ON, LVP = OFF
 #pragma config CPD = OFF, WRT = OFF, CP = OFF
 
+void interrupt I2Ctemp(void);
 
-void OBC1(void);
+cw_t cw = { {0x00, 0x00}, {0x00, 0x00}, {0x00, 0x00}, {0x00, 0x00}, {0x00, 0x00}, {0x00, 0x00}, 0, 0 };
 
 int main(void){
 
 TRISDbits.TRISD7 = 0;
+PORTDbits.RD7 = 0;
 OBC1_RESET_init();
-if(PORTEbits.RE0) OBC1_reset();
 I2C_init();
-
 uart_init();
+interrupt_able();
+_delay((unsigned long)((1000)*(20000000/4000.0)));
 
 while(1)
 {
 PORTDbits.RD7 = 1;
 _delay((unsigned long)((100)*(20000000/4000.0)));
 
-while(!TRISDbits.TRISD5)
+
+while(!PORTDbits.RD2)
 {
 int count = 0;
 if(count < 100){
 OBC1_reset();
 count++;
 }else{
+interrupt_disable();
 OBC1();
 }
 }
 
-
-
-
 PORTDbits.RD7 = 0;
 _delay((unsigned long)((100)*(20000000/4000.0)));
 }
-
 return 0;
 }
 
-void OBC1(void)
+# 71
+void interrupt I2Ctemp(void)
 {
-MCLR_init();
-sysprot_init();
-spi_master_start();
-uart_init();
-
-while(1)
+if(PIR1bits.RCIF == 1)
 {
-PORTDbits.RD7 = 1;
-_delay((unsigned long)((1000)*(20000000/4000.0)));
-
-
-COM_status();
-
-
-POW_status();
-
-
-command(COM_status);
-
-PORTDbits.RD7 = 0;
-_delay((unsigned long)((1000)*(20000000/4000.0)));
+PIR1bits.RCIF == 0;
+trans_I2Ctemp();
 }
 }

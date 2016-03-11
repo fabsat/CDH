@@ -1,4 +1,3 @@
-
 #include <xc.h>
 #include "uint8_to_string.h"
 #include "pic_clock.h"
@@ -121,4 +120,5 @@ static void process_1(uint8_t num, uint8_t *p_str_buf, uint8_t *p_flag)
 
     p_str_buf[*p_flag] = '\0';
 }
+
 

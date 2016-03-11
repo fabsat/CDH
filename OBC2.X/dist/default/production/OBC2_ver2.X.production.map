@@ -1,0 +1,2231 @@
+Microchip MPLAB XC8 Compiler V1.35 ()
+
+Linker command line:
+
+--edf=C:\Program Files (x86)\Microchip\xc8\v1.35\dat\en_msgs.txt -cs \
+  -h+dist/default/production\OBC2_ver2.X.production.sym \
+  --cmf=dist/default/production\OBC2_ver2.X.production.cmf -z -Q16F877A \
+  -oC:\Users\Tetsuya\AppData\Local\Temp\s82g.2 \
+  -Mdist/default/production/OBC2_ver2.X.production.map -E1 -ver=XC8 \
+  -ASTACK=0110h-016fh -pstack=STACK -ACODE=00h-07FFhx4 -ASTRCODE=00h-01FFFh \
+  -ASTRING=00h-0FFhx32 -ACONST=00h-0FFhx32 -AENTRY=00h-0FFhx32 \
+  -ACOMMON=070h-07Fh -ABANK0=020h-06Fh -ABANK1=0A0h-0EFh \
+  -ABANK2=0110h-016Fh -ABANK3=0190h-01EFh \
+  -ARAM=020h-06Fh,0A0h-0EFh,0110h-016Fh,0190h-01EFh \
+  -AABS1=020h-07Fh,0A0h-0EFh,0110h-016Fh,0190h-01EFh -ASFR0=00h-01Fh \
+  -ASFR1=080h-09Fh -ASFR2=0100h-010Fh -ASFR3=0180h-018Fh \
+  -preset_vec=00h,intentry=04h,init,end_init -ppowerup=CODE -pcinit=CODE \
+  -pfunctab=CODE -ACONFIG=02007h-02007h -pconfig=CONFIG -DCONFIG=2 \
+  -AIDLOC=02000h-02003h -pidloc=IDLOC -DIDLOC=2 -AEEDATA=00h-0FFh/02100h \
+  -peeprom_data=EEDATA -DEEDATA=2 -DCODE=2 -DSTRCODE=2 -DSTRING=2 -DCONST=2 \
+  -DENTRY=2 -k C:\Users\Tetsuya\AppData\Local\Temp\s82g.obj \
+  dist/default/production\OBC2_ver2.X.production.obj 
+
+Object code version is 3.11
+
+Machine type is 16F877A
+
+
+
+                Name                               Link     Load   Length Selector   Space Scale
+C:\Users\Tetsuya\AppData\Local\Temp\s82g.obj
+                end_init                             12       12        3        8       0
+                reset_vec                             0        0        3        0       0
+                config                             2007     2007        1     400E       0
+dist/default/production\OBC2_ver2.X.production.obj
+                cinit                                15       15       13        8       0
+                intentry                              4        4        E        8       0
+                text44                              3CE      3CE       50        8       0
+                text43                              2DB      2DB       53        8       0
+                text42                              7F9      7F9        7        8       0
+                text41                              7DE      7DE       1B        8       0
+                text40                              4B2      4B2       45        8       0
+                text39                              7A5      7A5       1D        8       0
+                text38                              64F      64F       2B        8       0
+                text37                              624      624       2B        8       0
+                text36                              F6F      F6F        8     1EDE       0
+                text35                              74B      74B       1F        8       0
+                text34                              70B      70B       21        8       0
+                text33                              FD5      FD5       15     1FAA       0
+                text32                              F93      F93        D     1F26       0
+                text31                              6EA      6EA       21        8       0
+                text30                              41E      41E       4C        8       0
+                text29                              37E      37E       50        8       0
+                text28                              6C7      6C7       23        8       0
+                text27                              FC1      FC1       14     1F82       0
+                text26                              FAE      FAE       13     1F5C       0
+                text25                              76A      76A       1E        8       0
+                text24                              6A4      6A4       23        8       0
+                text23                              5CC      5CC       2D        8       0
+                text22                              532      532       3B        8       0
+                text21                              59D      59D       2F        8       0
+                text20                              4F7      4F7       3B        8       0
+                text19                              5F9      5F9       2B        8       0
+                text18                               CA       CA       91        8       0
+                text17                              67A      67A       2A        8       0
+                text16                              FA0      FA0        E     1F40       0
+                text15                              15B      15B       8C        8       0
+                text14                              788      788       1D        8       0
+                text13                              1E7      1E7       7C        8       0
+                text12                              F77      F77        8     1EEE       0
+                text11                              46A      46A       48        8       0
+                text10                              56D      56D       30        8       0
+                text9                               7C2      7C2       1C        8       0
+                text8                                28       28       A2        8       0
+                text7                               F6A      F6A        5     1ED4       0
+                text6                               F87      F87        C     1F0E       0
+                text5                               32E      32E       50        8       0
+                text4                               FEA      FEA       16     1FD4       0
+                text3                               72C      72C       1F        8       0
+                text2                               F64      F64        3     1EC8       0
+                text1                               F67      F67        3     1ECE       0
+                maintext                            263      263       78        8       0
+                cstackBANK0                          20       20       2B       20       1
+                cstackCOMMON                         70       70        E       70       1
+                cstackBANK1                          C0       C0       17       A0       1
+                clrtext                             F7F      F7F        8     1EFE       0
+                bssBANK1                             A0       A0       20       A0       1
+                bssBANK0                             4B       4B       10       20       1
+                strings                             800      800        8     1000       0
+
+TOTAL           Name                               Link     Load   Length     Space
+        CLASS   STACK          
+
+        CLASS   CODE           
+                end_init                             12       12        3         0
+                cinit                                15       15       13         0
+                intentry                              4        4        E         0
+                reset_vec                             0        0        3         0
+                text44                              3CE      3CE       50         0
+                text43                              2DB      2DB       53         0
+                text42                              7F9      7F9        7         0
+                text41                              7DE      7DE       1B         0
+                text40                              4B2      4B2       45         0
+                text39                              7A5      7A5       1D         0
+                text38                              64F      64F       2B         0
+                text37                              624      624       2B         0
+                text36                              F6F      F6F        8         0
+                text35                              74B      74B       1F         0
+                text34                              70B      70B       21         0
+                text33                              FD5      FD5       15         0
+                text32                              F93      F93        D         0
+                text31                              6EA      6EA       21         0
+                text30                              41E      41E       4C         0
+                text29                              37E      37E       50         0
+                text28                              6C7      6C7       23         0
+                text27                              FC1      FC1       14         0
+                text26                              FAE      FAE       13         0
+                text25                              76A      76A       1E         0
+                text24                              6A4      6A4       23         0
+                text23                              5CC      5CC       2D         0
+                text22                              532      532       3B         0
+                text21                              59D      59D       2F         0
+                text20                              4F7      4F7       3B         0
+                text19                              5F9      5F9       2B         0
+                text18                               CA       CA       91         0
+                text17                              67A      67A       2A         0
+                text16                              FA0      FA0        E         0
+                text15                              15B      15B       8C         0
+                text14                              788      788       1D         0
+                text13                              1E7      1E7       7C         0
+                text12                              F77      F77        8         0
+                text11                              46A      46A       48         0
+                text10                              56D      56D       30         0
+                text9                               7C2      7C2       1C         0
+                text8                                28       28       A2         0
+                text7                               F6A      F6A        5         0
+                text6                               F87      F87        C         0
+                text5                               32E      32E       50         0
+                text4                               FEA      FEA       16         0
+                text3                               72C      72C       1F         0
+                text2                               F64      F64        3         0
+                text1                               F67      F67        3         0
+                maintext                            263      263       78         0
+                clrtext                             F7F      F7F        8         0
+
+        CLASS   STRCODE        
+
+        CLASS   STRING         
+                strings                             800      800        8         0
+
+        CLASS   CONST          
+
+        CLASS   ENTRY          
+
+        CLASS   COMMON         
+                cstackCOMMON                         70       70        E         1
+
+        CLASS   BANK0          
+                cstackBANK0                          20       20       2B         1
+                bssBANK0                             4B       4B       10         1
+
+        CLASS   BANK1          
+                cstackBANK1                          C0       C0       17         1
+                bssBANK1                             A0       A0       20         1
+
+        CLASS   BANK2          
+
+        CLASS   BANK3          
+
+        CLASS   RAM            
+
+        CLASS   ABS1           
+                abs_s1                               7E       7E        2         1
+
+        CLASS   SFR0           
+
+        CLASS   SFR1           
+
+        CLASS   SFR2           
+
+        CLASS   SFR3           
+
+        CLASS   CONFIG         
+                config                             2007     2007        1         0
+
+        CLASS   IDLOC          
+
+        CLASS   EEDATA         
+
+
+
+SEGMENTS        Name                           Load    Length   Top    Selector   Space  Class     Delta
+
+                reset_vec                      000000  000003  000003         0       0  CODE        2
+                intentry                       000004  0007FC  000800         8       0  CODE        2
+                cstackBANK0                    000020  00003B  00005B        20       1  BANK0       1
+                cstackCOMMON                   000070  00000E  00007E        70       1  COMMON      1
+                bssBANK1                       0000A0  000037  0000D7        A0       1  BANK1       1
+                strings                        000800  000008  000808      1000       0  STRING      2
+                text2                          000F64  000003  000F67      1EC8       0  CODE        2
+                text1                          000F67  000003  000F6A      1ECE       0  CODE        2
+                text7                          000F6A  000005  000F6F      1ED4       0  CODE        2
+                text36                         000F6F  000008  000F77      1EDE       0  CODE        2
+                text12                         000F77  000008  000F7F      1EEE       0  CODE        2
+                clrtext                        000F7F  000008  000F87      1EFE       0  CODE        2
+                text6                          000F87  00000C  000F93      1F0E       0  CODE        2
+                text32                         000F93  00000D  000FA0      1F26       0  CODE        2
+                text16                         000FA0  00000E  000FAE      1F40       0  CODE        2
+                text26                         000FAE  000013  000FC1      1F5C       0  CODE        2
+                text27                         000FC1  000014  000FD5      1F82       0  CODE        2
+                text33                         000FD5  000015  000FEA      1FAA       0  CODE        2
+                text4                          000FEA  000016  001000      1FD4       0  CODE        2
+                config                         002007  000001  002008      400E       0  CONFIG      2
+
+
+UNUSED ADDRESS RANGES
+
+        Name                Unused          Largest block    Delta
+        BANK0            005B-006F             15           1
+        BANK1            00D7-00EF             19           1
+        BANK2            0110-016F             60           1
+        BANK3            0190-01EF             60           1
+        CODE             0003-0003              1           2
+                         0808-0F63            75C
+                         1000-1FFF            800
+        CONST            0003-0003              1           2
+                         0808-0F63            100
+                         1000-1FFF            100
+        EEDATA           2100-21FF            100           2
+        ENTRY            0003-0003              1           2
+                         0808-0F63            100
+                         1000-1FFF            100
+        IDLOC            2000-2003              4           2
+        RAM              005B-006F             15           1
+                         00D7-00EF             19
+                         0110-016F             60
+                         0190-01EF             60
+        SFR0             0000-001F             20           1
+        SFR1             0080-009F             20           1
+        SFR2             0100-010F             10           1
+        SFR3             0180-018F             10           1
+        STACK            0110-016F             60           1
+        STRCODE          0003-0003              1           2
+                         0808-0F63            75C
+                         1000-1FFF           1000
+        STRING           0003-0003              1           2
+                         0808-0F63            100
+                         1000-1FFF            100
+
+                                  Symbol Table
+
+?___wmul                              cstackBANK0  0035
+ADT_ActionMode@F1258                  bssBANK0     004B
+ADT_Read@ans                          cstackBANK0  0029
+ADT_Read@data                         cstackBANK0  002A
+ADT_Read@temp                         cstackBANK0  002C
+ADT_Receive@ans                       cstackBANK0  0025
+ADT_Receive@data                      cstackBANK0  0020
+ADT_Receive@kosu                      cstackBANK0  0021
+ADT_Receive@reg_adrs                  cstackBANK0  0024
+COM_status@COM_stat                   cstackBANK0  003C
+I2C_GetData@Buffer                    cstackCOMMON 0077
+I2C_GetData@CNT                       cstackCOMMON 0078
+I2C_GetData@adr                       cstackCOMMON 007C
+I2C_GetData@i                         cstackCOMMON 007D
+I2C_GetData@slave_adr                 cstackCOMMON 007B
+I2C_Out@ACK                           cstackCOMMON 0072
+I2C_Out@BitPos                        cstackCOMMON 0076
+I2C_Out@data                          cstackCOMMON 0073
+I2C_Out@i                             cstackCOMMON 0074
+I2C_Rcv@Ack                           cstackCOMMON 0072
+I2C_Rcv@BitPos                        cstackCOMMON 0076
+I2C_Rcv@data                          cstackCOMMON 0073
+I2C_Rcv@i                             cstackCOMMON 0074
+I2C_Send@adr                          cstackCOMMON 007B
+I2C_Send@data                         cstackCOMMON 0077
+I2C_Send@slave_adr                    cstackCOMMON 007A
+I2Ctemp_data_set@I2CTEMP_data         cstackBANK1  00C9
+MCLR_init@nin                         cstackBANK0  0035
+MCLR_reset@nin                        cstackBANK0  0038
+MCLR_reset@resetted_mcu               cstackBANK0  0037
+OBC1@COM_s                            cstackBANK1  00D1
+OBC1_RESET_init@nin                   cstackBANK0  0035
+OBC1_reset@nin                        cstackBANK0  0037
+_ADT_Read                             text37       0624
+_ADT_Receive                          text38       064F
+_COM_status                           text28       06C7
+_I2C_GetData                          text40       04B2
+_I2C_Out                              text44       03CE
+_I2C_Rcv                              text43       02DB
+_I2C_Send                             text39       07A5
+_I2C_Start                            text42       07F9
+_I2C_Stop                             text41       07DE
+_I2C_init                             text32       0F93
+_I2Ctemp                              text33       0FD5
+_I2Ctemp_data_set                     text17       067A
+_INTCONbits                           (abs)        000B
+_LED_data_set                         text16       0FA0
+_MCLR_init                            text27       0FC1
+_MCLR_reset                           text31       06EA
+_OBC1                                 text5        032E
+_OBC1_RESET_init                      text4        0FEA
+_OBC1_reset                           text3        072C
+_PIR1bits                             (abs)        000C
+_PORTCbits                            (abs)        0007
+_PORTDbits                            (abs)        0008
+_POW_status                           text26       0FAE
+_RCIF                                 (abs)        0065
+_RCREG                                (abs)        001A
+_RCSTA                                (abs)        0018
+_SPBRG                                (abs)        0099
+_SSPBUF                               (abs)        0013
+_SSPCONbits                           (abs)        0014
+_SSPSTATbits                          (abs)        0094
+_TRISCbits                            (abs)        0087
+_TRISDbits                            (abs)        0088
+_TRISEbits                            (abs)        0089
+_TXIF                                 (abs)        0064
+_TXREG                                (abs)        0019
+_TXSTA                                (abs)        0098
+__CFG_BOREN$ON                        (abs)        0000
+__CFG_CP$OFF                          (abs)        0000
+__CFG_CPD$OFF                         (abs)        0000
+__CFG_FOSC$HS                         (abs)        0000
+__CFG_LVP$OFF                         (abs)        0000
+__CFG_PWRTE$ON                        (abs)        0000
+__CFG_WDTE$OFF                        (abs)        0000
+__CFG_WRT$OFF                         (abs)        0000
+__Habs1                               abs1         0000
+__Hbank0                              bank0        0000
+__Hbank1                              bank1        0000
+__Hbank2                              bank2        0000
+__Hbank3                              bank3        0000
+__HbssBANK0                           bssBANK0     0000
+__HbssBANK1                           bssBANK1     0000
+__Hcinit                              cinit        0028
+__Hclrtext                            clrtext      0000
+__Hcode                               code         0000
+__Hcommon                             common       0000
+__Hconfig                             config       2008
+__HcstackBANK0                        cstackBANK0  0000
+__HcstackBANK1                        cstackBANK1  0000
+__HcstackCOMMON                       cstackCOMMON 0000
+__Heeprom_data                        eeprom_data  0000
+__Hend_init                           end_init     0015
+__Hfunctab                            functab      0000
+__Hidloc                              idloc        0000
+__Hinit                               init         0012
+__Hintentry                           intentry     0012
+__Hmaintext                           maintext     0000
+__Hpowerup                            powerup      0000
+__Hram                                ram          0000
+__Hreset_vec                          reset_vec    0003
+__Hsfr0                               sfr0         0000
+__Hsfr1                               sfr1         0000
+__Hsfr2                               sfr2         0000
+__Hsfr3                               sfr3         0000
+__Hspace_0                            (abs)        2008
+__Hspace_1                            (abs)        00D7
+__Hspace_2                            (abs)        0000
+__Hspace_3                            (abs)        0000
+__Hstack                              stack        0000
+__Hstrings                            strings      0000
+__Htext                               text         0000
+__Labs1                               abs1         0000
+__Lbank0                              bank0        0000
+__Lbank1                              bank1        0000
+__Lbank2                              bank2        0000
+__Lbank3                              bank3        0000
+__LbssBANK0                           bssBANK0     0000
+__LbssBANK1                           bssBANK1     0000
+__Lcinit                              cinit        0015
+__Lclrtext                            clrtext      0000
+__Lcode                               code         0000
+__Lcommon                             common       0000
+__Lconfig                             config       2007
+__LcstackBANK0                        cstackBANK0  0000
+__LcstackBANK1                        cstackBANK1  0000
+__LcstackCOMMON                       cstackCOMMON 0000
+__Leeprom_data                        eeprom_data  0000
+__Lend_init                           end_init     0012
+__Lfunctab                            functab      0000
+__Lidloc                              idloc        0000
+__Linit                               init         0012
+__Lintentry                           intentry     0004
+__Lmaintext                           maintext     0000
+__Lpowerup                            powerup      0000
+__Lram                                ram          0000
+__Lreset_vec                          reset_vec    0000
+__Lsfr0                               sfr0         0000
+__Lsfr1                               sfr1         0000
+__Lsfr2                               sfr2         0000
+__Lsfr3                               sfr3         0000
+__Lspace_0                            (abs)        0000
+__Lspace_1                            (abs)        0000
+__Lspace_2                            (abs)        0000
+__Lspace_3                            (abs)        0000
+__Lstack                              stack        0000
+__Lstrings                            strings      0000
+__Ltext                               text         0000
+__S0                                  (abs)        2008
+__S1                                  (abs)        00D7
+__S2                                  (abs)        0000
+__S3                                  (abs)        0000
+___int_sp                             stack        0000
+___latbits                            (abs)        0002
+___sp                                 stack        0000
+___wmul                               text24       06A4
+___wmul@multiplicand                  cstackBANK0  0037
+___wmul@multiplier                    cstackBANK0  0035
+___wmul@product                       cstackBANK0  0039
+__end_of_ADT_Read                     text37       064F
+__end_of_ADT_Receive                  text38       067A
+__end_of_COM_status                   text28       06EA
+__end_of_I2C_GetData                  text40       04F7
+__end_of_I2C_Out                      text44       041E
+__end_of_I2C_Rcv                      text43       032E
+__end_of_I2C_Send                     text39       07C2
+__end_of_I2C_Start                    text42       0800
+__end_of_I2C_Stop                     text41       07F9
+__end_of_I2C_init                     text32       0FA0
+__end_of_I2Ctemp                      text33       0FEA
+__end_of_I2Ctemp_data_set             text17       06A4
+__end_of_LED_data_set                 text16       0FAE
+__end_of_MCLR_init                    text27       0FD5
+__end_of_MCLR_reset                   text31       070B
+__end_of_OBC1                         text5        037E
+__end_of_OBC1_RESET_init              text4        1000
+__end_of_OBC1_reset                   text3        074B
+__end_of_POW_status                   text26       0FC1
+__end_of___wmul                       text24       06C7
+__end_of__initialization              cinit        0024
+__end_of__stringtab                   strings      0806
+__end_of_command                      text8        00CA
+__end_of_cw_data_set                  text15       01E7
+__end_of_double_data_set              text22       056D
+__end_of_double_to_byte_array         text23       05F9
+__end_of_get_cw_data                  text13       0263
+__end_of_getch                        text25       0788
+__end_of_interrupt_able               text2        0F67
+__end_of_interrupt_disable            text1        0F6A
+__end_of_main                         maintext     02DB
+__end_of_packet_send_master           text10       059D
+__end_of_put_string                   text35       076A
+__end_of_putch                        text12       0F7F
+__end_of_send_data_master             text9        07DE
+__end_of_send_payload                 text11       04B2
+__end_of_sent_data_set                text18       015B
+__end_of_spi_master_receive           text30       046A
+__end_of_spi_master_send              text29       03CE
+__end_of_spi_master_start             text14       07A5
+__end_of_sysprot_init                 text7        0F6F
+__end_of_trans_I2Ctemp                text34       072C
+__end_of_uart_init                    text6        0F93
+__end_of_uint16_data_set              text20       0532
+__end_of_uint16_to_byte_array         text21       05CC
+__end_of_uint8_data_set               text19       0624
+__end_ofi1_putch                      text36       0F77
+__end_ofuint16_to_byte_array@bit_mask strings      0808
+__initialization                      cinit        0015
+__pbssBANK0                           bssBANK0     004B
+__pbssBANK1                           bssBANK1     00A0
+__pcstackBANK0                        cstackBANK0  0020
+__pcstackBANK1                        cstackBANK1  00C0
+__pcstackCOMMON                       cstackCOMMON 0070
+__pintentry                           intentry     0004
+__pmaintext                           maintext     0263
+__pstrings                            strings      0800
+__ptext1                              text1        0F67
+__ptext10                             text10       056D
+__ptext11                             text11       046A
+__ptext12                             text12       0F77
+__ptext13                             text13       01E7
+__ptext14                             text14       0788
+__ptext15                             text15       015B
+__ptext16                             text16       0FA0
+__ptext17                             text17       067A
+__ptext18                             text18       00CA
+__ptext19                             text19       05F9
+__ptext2                              text2        0F64
+__ptext20                             text20       04F7
+__ptext21                             text21       059D
+__ptext22                             text22       0532
+__ptext23                             text23       05CC
+__ptext24                             text24       06A4
+__ptext25                             text25       076A
+__ptext26                             text26       0FAE
+__ptext27                             text27       0FC1
+__ptext28                             text28       06C7
+__ptext29                             text29       037E
+__ptext3                              text3        072C
+__ptext30                             text30       041E
+__ptext31                             text31       06EA
+__ptext32                             text32       0F93
+__ptext33                             text33       0FD5
+__ptext34                             text34       070B
+__ptext35                             text35       074B
+__ptext36                             text36       0F6F
+__ptext37                             text37       0624
+__ptext38                             text38       064F
+__ptext39                             text39       07A5
+__ptext4                              text4        0FEA
+__ptext40                             text40       04B2
+__ptext41                             text41       07DE
+__ptext42                             text42       07F9
+__ptext43                             text43       02DB
+__ptext44                             text44       03CE
+__ptext5                              text5        032E
+__ptext6                              text6        0F87
+__ptext7                              text7        0F6A
+__ptext8                              text8        0028
+__ptext9                              text9        07C2
+__size_of_ADT_Read                    (abs)        0000
+__size_of_ADT_Receive                 (abs)        0000
+__size_of_COM_status                  (abs)        0000
+__size_of_I2C_GetData                 (abs)        0000
+__size_of_I2C_Out                     (abs)        0000
+__size_of_I2C_Rcv                     (abs)        0000
+__size_of_I2C_Send                    (abs)        0000
+__size_of_I2C_Start                   (abs)        0000
+__size_of_I2C_Stop                    (abs)        0000
+__size_of_I2C_init                    (abs)        0000
+__size_of_I2Ctemp                     (abs)        0000
+__size_of_I2Ctemp_data_set            (abs)        0000
+__size_of_LED_data_set                (abs)        0000
+__size_of_MCLR_init                   (abs)        0000
+__size_of_MCLR_reset                  (abs)        0000
+__size_of_OBC1                        (abs)        0000
+__size_of_OBC1_RESET_init             (abs)        0000
+__size_of_OBC1_reset                  (abs)        0000
+__size_of_POW_status                  (abs)        0000
+__size_of___wmul                      (abs)        0000
+__size_of_command                     (abs)        0000
+__size_of_cw_data_set                 (abs)        0000
+__size_of_double_data_set             (abs)        0000
+__size_of_double_to_byte_array        (abs)        0000
+__size_of_get_cw_data                 (abs)        0000
+__size_of_getch                       (abs)        0000
+__size_of_interrupt_able              (abs)        0000
+__size_of_interrupt_disable           (abs)        0000
+__size_of_main                        (abs)        0000
+__size_of_packet_send_master          (abs)        0000
+__size_of_put_string                  (abs)        0000
+__size_of_putch                       (abs)        0000
+__size_of_send_data_master            (abs)        0000
+__size_of_send_payload                (abs)        0000
+__size_of_sent_data_set               (abs)        0000
+__size_of_spi_master_receive          (abs)        0000
+__size_of_spi_master_send             (abs)        0000
+__size_of_spi_master_start            (abs)        0000
+__size_of_sysprot_init                (abs)        0000
+__size_of_trans_I2Ctemp               (abs)        0000
+__size_of_uart_init                   (abs)        0000
+__size_of_uint16_data_set             (abs)        0000
+__size_of_uint16_to_byte_array        (abs)        0000
+__size_of_uint8_data_set              (abs)        0000
+__size_ofi1_putch                     (abs)        0000
+__stringbase                          strings      0805
+__stringtab                           strings      0800
+_command                              text8        0028
+_cw                                   bssBANK0     004E
+_cw_data_set                          text15       015B
+_double_data_set                      text22       0532
+_double_to_byte_array                 text23       05CC
+_get_cw_data                          text13       01E7
+_getch                                text25       076A
+_index_pos                            bssBANK0     004D
+_interrupt_able                       text2        0F64
+_interrupt_disable                    text1        0F67
+_main                                 maintext     0263
+_packet                               bssBANK1     00A0
+_packet_send_master                   text10       056D
+_put_string                           text35       074B
+_putch                                text12       0F77
+_send_data_master                     text9        07C2
+_send_payload                         text11       046A
+_sent_data_set                        text18       00CA
+_spi_master_receive                   text30       041E
+_spi_master_send                      text29       037E
+_spi_master_start                     text14       0788
+_sysprot_init                         text7        0F6A
+_trans_I2Ctemp                        text34       070B
+_uart_init                            text6        0F87
+_uint16_data_set                      text20       04F7
+_uint16_to_byte_array                 text21       059D
+_uint8_data_set                       text19       05F9
+btemp                                 (abs)        007E
+clear_ram0                            clrtext      0F7F
+command@data                          cstackBANK0  004A
+cw_data_set@p_cw_data                 cstackBANK0  003A
+double_data_set@buf                   cstackBANK0  0043
+double_data_set@data_len              cstackBANK0  0041
+double_data_set@i                     cstackBANK0  0048
+double_data_set@p_data                cstackBANK0  003F
+double_to_byte_array@converter        cstackBANK0  003A
+double_to_byte_array@i                cstackBANK0  003E
+double_to_byte_array@p_data           cstackBANK0  0035
+double_to_byte_array@p_data_array     cstackBANK0  0037
+end_of_initialization                 cinit        0024
+get_cw_data@buf                       cstackBANK0  003B
+getch@count                           cstackBANK0  0035
+i1_putch                              text36       0F6F
+i1putch@byte                          cstackCOMMON 0070
+interrupt_function                    intentry     0004
+intlevel0                             functab      0000
+intlevel1                             functab      0000
+intlevel2                             functab      0000
+intlevel3                             functab      0000
+intlevel4                             functab      0000
+intlevel5                             functab      0000
+ltemp                                 (abs)        007E
+ltemp0                                (abs)        007E
+ltemp1                                (abs)        0082
+ltemp2                                (abs)        0086
+ltemp3                                (abs)        0080
+main@count                            cstackBANK1  00D5
+packet_send_master@destination        cstackBANK0  0043
+packet_send_master@p_packet           cstackBANK0  0041
+put_string@str                        cstackCOMMON 0071
+putch@byte                            cstackBANK0  0035
+reset_vec                             reset_vec    0000
+saved_w                               (abs)        007E
+send_data_master@data_end_command     cstackBANK0  0045
+send_data_master@data_type            cstackBANK0  0044
+send_data_master@destination          cstackBANK0  0047
+send_payload@data_len                 cstackBANK0  003D
+send_payload@destination              cstackBANK0  003F
+send_payload@i                        cstackBANK0  003E
+send_payload@index_pos                cstackBANK0  0040
+send_payload@p_payload                cstackBANK0  003B
+sent_data_set@byte_of_data            cstackBANK1  00C3
+sent_data_set@data_len                cstackBANK1  00C2
+sent_data_set@p_data                  cstackBANK1  00C0
+spi_master_receive@destination        cstackBANK0  0039
+spi_master_receive@dummy              cstackBANK0  0036
+spi_master_receive@timeout_counter    cstackBANK0  0037
+spi_master_send@data                  cstackBANK0  0035
+spi_master_send@destination           cstackBANK0  003A
+spi_master_send@dummy                 cstackBANK0  0037
+spi_master_send@timeout_counter       cstackBANK0  0038
+stackhi                               (abs)        0000
+stacklo                               (abs)        0000
+start                                 init         0012
+start_initialization                  cinit        0015
+trans_I2Ctemp@data                    cstackBANK0  002F
+ttemp                                 (abs)        007E
+ttemp0                                (abs)        007E
+ttemp1                                (abs)        0081
+ttemp2                                (abs)        0084
+ttemp3                                (abs)        0087
+ttemp4                                (abs)        007F
+uint16_data_set@buf                   cstackBANK0  003F
+uint16_data_set@data_len              cstackBANK0  003D
+uint16_data_set@i                     cstackBANK0  0042
+uint16_data_set@p_data                cstackBANK0  003B
+uint16_to_byte_array@bit_mask         strings      0806
+uint16_to_byte_array@p_data           cstackBANK0  0035
+uint16_to_byte_array@p_data_array     cstackBANK0  0037
+uint8_data_set@data_len               cstackBANK0  0037
+uint8_data_set@p_data                 cstackBANK0  0035
+wtemp                                 (abs)        007E
+wtemp0                                (abs)        007E
+wtemp1                                (abs)        0080
+wtemp2                                (abs)        0082
+wtemp3                                (abs)        0084
+wtemp4                                (abs)        0086
+wtemp5                                (abs)        0088
+wtemp6                                (abs)        007F
+
+
+FUNCTION INFORMATION:
+
+ *************** function _main *****************
+ Defined at:
+		line 26 in file "OBC2_main.c"
+ Parameters:    Size  Location     Type
+		None
+ Auto vars:     Size  Location     Type
+  count           2   21[BANK1 ] int 
+ Return value:  Size  Location     Type
+                  2  465[None  ] int 
+ Registers used:
+		wreg, fsr0l, fsr0h, status,2, status,0, btemp+1, pclath, cstack
+ Tracked objects:
+		On entry : 
+		On exit  : 
+		Unchanged: 
+ Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
+      Params:         0       0       0       0       0
+      Locals:         0       0       2       0       0
+      Temps:          0       0       3       0       0
+      Totals:         0       0       5       0       0
+Total ram usage:        5 bytes
+ Hardware stack levels required when called:   12
+ This function calls:
+		_I2C_init
+		_OBC1
+		_OBC1_RESET_init
+		_OBC1_reset
+		_interrupt_able
+		_interrupt_disable
+		_uart_init
+ This function is called by:
+		Startup code after reset
+ This function uses a non-reentrant model
+
+
+ *************** function _interrupt_disable *****************
+ Defined at:
+		line 101 in file "OBC2_app.c"
+ Parameters:    Size  Location     Type
+		None
+ Auto vars:     Size  Location     Type
+		None
+ Return value:  Size  Location     Type
+		None               void
+ Registers used:
+		None
+ Tracked objects:
+		On entry : 
+		On exit  : 
+		Unchanged: 
+ Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
+      Params:         0       0       0       0       0
+      Locals:         0       0       0       0       0
+      Temps:          0       0       0       0       0
+      Totals:         0       0       0       0       0
+Total ram usage:        0 bytes
+ Hardware stack levels used:    1
+ Hardware stack levels required when called:    6
+ This function calls:
+		Nothing
+ This function is called by:
+		_main
+ This function uses a non-reentrant model
+
+
+ *************** function _interrupt_able *****************
+ Defined at:
+		line 82 in file "OBC2_app.c"
+ Parameters:    Size  Location     Type
+		None
+ Auto vars:     Size  Location     Type
+		None
+ Return value:  Size  Location     Type
+		None               void
+ Registers used:
+		None
+ Tracked objects:
+		On entry : 
+		On exit  : 
+		Unchanged: 
+ Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
+      Params:         0       0       0       0       0
+      Locals:         0       0       0       0       0
+      Temps:          0       0       0       0       0
+      Totals:         0       0       0       0       0
+Total ram usage:        0 bytes
+ Hardware stack levels used:    1
+ Hardware stack levels required when called:    6
+ This function calls:
+		Nothing
+ This function is called by:
+		_main
+ This function uses a non-reentrant model
+
+
+ *************** function _OBC1_reset *****************
+ Defined at:
+		line 60 in file "OBC2_app.c"
+ Parameters:    Size  Location     Type
+		None
+ Auto vars:     Size  Location     Type
+  nin             2   23[BANK0 ] PTR unsigned char 
+		 -> RAM(512), 
+ Return value:  Size  Location     Type
+		None               void
+ Registers used:
+		wreg, fsr0l, fsr0h, status,2
+ Tracked objects:
+		On entry : 
+		On exit  : 
+		Unchanged: 
+ Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
+      Params:         0       0       0       0       0
+      Locals:         0       2       0       0       0
+      Temps:          0       2       0       0       0
+      Totals:         0       4       0       0       0
+Total ram usage:        4 bytes
+ Hardware stack levels used:    1
+ Hardware stack levels required when called:    6
+ This function calls:
+		Nothing
+ This function is called by:
+		_main
+ This function uses a non-reentrant model
+
+
+ *************** function _OBC1_RESET_init *****************
+ Defined at:
+		line 37 in file "OBC2_app.c"
+ Parameters:    Size  Location     Type
+		None
+ Auto vars:     Size  Location     Type
+  nin             2   21[BANK0 ] PTR unsigned char 
+		 -> RAM(512), 
+ Return value:  Size  Location     Type
+		None               void
+ Registers used:
+		wreg, fsr0l, fsr0h
+ Tracked objects:
+		On entry : 
+		On exit  : 
+		Unchanged: 
+ Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
+      Params:         0       0       0       0       0
+      Locals:         0       2       0       0       0
+      Temps:          0       0       0       0       0
+      Totals:         0       2       0       0       0
+Total ram usage:        2 bytes
+ Hardware stack levels used:    1
+ Hardware stack levels required when called:    6
+ This function calls:
+		Nothing
+ This function is called by:
+		_main
+ This function uses a non-reentrant model
+
+
+ *************** function _OBC1 *****************
+ Defined at:
+		line 120 in file "OBC2_app.c"
+ Parameters:    Size  Location     Type
+		None
+ Auto vars:     Size  Location     Type
+  COM_s           1   17[BANK1 ] unsigned char 
+ Return value:  Size  Location     Type
+		None               void
+ Registers used:
+		wreg, fsr0l, fsr0h, status,2, status,0, btemp+1, pclath, cstack
+ Tracked objects:
+		On entry : 
+		On exit  : 
+		Unchanged: 
+ Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
+      Params:         0       0       0       0       0
+      Locals:         0       0       1       0       0
+      Temps:          0       0       3       0       0
+      Totals:         0       0       4       0       0
+Total ram usage:        4 bytes
+ Hardware stack levels used:    1
+ Hardware stack levels required when called:   11
+ This function calls:
+		_COM_status
+		_MCLR_init
+		_POW_status
+		_command
+		_spi_master_start
+		_sysprot_init
+		_uart_init
+ This function is called by:
+		_main
+ This function uses a non-reentrant model
+
+
+ *************** function _uart_init *****************
+ Defined at:
+		line 34 in file "uart_serial.c"
+ Parameters:    Size  Location     Type
+		None
+ Auto vars:     Size  Location     Type
+		None
+ Return value:  Size  Location     Type
+		None               void
+ Registers used:
+		wreg
+ Tracked objects:
+		On entry : 
+		On exit  : 
+		Unchanged: 
+ Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
+      Params:         0       0       0       0       0
+      Locals:         0       0       0       0       0
+      Temps:          0       0       0       0       0
+      Totals:         0       0       0       0       0
+Total ram usage:        0 bytes
+ Hardware stack levels used:    1
+ Hardware stack levels required when called:    6
+ This function calls:
+		Nothing
+ This function is called by:
+		_OBC1
+		_main
+ This function uses a non-reentrant model
+
+
+ *************** function _sysprot_init *****************
+ Defined at:
+		line 83 in file "sysytem_protocol.c"
+ Parameters:    Size  Location     Type
+		None
+ Auto vars:     Size  Location     Type
+		None
+ Return value:  Size  Location     Type
+		None               void
+ Registers used:
+		None
+ Tracked objects:
+		On entry : 
+		On exit  : 
+		Unchanged: 
+ Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
+      Params:         0       0       0       0       0
+      Locals:         0       0       0       0       0
+      Temps:          0       0       0       0       0
+      Totals:         0       0       0       0       0
+Total ram usage:        0 bytes
+ Hardware stack levels used:    1
+ Hardware stack levels required when called:    6
+ This function calls:
+		Nothing
+ This function is called by:
+		_OBC1
+ This function uses a non-reentrant model
+
+
+ *************** function _command *****************
+ Defined at:
+		line 50 in file "OBC1_app.c"
+ Parameters:    Size  Location     Type
+  data            1    wreg     unsigned char 
+ Auto vars:     Size  Location     Type
+  data            1   42[BANK0 ] unsigned char 
+ Return value:  Size  Location     Type
+		None               void
+ Registers used:
+		wreg, fsr0l, fsr0h, status,2, status,0, btemp+1, pclath, cstack
+ Tracked objects:
+		On entry : 
+		On exit  : 
+		Unchanged: 
+ Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
+      Params:         0       0       0       0       0
+      Locals:         0       1       0       0       0
+      Temps:          0       0       3       0       0
+      Totals:         0       1       3       0       0
+Total ram usage:        4 bytes
+ Hardware stack levels used:    1
+ Hardware stack levels required when called:   10
+ This function calls:
+		_I2Ctemp_data_set
+		_LED_data_set
+		_cw_data_set
+		_get_cw_data
+		_putch
+		_send_data_master
+		_spi_master_send
+ This function is called by:
+		_OBC1
+ This function uses a non-reentrant model
+
+
+ *************** function _send_data_master *****************
+ Defined at:
+		line 215 in file "sysytem_protocol.c"
+ Parameters:    Size  Location     Type
+  destination     1    wreg     enum E1099
+  data_type       1   36[BANK0 ] enum E1104
+  data_end_com    1   37[BANK0 ] enum E1108
+ Auto vars:     Size  Location     Type
+  destination     1   39[BANK0 ] enum E1099
+ Return value:  Size  Location     Type
+		None               void
+ Registers used:
+		wreg, fsr0l, fsr0h, status,2, status,0, pclath, cstack
+ Tracked objects:
+		On entry : 
+		On exit  : 
+		Unchanged: 
+ Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
+      Params:         0       2       0       0       0
+      Locals:         0       1       0       0       0
+      Temps:          0       1       0       0       0
+      Totals:         0       4       0       0       0
+Total ram usage:        4 bytes
+ Hardware stack levels used:    1
+ Hardware stack levels required when called:    9
+ This function calls:
+		_packet_send_master
+ This function is called by:
+		_command
+ This function uses a non-reentrant model
+
+
+ *************** function _packet_send_master *****************
+ Defined at:
+		line 463 in file "sysytem_protocol.c"
+ Parameters:    Size  Location     Type
+  destination     1    wreg     enum E1099
+  p_packet        1   33[BANK0 ] PTR struct .
+		 -> packet(32), 
+ Auto vars:     Size  Location     Type
+  destination     1   35[BANK0 ] enum E1099
+ Return value:  Size  Location     Type
+		None               void
+ Registers used:
+		wreg, fsr0l, fsr0h, status,2, status,0, pclath, cstack
+ Tracked objects:
+		On entry : 
+		On exit  : 
+		Unchanged: 
+ Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
+      Params:         0       1       0       0       0
+      Locals:         0       1       0       0       0
+      Temps:          0       1       0       0       0
+      Totals:         0       3       0       0       0
+Total ram usage:        3 bytes
+ Hardware stack levels used:    1
+ Hardware stack levels required when called:    8
+ This function calls:
+		_send_payload
+		_spi_master_send
+ This function is called by:
+		_send_data_master
+ This function uses a non-reentrant model
+
+
+ *************** function _send_payload *****************
+ Defined at:
+		line 395 in file "sysytem_protocol.c"
+ Parameters:    Size  Location     Type
+  destination     1    wreg     enum E1099
+  p_payload       1   27[BANK0 ] PTR unsigned char 
+		 -> packet(32), 
+ Auto vars:     Size  Location     Type
+  destination     1   31[BANK0 ] enum E1099
+  index_pos       1   32[BANK0 ] unsigned char 
+  i               1   30[BANK0 ] unsigned char 
+  data_len        1   29[BANK0 ] unsigned char 
+ Return value:  Size  Location     Type
+                  1    wreg      unsigned char 
+ Registers used:
+		wreg, fsr0l, fsr0h, status,2, status,0, pclath, cstack
+ Tracked objects:
+		On entry : 
+		On exit  : 
+		Unchanged: 
+ Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
+      Params:         0       1       0       0       0
+      Locals:         0       4       0       0       0
+      Temps:          0       1       0       0       0
+      Totals:         0       6       0       0       0
+Total ram usage:        6 bytes
+ Hardware stack levels used:    1
+ Hardware stack levels required when called:    7
+ This function calls:
+		_spi_master_send
+ This function is called by:
+		_packet_send_master
+ This function uses a non-reentrant model
+
+
+ *************** function _putch *****************
+ Defined at:
+		line 53 in file "uart_serial.c"
+ Parameters:    Size  Location     Type
+  byte            1    wreg     unsigned char 
+ Auto vars:     Size  Location     Type
+  byte            1   21[BANK0 ] unsigned char 
+ Return value:  Size  Location     Type
+		None               void
+ Registers used:
+		wreg
+ Tracked objects:
+		On entry : 
+		On exit  : 
+		Unchanged: 
+ Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
+      Params:         0       0       0       0       0
+      Locals:         0       1       0       0       0
+      Temps:          0       0       0       0       0
+      Totals:         0       1       0       0       0
+Total ram usage:        1 bytes
+ Hardware stack levels used:    1
+ Hardware stack levels required when called:    6
+ This function calls:
+		Nothing
+ This function is called by:
+		_command
+ This function uses a non-reentrant model
+
+
+ *************** function _get_cw_data *****************
+ Defined at:
+		line 92 in file "sysytem_protocol.c"
+ Parameters:    Size  Location     Type
+		None
+ Auto vars:     Size  Location     Type
+  buf             2   27[BANK0 ] unsigned int 
+ Return value:  Size  Location     Type
+		None               void
+ Registers used:
+		wreg, fsr0l, fsr0h, status,2, status,0, pclath, cstack
+ Tracked objects:
+		On entry : 
+		On exit  : 
+		Unchanged: 
+ Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
+      Params:         0       0       0       0       0
+      Locals:         0       2       0       0       0
+      Temps:          0       1       0       0       0
+      Totals:         0       3       0       0       0
+Total ram usage:        3 bytes
+ Hardware stack levels used:    1
+ Hardware stack levels required when called:    7
+ This function calls:
+		_spi_master_receive
+		_spi_master_start
+ This function is called by:
+		_command
+ This function uses a non-reentrant model
+
+
+ *************** function _spi_master_start *****************
+ Defined at:
+		line 36 in file "spi_master.c"
+ Parameters:    Size  Location     Type
+		None
+ Auto vars:     Size  Location     Type
+		None
+ Return value:  Size  Location     Type
+		None               void
+ Registers used:
+		None
+ Tracked objects:
+		On entry : 
+		On exit  : 
+		Unchanged: 
+ Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
+      Params:         0       0       0       0       0
+      Locals:         0       0       0       0       0
+      Temps:          0       0       0       0       0
+      Totals:         0       0       0       0       0
+Total ram usage:        0 bytes
+ Hardware stack levels used:    1
+ Hardware stack levels required when called:    6
+ This function calls:
+		Nothing
+ This function is called by:
+		_OBC1
+		_get_cw_data
+ This function uses a non-reentrant model
+
+
+ *************** function _cw_data_set *****************
+ Defined at:
+		line 178 in file "sysytem_protocol.c"
+ Parameters:    Size  Location     Type
+  p_cw_data       1    wreg     PTR struct .
+		 -> cw(13), 
+ Auto vars:     Size  Location     Type
+  p_cw_data       1   26[BANK0 ] PTR struct .
+		 -> cw(13), 
+  i               1    0        unsigned char 
+ Return value:  Size  Location     Type
+		None               void
+ Registers used:
+		wreg, fsr0l, fsr0h, status,2, status,0, pclath, cstack
+ Tracked objects:
+		On entry : 
+		On exit  : 
+		Unchanged: 
+ Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
+      Params:         0       0       0       0       0
+      Locals:         0       1       0       0       0
+      Temps:          0       1       0       0       0
+      Totals:         0       2       0       0       0
+Total ram usage:        2 bytes
+ Hardware stack levels used:    1
+ Hardware stack levels required when called:    7
+ This function calls:
+		_uint8_data_set
+ This function is called by:
+		_command
+ This function uses a non-reentrant model
+
+
+ *************** function _LED_data_set *****************
+ Defined at:
+		line 80 in file "OBC1_app.c"
+ Parameters:    Size  Location     Type
+		None
+ Auto vars:     Size  Location     Type
+		None
+ Return value:  Size  Location     Type
+		None               void
+ Registers used:
+		wreg, fsr0l, fsr0h, status,2, status,0, pclath, cstack
+ Tracked objects:
+		On entry : 
+		On exit  : 
+		Unchanged: 
+ Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
+      Params:         0       0       0       0       0
+      Locals:         0       0       0       0       0
+      Temps:          0       0       0       0       0
+      Totals:         0       0       0       0       0
+Total ram usage:        0 bytes
+ Hardware stack levels used:    1
+ Hardware stack levels required when called:    9
+ This function calls:
+		_sent_data_set
+ This function is called by:
+		_command
+ This function uses a non-reentrant model
+
+
+ *************** function _I2Ctemp_data_set *****************
+ Defined at:
+		line 86 in file "OBC1_app.c"
+ Parameters:    Size  Location     Type
+		None
+ Auto vars:     Size  Location     Type
+  I2CTEMP_data    2    9[BANK1 ] unsigned char [2]
+ Return value:  Size  Location     Type
+		None               void
+ Registers used:
+		wreg, fsr0l, fsr0h, status,2, status,0, btemp+1, pclath, cstack
+ Tracked objects:
+		On entry : 
+		On exit  : 
+		Unchanged: 
+ Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
+      Params:         0       0       0       0       0
+      Locals:         0       0       2       0       0
+      Temps:          0       1       0       0       0
+      Totals:         0       1       2       0       0
+Total ram usage:        3 bytes
+ Hardware stack levels used:    1
+ Hardware stack levels required when called:    9
+ This function calls:
+		_getch
+		_sent_data_set
+ This function is called by:
+		_command
+ This function uses a non-reentrant model
+
+
+ *************** function _sent_data_set *****************
+ Defined at:
+		line 139 in file "sysytem_protocol.c"
+ Parameters:    Size  Location     Type
+  p_data          2    0[BANK1 ] PTR void 
+		 -> I2Ctemp_data_set@I2CTEMP_data(2), RAM(512), 
+  data_len        1    2[BANK1 ] unsigned char 
+  byte_of_data    1    3[BANK1 ] unsigned char 
+ Auto vars:     Size  Location     Type
+		None
+ Return value:  Size  Location     Type
+                  1    wreg      unsigned char 
+ Registers used:
+		wreg, fsr0l, fsr0h, status,2, status,0, pclath, cstack
+ Tracked objects:
+		On entry : 
+		On exit  : 
+		Unchanged: 
+ Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
+      Params:         0       0       4       0       0
+      Locals:         0       0       0       0       0
+      Temps:          0       0       5       0       0
+      Totals:         0       0       9       0       0
+Total ram usage:        9 bytes
+ Hardware stack levels used:    1
+ Hardware stack levels required when called:    8
+ This function calls:
+		___wmul
+		_double_data_set
+		_uint16_data_set
+		_uint8_data_set
+ This function is called by:
+		_LED_data_set
+		_I2Ctemp_data_set
+ This function uses a non-reentrant model
+
+
+ *************** function _uint8_data_set *****************
+ Defined at:
+		line 258 in file "sysytem_protocol.c"
+ Parameters:    Size  Location     Type
+  p_data          2   21[BANK0 ] PTR unsigned char 
+		 -> I2Ctemp_data_set@I2CTEMP_data(2), RAM(512), cw(13), 
+  data_len        1   23[BANK0 ] unsigned char 
+ Auto vars:     Size  Location     Type
+		None
+ Return value:  Size  Location     Type
+		None               void
+ Registers used:
+		wreg, fsr0l, fsr0h, status,2, status,0
+ Tracked objects:
+		On entry : 
+		On exit  : 
+		Unchanged: 
+ Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
+      Params:         0       3       0       0       0
+      Locals:         0       0       0       0       0
+      Temps:          0       1       0       0       0
+      Totals:         0       4       0       0       0
+Total ram usage:        4 bytes
+ Hardware stack levels used:    1
+ Hardware stack levels required when called:    6
+ This function calls:
+		Nothing
+ This function is called by:
+		_sent_data_set
+		_cw_data_set
+ This function uses a non-reentrant model
+
+
+ *************** function _uint16_data_set *****************
+ Defined at:
+		line 280 in file "sysytem_protocol.c"
+ Parameters:    Size  Location     Type
+  p_data          2   27[BANK0 ] PTR unsigned int 
+		 -> I2Ctemp_data_set@I2CTEMP_data(2), RAM(512), 
+  data_len        1   29[BANK0 ] unsigned char 
+ Auto vars:     Size  Location     Type
+  buf             3   31[BANK0 ] unsigned char [3]
+  i               1   34[BANK0 ] unsigned char 
+ Return value:  Size  Location     Type
+		None               void
+ Registers used:
+		wreg, fsr0l, fsr0h, status,2, status,0, pclath, cstack
+ Tracked objects:
+		On entry : 
+		On exit  : 
+		Unchanged: 
+ Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
+      Params:         0       3       0       0       0
+      Locals:         0       4       0       0       0
+      Temps:          0       1       0       0       0
+      Totals:         0       8       0       0       0
+Total ram usage:        8 bytes
+ Hardware stack levels used:    1
+ Hardware stack levels required when called:    7
+ This function calls:
+		_uint16_to_byte_array
+ This function is called by:
+		_sent_data_set
+ This function uses a non-reentrant model
+
+
+ *************** function _uint16_to_byte_array *****************
+ Defined at:
+		line 338 in file "sysytem_protocol.c"
+ Parameters:    Size  Location     Type
+  p_data          2   21[BANK0 ] PTR unsigned int 
+		 -> I2Ctemp_data_set@I2CTEMP_data(2), RAM(512), 
+  p_data_array    1   23[BANK0 ] PTR unsigned char 
+		 -> uint16_data_set@buf(3), 
+ Auto vars:     Size  Location     Type
+		None
+ Return value:  Size  Location     Type
+		None               void
+ Registers used:
+		wreg, fsr0l, fsr0h, status,2, status,0, pclath
+ Tracked objects:
+		On entry : 
+		On exit  : 
+		Unchanged: 
+ Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
+      Params:         0       3       0       0       0
+      Locals:         0       0       0       0       0
+      Temps:          0       3       0       0       0
+      Totals:         0       6       0       0       0
+Total ram usage:        6 bytes
+ Hardware stack levels used:    1
+ Hardware stack levels required when called:    6
+ This function calls:
+		Nothing
+ This function is called by:
+		_uint16_data_set
+ This function uses a non-reentrant model
+
+
+ *************** function _double_data_set *****************
+ Defined at:
+		line 309 in file "sysytem_protocol.c"
+ Parameters:    Size  Location     Type
+  p_data          2   31[BANK0 ] PTR 
+		 -> I2Ctemp_data_set@I2CTEMP_data(2), RAM(512), 
+  data_len        1   33[BANK0 ] unsigned char 
+ Auto vars:     Size  Location     Type
+  buf             5   35[BANK0 ] unsigned char [5]
+  i               1   40[BANK0 ] unsigned char 
+ Return value:  Size  Location     Type
+		None               void
+ Registers used:
+		wreg, fsr0l, fsr0h, status,2, status,0, pclath, cstack
+ Tracked objects:
+		On entry : 
+		On exit  : 
+		Unchanged: 
+ Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
+      Params:         0       3       0       0       0
+      Locals:         0       6       0       0       0
+      Temps:          0       1       0       0       0
+      Totals:         0      10       0       0       0
+Total ram usage:       10 bytes
+ Hardware stack levels used:    1
+ Hardware stack levels required when called:    7
+ This function calls:
+		_double_to_byte_array
+ This function is called by:
+		_sent_data_set
+ This function uses a non-reentrant model
+
+
+ *************** function _double_to_byte_array *****************
+ Defined at:
+		line 360 in file "sysytem_protocol.c"
+ Parameters:    Size  Location     Type
+  p_data          2   21[BANK0 ] PTR 
+		 -> I2Ctemp_data_set@I2CTEMP_data(2), RAM(512), 
+  p_data_array    1   23[BANK0 ] PTR unsigned char 
+		 -> double_data_set@buf(5), 
+ Auto vars:     Size  Location     Type
+  converter       4   26[BANK0 ] struct .
+  i               1   30[BANK0 ] unsigned char 
+ Return value:  Size  Location     Type
+		None               void
+ Registers used:
+		wreg, fsr0l, fsr0h, status,2, status,0
+ Tracked objects:
+		On entry : 
+		On exit  : 
+		Unchanged: 
+ Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
+      Params:         0       3       0       0       0
+      Locals:         0       5       0       0       0
+      Temps:          0       2       0       0       0
+      Totals:         0      10       0       0       0
+Total ram usage:       10 bytes
+ Hardware stack levels used:    1
+ Hardware stack levels required when called:    6
+ This function calls:
+		Nothing
+ This function is called by:
+		_double_data_set
+ This function uses a non-reentrant model
+
+
+ *************** function ___wmul *****************
+ Defined at:
+		line 15 in file "C:\Program Files (x86)\Microchip\xc8\v1.35\sources\common\Umul16.c"
+ Parameters:    Size  Location     Type
+  multiplier      2   21[BANK0 ] unsigned int 
+  multiplicand    2   23[BANK0 ] unsigned int 
+ Auto vars:     Size  Location     Type
+  product         2   25[BANK0 ] unsigned int 
+ Return value:  Size  Location     Type
+                  2   21[BANK0 ] unsigned int 
+ Registers used:
+		wreg, status,2, status,0
+ Tracked objects:
+		On entry : 
+		On exit  : 
+		Unchanged: 
+ Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
+      Params:         0       4       0       0       0
+      Locals:         0       2       0       0       0
+      Temps:          0       0       0       0       0
+      Totals:         0       6       0       0       0
+Total ram usage:        6 bytes
+ Hardware stack levels used:    1
+ Hardware stack levels required when called:    6
+ This function calls:
+		Nothing
+ This function is called by:
+		_sent_data_set
+ This function uses a non-reentrant model
+
+
+ *************** function _getch *****************
+ Defined at:
+		line 90 in file "uart_serial.c"
+ Parameters:    Size  Location     Type
+		None
+ Auto vars:     Size  Location     Type
+  count           2   21[BANK0 ] int 
+ Return value:  Size  Location     Type
+                  1    wreg      unsigned char 
+ Registers used:
+		wreg, status,2, btemp+1
+ Tracked objects:
+		On entry : 
+		On exit  : 
+		Unchanged: 
+ Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
+      Params:         0       0       0       0       0
+      Locals:         0       2       0       0       0
+      Temps:          0       0       0       0       0
+      Totals:         0       2       0       0       0
+Total ram usage:        2 bytes
+ Hardware stack levels used:    1
+ Hardware stack levels required when called:    6
+ This function calls:
+		Nothing
+ This function is called by:
+		_I2Ctemp_data_set
+ This function uses a non-reentrant model
+
+
+ *************** function _POW_status *****************
+ Defined at:
+		line 44 in file "OBC1_app.c"
+ Parameters:    Size  Location     Type
+		None
+ Auto vars:     Size  Location     Type
+		None
+ Return value:  Size  Location     Type
+		None               void
+ Registers used:
+		wreg, fsr0l, fsr0h, status,2, status,0, pclath, cstack
+ Tracked objects:
+		On entry : 
+		On exit  : 
+		Unchanged: 
+ Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
+      Params:         0       0       0       0       0
+      Locals:         0       0       0       0       0
+      Temps:          0       0       0       0       0
+      Totals:         0       0       0       0       0
+Total ram usage:        0 bytes
+ Hardware stack levels used:    1
+ Hardware stack levels required when called:    7
+ This function calls:
+		_MCLR_reset
+		_spi_master_send
+ This function is called by:
+		_OBC1
+ This function uses a non-reentrant model
+
+
+ *************** function _MCLR_init *****************
+ Defined at:
+		line 36 in file "MCLR_reset.c"
+ Parameters:    Size  Location     Type
+		None
+ Auto vars:     Size  Location     Type
+  nin             2   21[BANK0 ] PTR unsigned char 
+		 -> RAM(512), 
+ Return value:  Size  Location     Type
+		None               void
+ Registers used:
+		wreg, fsr0l, fsr0h
+ Tracked objects:
+		On entry : 
+		On exit  : 
+		Unchanged: 
+ Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
+      Params:         0       0       0       0       0
+      Locals:         0       2       0       0       0
+      Temps:          0       0       0       0       0
+      Totals:         0       2       0       0       0
+Total ram usage:        2 bytes
+ Hardware stack levels used:    1
+ Hardware stack levels required when called:    6
+ This function calls:
+		Nothing
+ This function is called by:
+		_OBC1
+ This function uses a non-reentrant model
+
+
+ *************** function _COM_status *****************
+ Defined at:
+		line 32 in file "OBC1_app.c"
+ Parameters:    Size  Location     Type
+		None
+ Auto vars:     Size  Location     Type
+  COM_stat        1   28[BANK0 ] unsigned char 
+ Return value:  Size  Location     Type
+                  1    wreg      unsigned char 
+ Registers used:
+		wreg, fsr0l, fsr0h, status,2, status,0, pclath, cstack
+ Tracked objects:
+		On entry : 
+		On exit  : 
+		Unchanged: 
+ Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
+      Params:         0       0       0       0       0
+      Locals:         0       1       0       0       0
+      Temps:          0       1       0       0       0
+      Totals:         0       2       0       0       0
+Total ram usage:        2 bytes
+ Hardware stack levels used:    1
+ Hardware stack levels required when called:    7
+ This function calls:
+		_MCLR_reset
+		_spi_master_receive
+		_spi_master_send
+ This function is called by:
+		_OBC1
+ This function uses a non-reentrant model
+
+
+ *************** function _spi_master_send *****************
+ Defined at:
+		line 154 in file "spi_master.c"
+ Parameters:    Size  Location     Type
+  destination     1    wreg     enum E1099
+  data            1   21[BANK0 ] unsigned char 
+ Auto vars:     Size  Location     Type
+  destination     1   26[BANK0 ] enum E1099
+  timeout_coun    2   24[BANK0 ] unsigned int 
+  dummy           1   23[BANK0 ] unsigned char 
+ Return value:  Size  Location     Type
+		None               void
+ Registers used:
+		wreg, fsr0l, fsr0h, status,2, status,0
+ Tracked objects:
+		On entry : 
+		On exit  : 
+		Unchanged: 
+ Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
+      Params:         0       1       0       0       0
+      Locals:         0       4       0       0       0
+      Temps:          0       1       0       0       0
+      Totals:         0       6       0       0       0
+Total ram usage:        6 bytes
+ Hardware stack levels used:    1
+ Hardware stack levels required when called:    6
+ This function calls:
+		Nothing
+ This function is called by:
+		_COM_status
+		_POW_status
+		_command
+		_send_payload
+		_packet_send_master
+ This function uses a non-reentrant model
+
+
+ *************** function _spi_master_receive *****************
+ Defined at:
+		line 80 in file "spi_master.c"
+ Parameters:    Size  Location     Type
+  destination     1    wreg     enum E1099
+ Auto vars:     Size  Location     Type
+  destination     1   25[BANK0 ] enum E1099
+  timeout_coun    2   23[BANK0 ] unsigned int 
+  dummy           1   22[BANK0 ] unsigned char 
+ Return value:  Size  Location     Type
+                  1    wreg      unsigned char 
+ Registers used:
+		wreg, fsr0l, fsr0h, status,2, status,0
+ Tracked objects:
+		On entry : 
+		On exit  : 
+		Unchanged: 
+ Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
+      Params:         0       0       0       0       0
+      Locals:         0       4       0       0       0
+      Temps:          0       1       0       0       0
+      Totals:         0       5       0       0       0
+Total ram usage:        5 bytes
+ Hardware stack levels used:    1
+ Hardware stack levels required when called:    6
+ This function calls:
+		Nothing
+ This function is called by:
+		_COM_status
+		_get_cw_data
+		_receive_payload
+		_packet_receive_master
+ This function uses a non-reentrant model
+
+
+ *************** function _MCLR_reset *****************
+ Defined at:
+		line 61 in file "MCLR_reset.c"
+ Parameters:    Size  Location     Type
+  resetted_mcu    1    wreg     unsigned char 
+ Auto vars:     Size  Location     Type
+  resetted_mcu    1   23[BANK0 ] unsigned char 
+  nin             2   24[BANK0 ] PTR unsigned char 
+		 -> RAM(512), 
+ Return value:  Size  Location     Type
+		None               void
+ Registers used:
+		wreg, fsr0l, fsr0h
+ Tracked objects:
+		On entry : 
+		On exit  : 
+		Unchanged: 
+ Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
+      Params:         0       0       0       0       0
+      Locals:         0       3       0       0       0
+      Temps:          0       2       0       0       0
+      Totals:         0       5       0       0       0
+Total ram usage:        5 bytes
+ Hardware stack levels used:    1
+ Hardware stack levels required when called:    6
+ This function calls:
+		Nothing
+ This function is called by:
+		_COM_status
+		_POW_status
+ This function uses a non-reentrant model
+
+
+ *************** function _I2C_init *****************
+ Defined at:
+		line 21 in file "i2c.c"
+ Parameters:    Size  Location     Type
+		None
+ Auto vars:     Size  Location     Type
+		None
+ Return value:  Size  Location     Type
+		None               void
+ Registers used:
+		None
+ Tracked objects:
+		On entry : 
+		On exit  : 
+		Unchanged: 
+ Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
+      Params:         0       0       0       0       0
+      Locals:         0       0       0       0       0
+      Temps:          0       0       0       0       0
+      Totals:         0       0       0       0       0
+Total ram usage:        0 bytes
+ Hardware stack levels used:    1
+ Hardware stack levels required when called:    6
+ This function calls:
+		Nothing
+ This function is called by:
+		_main
+ This function uses a non-reentrant model
+
+
+ *************** function _I2Ctemp *****************
+ Defined at:
+		line 71 in file "OBC2_main.c"
+ Parameters:    Size  Location     Type
+		None
+ Auto vars:     Size  Location     Type
+		None
+ Return value:  Size  Location     Type
+		None               void
+ Registers used:
+		wreg, fsr0l, fsr0h, status,2, status,0, btemp+1, pclath, cstack
+ Tracked objects:
+		On entry : 
+		On exit  : 
+		Unchanged: 
+ Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
+      Params:         0       0       0       0       0
+      Locals:         0       0       0       0       0
+      Temps:          0       4       0       0       0
+      Totals:         0       4       0       0       0
+Total ram usage:        4 bytes
+ Hardware stack levels used:    1
+ Hardware stack levels required when called:    5
+ This function calls:
+		_trans_I2Ctemp
+ This function is called by:
+		Interrupt level 1
+ This function uses a non-reentrant model
+
+
+ *************** function _trans_I2Ctemp *****************
+ Defined at:
+		line 148 in file "OBC2_app.c"
+ Parameters:    Size  Location     Type
+		None
+ Auto vars:     Size  Location     Type
+  data            2   15[BANK0 ] unsigned char [2]
+ Return value:  Size  Location     Type
+		None               void
+ Registers used:
+		wreg, fsr0l, fsr0h, status,2, status,0, btemp+1, pclath, cstack
+ Tracked objects:
+		On entry : 
+		On exit  : 
+		Unchanged: 
+ Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
+      Params:         0       0       0       0       0
+      Locals:         0       2       0       0       0
+      Temps:          0       2       0       0       0
+      Totals:         0       4       0       0       0
+Total ram usage:        4 bytes
+ Hardware stack levels used:    1
+ Hardware stack levels required when called:    4
+ This function calls:
+		_ADT_Read
+		_put_string
+ This function is called by:
+		_I2Ctemp
+ This function uses a non-reentrant model
+
+
+ *************** function _put_string *****************
+ Defined at:
+		line 73 in file "uart_serial.c"
+ Parameters:    Size  Location     Type
+  str             2    1[COMMON] PTR unsigned char 
+		 -> RAM(512), 
+ Auto vars:     Size  Location     Type
+		None
+ Return value:  Size  Location     Type
+		None               void
+ Registers used:
+		wreg, fsr0l, fsr0h, status,2, status,0, pclath, cstack
+ Tracked objects:
+		On entry : 
+		On exit  : 
+		Unchanged: 
+ Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
+      Params:         2       0       0       0       0
+      Locals:         0       0       0       0       0
+      Temps:          0       0       0       0       0
+      Totals:         2       0       0       0       0
+Total ram usage:        2 bytes
+ Hardware stack levels used:    1
+ Hardware stack levels required when called:    1
+ This function calls:
+		i1_putch
+ This function is called by:
+		_trans_I2Ctemp
+ This function uses a non-reentrant model
+
+
+ *************** function i1_putch *****************
+ Defined at:
+		line 53 in file "uart_serial.c"
+ Parameters:    Size  Location     Type
+  byte            1    wreg     unsigned char 
+ Auto vars:     Size  Location     Type
+  byte            1    0[COMMON] unsigned char 
+ Return value:  Size  Location     Type
+		None               void
+ Registers used:
+		wreg
+ Tracked objects:
+		On entry : 
+		On exit  : 
+		Unchanged: 
+ Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
+      Params:         0       0       0       0       0
+      Locals:         1       0       0       0       0
+      Temps:          0       0       0       0       0
+      Totals:         1       0       0       0       0
+Total ram usage:        1 bytes
+ Hardware stack levels used:    1
+ This function calls:
+		Nothing
+ This function is called by:
+		_put_string
+ This function uses a non-reentrant model
+
+
+ *************** function _ADT_Read *****************
+ Defined at:
+		line 134 in file "tempADT.c"
+ Parameters:    Size  Location     Type
+  temp            1    wreg     PTR unsigned char 
+		 -> trans_I2Ctemp@data(2), 
+ Auto vars:     Size  Location     Type
+  temp            1   12[BANK0 ] PTR unsigned char 
+		 -> trans_I2Ctemp@data(2), 
+  t               4    0        long 
+  data            2   10[BANK0 ] unsigned char [2]
+  ans             1    9[BANK0 ] unsigned char 
+ Return value:  Size  Location     Type
+		None               void
+ Registers used:
+		wreg, fsr0l, fsr0h, status,2, status,0, btemp+1, pclath, cstack
+ Tracked objects:
+		On entry : 
+		On exit  : 
+		Unchanged: 
+ Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
+      Params:         0       0       0       0       0
+      Locals:         0       4       0       0       0
+      Temps:          0       3       0       0       0
+      Totals:         0       7       0       0       0
+Total ram usage:        7 bytes
+ Hardware stack levels used:    1
+ Hardware stack levels required when called:    3
+ This function calls:
+		_ADT_Receive
+ This function is called by:
+		_trans_I2Ctemp
+ This function uses a non-reentrant model
+
+
+ *************** function _ADT_Receive *****************
+ Defined at:
+		line 84 in file "tempADT.c"
+ Parameters:    Size  Location     Type
+  reg_adrs        1    wreg     unsigned char 
+  data            1    0[BANK0 ] PTR unsigned char 
+		 -> ADT_Read@data(2), ADT_ActionMode@data(2), 
+  kosu            1    1[BANK0 ] unsigned char 
+ Auto vars:     Size  Location     Type
+  reg_adrs        1    4[BANK0 ] unsigned char 
+  ans             1    5[BANK0 ] unsigned char 
+  i               1    0        unsigned char 
+ Return value:  Size  Location     Type
+                  1    wreg      unsigned char 
+ Registers used:
+		wreg, fsr0l, fsr0h, status,2, status,0, btemp+1, pclath, cstack
+ Tracked objects:
+		On entry : 
+		On exit  : 
+		Unchanged: 
+ Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
+      Params:         0       2       0       0       0
+      Locals:         0       2       0       0       0
+      Temps:          0       2       0       0       0
+      Totals:         0       6       0       0       0
+Total ram usage:        6 bytes
+ Hardware stack levels used:    1
+ Hardware stack levels required when called:    2
+ This function calls:
+		_I2C_GetData
+		_I2C_Send
+ This function is called by:
+		_ADT_Read
+		_ADT_ActionMode
+ This function uses a non-reentrant model
+
+
+ *************** function _I2C_Send *****************
+ Defined at:
+		line 78 in file "i2c.c"
+ Parameters:    Size  Location     Type
+  slave_adr       1    wreg     unsigned char 
+  data            1    7[COMMON] unsigned char 
+ Auto vars:     Size  Location     Type
+  slave_adr       1   10[COMMON] unsigned char 
+  adr             1   11[COMMON] unsigned char 
+ Return value:  Size  Location     Type
+		None               void
+ Registers used:
+		wreg, status,2, status,0, btemp+1, pclath, cstack
+ Tracked objects:
+		On entry : 
+		On exit  : 
+		Unchanged: 
+ Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
+      Params:         1       0       0       0       0
+      Locals:         2       0       0       0       0
+      Temps:          2       0       0       0       0
+      Totals:         5       0       0       0       0
+Total ram usage:        5 bytes
+ Hardware stack levels used:    1
+ Hardware stack levels required when called:    1
+ This function calls:
+		_I2C_Out
+		_I2C_Start
+		_I2C_Stop
+ This function is called by:
+		_ADT_Receive
+		_ADT_Send
+ This function uses a non-reentrant model
+
+
+ *************** function _I2C_GetData *****************
+ Defined at:
+		line 121 in file "i2c.c"
+ Parameters:    Size  Location     Type
+  slave_adr       1    wreg     unsigned char 
+  Buffer          1    7[COMMON] PTR unsigned char 
+		 -> ADT_Read@data(2), ADT_ActionMode@data(2), 
+  CNT             1    8[COMMON] unsigned char 
+ Auto vars:     Size  Location     Type
+  slave_adr       1   11[COMMON] unsigned char 
+  i               1   13[COMMON] unsigned char 
+  adr             1   12[COMMON] unsigned char 
+ Return value:  Size  Location     Type
+		None               void
+ Registers used:
+		wreg, fsr0l, fsr0h, status,2, status,0, btemp+1, pclath, cstack
+ Tracked objects:
+		On entry : 
+		On exit  : 
+		Unchanged: 
+ Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
+      Params:         2       0       0       0       0
+      Locals:         3       0       0       0       0
+      Temps:          2       0       0       0       0
+      Totals:         7       0       0       0       0
+Total ram usage:        7 bytes
+ Hardware stack levels used:    1
+ Hardware stack levels required when called:    1
+ This function calls:
+		_I2C_Out
+		_I2C_Rcv
+		_I2C_Start
+		_I2C_Stop
+ This function is called by:
+		_ADT_Receive
+ This function uses a non-reentrant model
+
+
+ *************** function _I2C_Stop *****************
+ Defined at:
+		line 36 in file "i2c.c"
+ Parameters:    Size  Location     Type
+		None
+ Auto vars:     Size  Location     Type
+		None
+ Return value:  Size  Location     Type
+		None               void
+ Registers used:
+		wreg
+ Tracked objects:
+		On entry : 
+		On exit  : 
+		Unchanged: 
+ Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
+      Params:         0       0       0       0       0
+      Locals:         0       0       0       0       0
+      Temps:          1       0       0       0       0
+      Totals:         1       0       0       0       0
+Total ram usage:        1 bytes
+ Hardware stack levels used:    1
+ This function calls:
+		Nothing
+ This function is called by:
+		_I2C_Send
+		_I2C_GetData
+		_ADT_Send
+ This function uses a non-reentrant model
+
+
+ *************** function _I2C_Start *****************
+ Defined at:
+		line 29 in file "i2c.c"
+ Parameters:    Size  Location     Type
+		None
+ Auto vars:     Size  Location     Type
+		None
+ Return value:  Size  Location     Type
+		None               void
+ Registers used:
+		None
+ Tracked objects:
+		On entry : 
+		On exit  : 
+		Unchanged: 
+ Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
+      Params:         0       0       0       0       0
+      Locals:         0       0       0       0       0
+      Temps:          0       0       0       0       0
+      Totals:         0       0       0       0       0
+Total ram usage:        0 bytes
+ Hardware stack levels used:    1
+ This function calls:
+		Nothing
+ This function is called by:
+		_I2C_Send
+		_I2C_GetData
+		_ADT_Send
+ This function uses a non-reentrant model
+
+
+ *************** function _I2C_Rcv *****************
+ Defined at:
+		line 91 in file "i2c.c"
+ Parameters:    Size  Location     Type
+  Ack             1    wreg     unsigned char 
+ Auto vars:     Size  Location     Type
+  Ack             1    2[COMMON] unsigned char 
+  i               2    4[COMMON] int 
+  BitPos          1    6[COMMON] unsigned char 
+  data            1    3[COMMON] unsigned char 
+ Return value:  Size  Location     Type
+                  1    wreg      unsigned char 
+ Registers used:
+		wreg, status,2, status,0, btemp+1
+ Tracked objects:
+		On entry : 
+		On exit  : 
+		Unchanged: 
+ Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
+      Params:         0       0       0       0       0
+      Locals:         5       0       0       0       0
+      Temps:          2       0       0       0       0
+      Totals:         7       0       0       0       0
+Total ram usage:        7 bytes
+ Hardware stack levels used:    1
+ This function calls:
+		Nothing
+ This function is called by:
+		_I2C_GetData
+ This function uses a non-reentrant model
+
+
+ *************** function _I2C_Out *****************
+ Defined at:
+		line 49 in file "i2c.c"
+ Parameters:    Size  Location     Type
+  data            1    wreg     unsigned char 
+ Auto vars:     Size  Location     Type
+  data            1    3[COMMON] unsigned char 
+  i               2    4[COMMON] int 
+  BitPos          1    6[COMMON] unsigned char 
+  ACK             1    2[COMMON] unsigned char 
+ Return value:  Size  Location     Type
+                  1    wreg      unsigned char 
+ Registers used:
+		wreg, status,2, status,0, btemp+1
+ Tracked objects:
+		On entry : 
+		On exit  : 
+		Unchanged: 
+ Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
+      Params:         0       0       0       0       0
+      Locals:         5       0       0       0       0
+      Temps:          2       0       0       0       0
+      Totals:         7       0       0       0       0
+Total ram usage:        7 bytes
+ Hardware stack levels used:    1
+ This function calls:
+		Nothing
+ This function is called by:
+		_I2C_Send
+		_I2C_GetData
+		_ADT_Send
+ This function uses a non-reentrant model
+
+
+
+MODULE INFORMATION
+
+Module		Function		Class		Link	Load	Size
+MCLR_reset.c
+		_MCLR_reset    		CODE           	06EA	0000	34
+		_MCLR_init     		CODE           	0FC1	0000	21
+
+MCLR_reset.c estimated size: 55
+
+tempADT.c
+		_ADT_Read      		CODE           	0624	0000	44
+		_ADT_Receive   		CODE           	064F	0000	44
+
+tempADT.c estimated size: 88
+
+OBC2_app.c
+		_OBC1_RESET_init		CODE           	0FEA	0000	23
+		_trans_I2Ctemp 		CODE           	070B	0000	34
+		_OBC1          		CODE           	032E	0000	81
+		_OBC1_reset    		CODE           	072C	0000	32
+		_interrupt_disable		CODE           	0F67	0000	4
+		_interrupt_able		CODE           	0F64	0000	4
+
+OBC2_app.c estimated size: 178
+
+i2c.c
+		_I2C_init      		CODE           	0F93	0000	14
+		_I2C_Rcv       		CODE           	02DB	0000	84
+		_I2C_Stop      		CODE           	07DE	0000	28
+		_I2C_Out       		CODE           	03CE	0000	81
+		_I2C_Send      		CODE           	07A5	0000	30
+		_I2C_GetData   		CODE           	04B2	0000	70
+		_I2C_Start     		CODE           	07F9	0000	8
+
+i2c.c estimated size: 315
+
+spi_master.c
+		_spi_master_receive		CODE           	041E	0000	77
+		_spi_master_send		CODE           	037E	0000	81
+		_spi_master_start		CODE           	0788	0000	30
+
+spi_master.c estimated size: 188
+
+shared
+		i1_putch       		CODE           	0F6F	0000	9
+		__stringtab    		STRING         	0800	0000	7
+		__initialization		CODE           	0015	0000	16
+		uint16_to_byte_array@bit_mask		STRING         	0806	0000	3
+
+shared estimated size: 35
+
+OBC1_app.c
+		_COM_status    		CODE           	06C7	0000	36
+		_I2Ctemp_data_set		CODE           	067A	0000	43
+		_command       		CODE           	0028	0000	163
+		_LED_data_set  		CODE           	0FA0	0000	15
+		_POW_status    		CODE           	0FAE	0000	20
+
+OBC1_app.c estimated size: 277
+
+uart_serial.c
+		_put_string    		CODE           	074B	0000	32
+		_putch         		CODE           	0F77	0000	9
+		_uart_init     		CODE           	0F87	0000	13
+		_getch         		CODE           	076A	0000	31
+
+uart_serial.c estimated size: 85
+
+OBC2_main.c
+		_main          		CODE           	0263	0000	121
+		_I2Ctemp       		CODE           	0FD5	0000	22
+
+OBC2_main.c estimated size: 143
+
+sysytem_protocol.c
+		_sysprot_init  		CODE           	0F6A	0000	6
+		_packet_send_master		CODE           	056D	0000	49
+		_uint16_data_set		CODE           	04F7	0000	60
+		_double_data_set		CODE           	0532	0000	60
+		_send_data_master		CODE           	07C2	0000	29
+		_send_payload  		CODE           	046A	0000	73
+		_uint8_data_set		CODE           	05F9	0000	44
+		_cw_data_set   		CODE           	015B	0000	141
+		_sent_data_set 		CODE           	00CA	0000	146
+		_get_cw_data   		CODE           	01E7	0000	125
+		_uint16_to_byte_array		CODE           	059D	0000	48
+		_double_to_byte_array		CODE           	05CC	0000	46
+
+sysytem_protocol.c estimated size: 827
+
+C:\Program Files (x86)\Microchip\xc8\v1.35\sources\common\Umul16.c
+		___wmul        		CODE           	06A4	0000	36
+
+C:\Program Files (x86)\Microchip\xc8\v1.35\sources\common\Umul16.c estimated size: 36
+

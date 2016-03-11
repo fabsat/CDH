@@ -131,7 +131,7 @@ unsigned char ADT_Send(char reg_adrs, unsigned char *data, unsigned char kosu){
 *    temp : 摂氏温度を返すのでfloat変数のアドレスを指定                        *
 *    ans  : 戻り値、0=正常終了　それ以外Begin()のans値を参照                   *
 *******************************************************************************/
-long ADT_Read(double *temp){
+void ADT_Read(uint8_t *temp){
     
     long t;
     unsigned char ans;
@@ -140,13 +140,16 @@ long ADT_Read(double *temp){
     ans = ADT_Receive(TEMP_DATA_ADRS, &data[0], 2);
     
     if(ans == 0){
-        t = (data[0] << 8) | data[1];
+        //t = (data[0] << 8) | data[1];
         //if (t < 0) t = t - 65536;
         //*temp = (double)t / 128.0;
+        
+        *temp = data[0];
+        temp++;
+        *temp = data[1];
     }
-     
     //return ans;
-
-    return t;
+//    return t;
 }
+
 

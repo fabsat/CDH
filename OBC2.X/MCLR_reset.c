@@ -68,3 +68,4 @@ void MCLR_reset(uint8_t resetted_mcu)
     __delay_ms(10);
     *nin = PORTE_POEWR_ON;              // 全てHIGHにして再起動
 }
+

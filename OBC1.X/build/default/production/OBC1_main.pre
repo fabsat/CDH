@@ -1509,16 +1509,19 @@ void MCLR_init(void);
 # 55
 void MCLR_reset(uint8_t resetted_mcu);
 
-# 64 "uart_serial.h"
+# 23 "uint8_to_string.h"
+void uint8_to_string(uint8_t num, uint8_t *p_str_buf, uint8_t buf_size);
+
+# 65 "uart_serial.h"
 void uart_init(void);
 
-# 77
+# 78
 void putch(uint8_t byte);
 
-# 91
+# 92
 void put_string(uint8_t *str);
 
-# 104
+# 107
 uint8_t getch(void);
 
 # 35 "AD_value.h"
@@ -1584,20 +1587,20 @@ void send_data_master(destination_t destination, data_type_t data_type, data_end
 
 void receive_data_master(destination_t destination);
 
-# 51 "spi_master.h"
+# 49 "spi_master.h"
 void spi_master_start(void);
 
-# 64
+# 62
 uint8_t spi_master_receive(destination_t destination);
 
-# 79
+# 77
 void spi_master_send(destination_t destination, uint8_t data);
 
-# 92
+# 90
 void spi_master_stop(void);
 
 # 16 "OBC1_app.h"
-void COM_status(void);
+uint8_t COM_status(void);
 void POW_status(void);
 void command(uint8_t data);
 
@@ -1612,12 +1615,15 @@ int main(void){
 
 TRISDbits.TRISD7 = 0;
 PORTDbits.RD7 = 0;
+TRISDbits.TRISD6 = 0;
+PORTDbits.RD6 = 0;
 
 MCLR_init();
 sysprot_init();
 ad_con_init();
 spi_master_start();
 uart_init();
+_delay((unsigned long)((1000)*(20000000/4000.0)));
 
 while(1)
 {
@@ -1625,13 +1631,13 @@ PORTDbits.RD7 = 1;
 _delay((unsigned long)((1000)*(20000000/4000.0)));
 
 
-COM_status();
+uint8_t COM_stat = COM_status();
 
 
 POW_status();
 
 
-command(COM_status);
+command(COM_stat);
 
 PORTDbits.RD7 = 0;
 _delay((unsigned long)((1000)*(20000000/4000.0)));
@@ -1639,4 +1645,3 @@ _delay((unsigned long)((1000)*(20000000/4000.0)));
 
 return 0;
 }
-

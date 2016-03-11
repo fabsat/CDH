@@ -21,21 +21,24 @@
 #include "spi_master.h"
 #include "OBC1_app.h"
 #include "MCLR_reset.h"
+#include "uart_serial.h"
 
 
 static void LED_data_set(void);
 static void I2Ctemp_data_set(void);
 
+    
 
-void COM_status(void)
+uint8_t COM_status(void)
 {
-    uint8_t COM_status = 0;
+    uint8_t COM_stat = 0;
     spi_master_send(COM, 0x01);
-    COM_status = spi_master_receive(COM);           // COMのステータス受け取り
-    if(COM_status == 0x00 || COM_status == 0xFF)    // COMの生存判定
+    COM_stat = spi_master_receive(COM);           // COMのステータス受け取り
+    if(COM_stat == 0x00 || COM_stat == 0xFF)    // COMの生存判定
     {
         MCLR_reset(COM_RESET);                      // COMをリセット
     }
+    return COM_stat;
 }
 
 void POW_status(void)
@@ -66,22 +69,25 @@ void command(uint8_t data)
             break;
 
         case GET_I2C_TEMP:
-            spi_master_send(OBC2, 0x01);
-            I2Ctemp_data_set();
-            spi_master_send(COM, 0x11);
-            send_data_master(COM, DATA, DATA_END);
+            putch(0x01);                                        // OBC2へUART割り込み
+            I2Ctemp_data_set();                                 // I2C温度データセット
+            send_data_master(COM, GET_I2C_TEMP, DATA_END);
             break;
     }
 }
 
-
+/*LEDのパケット格納*/
 static void LED_data_set(void)
 {
     sent_data_set(0x01, 1, 1);
 }
 
+/*I2C温度センサデータをパケット格納*/
 static void I2Ctemp_data_set(void)
 {
-    receive_data_master(OBC2);
+    uint8_t I2CTEMP_data[2];
+    I2CTEMP_data[0] = getch();                  // 温度データをOBC2から取得
+    I2CTEMP_data[1] = getch();                  // 温度データをOBC2から取得
+    sent_data_set(I2CTEMP_data, 2, 1);          // 温度データをパケットに格納
 }
 

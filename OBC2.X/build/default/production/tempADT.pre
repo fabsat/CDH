@@ -1545,7 +1545,7 @@ unsigned char ADT_Begin(void);
 unsigned char ADT_ActionMode(unsigned char mode);
 unsigned char ADT_Receive(char reg_adrs, unsigned char *data, unsigned char kosu);
 unsigned char ADT_Send(char reg_adrs, unsigned char *data, unsigned char kosu);
-long ADT_Read(double *temp);
+void ADT_Read(uint8_t *temp);
 
 # 39 "tempADT.c"
 unsigned char ADT_Begin(void){
@@ -1615,7 +1615,7 @@ return ans ;
 }
 
 # 134
-long ADT_Read(double *temp){
+void ADT_Read(uint8_t *temp){
 
 long t;
 unsigned char ans;
@@ -1624,13 +1624,15 @@ unsigned char data[2];
 ans = ADT_Receive(0x00, &data[0], 2);
 
 if(ans == 0){
-t = (data[0] << 8) | data[1];
 
 
+
+
+*temp = data[0];
+temp++;
+*temp = data[1];
 }
 
 
-
-return t;
 }
 

@@ -18,6 +18,7 @@
 #include <xc.h>
 #include "uart_serial.h"
 #include "pic_clock.h"
+#include "uint8_to_string.h"
 
 
 /*=====================================================
@@ -80,20 +81,17 @@ void put_string(uint8_t *str)
  * @brief
  *     1Byte受信
  * @param
- *     data:受信したデータ
+ *     void
  * @return
- *     0xFF:受信失敗
- *     0x00:受信成功
+ *     data:受信したデータ
  * @note
  *     none
  *===================================================*/
-uint8_t getch(uint8_t data)
+uint8_t getch(void)
 {
     int count = 0;
     while(!RCIF && count <= 100) count++;       // カウントが100まで受信待ち
-    data = RCREG;
-    
-    if(count >= 100) return 0xFF;
-    else             return 0;
+   
+    return RCREG;
 }
 

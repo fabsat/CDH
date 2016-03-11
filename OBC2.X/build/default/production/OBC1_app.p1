@@ -1,10 +1,10 @@
 Version 3.2 HI-TECH Software Intermediate Code
-"33 OBC1_app.c
+"35 OBC1_app.c
 [c E1099 2 3 4 .. ]
 [n E1099 . OBC2 COM POW  ]
-"79 spi_master.h
+"77 spi_master.h
 [v _spi_master_send `(v ~T0 @X0 0 ef2`E1099`uc ]
-"64
+"62
 [v _spi_master_receive `(uc ~T0 @X0 0 ef1`E1099 ]
 "55 MCLR_reset.h
 [v _MCLR_reset `(v ~T0 @X0 0 ef1`uc ]
@@ -16,34 +16,36 @@ Version 3.2 HI-TECH Software Intermediate Code
 [n S12 . . ]
 "348
 [v _PORTDbits `VS12 ~T0 @X0 0 e@8 ]
-"52 OBC1_app.c
-[v _get_cw_data `(i ~T0 @X0 0 ef ]
-"52 system_protocol.h
+"155 system_protocol.h
+[v _get_cw_data `(v ~T0 @X0 0 ef ]
+"52
 [s S96 `uc -> 2 `i `uc -> 2 `i `uc -> 2 `i `uc -> 2 `i `uc -> 2 `i `uc -> 2 `i :1 `uc 1 :1 `uc 1 ]
 [n S96 . power1 power2 power3 power4 power5 temp obc2 powmcu ]
-"145
+"143
 [v _cw_data_set `(v ~T0 @X0 0 ef1`*S96 ]
 "63
 [v _cw `S96 ~T0 @X0 0 e ]
-"55 OBC1_app.c
+"58 OBC1_app.c
 [c E1104 1 2 .. ]
 [n E1104 . CW_TYPE DATA_TYPE  ]
 [c E1108 16 17 .. ]
 [n E1108 . DATA_END DATA_CONTINUE  ]
-"160 system_protocol.h
+"169 system_protocol.h
 [v _send_data_master `(v ~T0 @X0 0 ef3`E1099`E1104`E1108 ]
 [v F1091 `(v ~T0 @X0 1 tf1`ul ]
 "150 C:\Program Files (x86)\Microchip\xc8\v1.35\include\pic.h
 [v __delay `JF1091 ~T0 @X0 0 e ]
 [p i __delay ]
-"26 OBC1_app.c
+"27 OBC1_app.c
 [v _LED_data_set `(v ~T0 @X0 0 sf ]
-"27
+"78 uart_serial.h
+[v _putch `(v ~T0 @X0 0 ef1`uc ]
+"28 OBC1_app.c
 [v _I2Ctemp_data_set `(v ~T0 @X0 0 sf ]
-"132 system_protocol.h
+"130 system_protocol.h
 [v _sent_data_set `(uc ~T0 @X0 0 ef3`*v`uc`uc ]
-"163
-[v _receive_data_master `(v ~T0 @X0 0 ef1`E1099 ]
+"107 uart_serial.h
+[v _getch `(uc ~T0 @X0 0 ef ]
 [; ;htc.h: 26: extern const char __xc8_OPTIM_SPEED;
 [; ;htc.h: 28: extern double __fpnormalize(double);
 [; ;xc8debug.h: 14: extern void __builtin_software_breakpoint(void);
@@ -1094,200 +1096,215 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;system_protocol.h: 61: } cw_t;
 [; ;system_protocol.h: 63: extern cw_t cw;
 [; ;system_protocol.h: 104: void sysprot_init(void);
-[; ;system_protocol.h: 106: void cw_set(void);
-[; ;system_protocol.h: 132: uint8_t sent_data_set(void *p_data, uint8_t data_len, uint8_t byte_of_data);
-[; ;system_protocol.h: 145: void cw_data_set(cw_t *p_cw_data);
-[; ;system_protocol.h: 160: void send_data_master(destination_t destination, data_type_t data_type, data_end_command_t data_end_command);
-[; ;system_protocol.h: 163: void receive_data_master(destination_t destination);
-[; ;spi_master.h: 51: void spi_master_start(void);
-[; ;spi_master.h: 64: uint8_t spi_master_receive(destination_t destination);
-[; ;spi_master.h: 79: void spi_master_send(destination_t destination, uint8_t data);
-[; ;spi_master.h: 92: void spi_master_stop(void);
-[; ;OBC1_app.h: 16: void COM_status(void);
+[; ;system_protocol.h: 130: uint8_t sent_data_set(void *p_data, uint8_t data_len, uint8_t byte_of_data);
+[; ;system_protocol.h: 143: void cw_data_set(cw_t *p_cw_data);
+[; ;system_protocol.h: 155: void get_cw_data(void);
+[; ;system_protocol.h: 169: void send_data_master(destination_t destination, data_type_t data_type, data_end_command_t data_end_command);
+[; ;system_protocol.h: 172: void receive_data_master(destination_t destination);
+[; ;spi_master.h: 49: void spi_master_start(void);
+[; ;spi_master.h: 62: uint8_t spi_master_receive(destination_t destination);
+[; ;spi_master.h: 77: void spi_master_send(destination_t destination, uint8_t data);
+[; ;spi_master.h: 90: void spi_master_stop(void);
+[; ;OBC1_app.h: 16: uint8_t COM_status(void);
 [; ;OBC1_app.h: 17: void POW_status(void);
 [; ;OBC1_app.h: 18: void command(uint8_t data);
 [; ;MCLR_reset.h: 41: void MCLR_init(void);
 [; ;MCLR_reset.h: 55: void MCLR_reset(uint8_t resetted_mcu);
-[; ;OBC1_app.c: 26: static void LED_data_set(void);
-[; ;OBC1_app.c: 27: static void I2Ctemp_data_set(void);
-"30 OBC1_app.c
-[v _COM_status `(v ~T0 @X0 1 ef ]
-"31
+[; ;uint8_to_string.h: 23: void uint8_to_string(uint8_t num, uint8_t *p_str_buf, uint8_t buf_size);
+[; ;uart_serial.h: 65: void uart_init(void);
+[; ;uart_serial.h: 78: void putch(uint8_t byte);
+[; ;uart_serial.h: 92: void put_string(uint8_t *str);
+[; ;uart_serial.h: 107: uint8_t getch(void);
+[; ;OBC1_app.c: 27: static void LED_data_set(void);
+[; ;OBC1_app.c: 28: static void I2Ctemp_data_set(void);
+"32 OBC1_app.c
+[v _COM_status `(uc ~T0 @X0 1 ef ]
+"33
 {
-[; ;OBC1_app.c: 30: void COM_status(void)
-[; ;OBC1_app.c: 31: {
+[; ;OBC1_app.c: 32: uint8_t COM_status(void)
+[; ;OBC1_app.c: 33: {
 [e :U _COM_status ]
 [f ]
-[v _COM_status `uc ~T0 @X0 1 a ]
-[; ;OBC1_app.c: 32: uint8_t COM_status = 0;
-"32
-[e = _COM_status -> -> 0 `i `uc ]
-[; ;OBC1_app.c: 33: spi_master_send(COM, 0x01);
-"33
-[e ( _spi_master_send (2 , . `E1099 1 -> -> 1 `i `uc ]
-[; ;OBC1_app.c: 34: COM_status = spi_master_receive(COM);
 "34
-[e = _COM_status ( _spi_master_receive (1 . `E1099 1 ]
-[; ;OBC1_app.c: 35: if(COM_status == 0x00 || COM_status == 0xFF)
+[v _COM_stat `uc ~T0 @X0 1 a ]
+[; ;OBC1_app.c: 34: uint8_t COM_stat = 0;
+[e = _COM_stat -> -> 0 `i `uc ]
+[; ;OBC1_app.c: 35: spi_master_send(COM, 0x01);
 "35
-[e $ ! || == -> _COM_status `i -> 0 `i == -> _COM_status `i -> 255 `i 98  ]
-[; ;OBC1_app.c: 36: {
+[e ( _spi_master_send (2 , . `E1099 1 -> -> 1 `i `uc ]
+[; ;OBC1_app.c: 36: COM_stat = spi_master_receive(COM);
 "36
-{
-[; ;OBC1_app.c: 37: MCLR_reset(0x05);
+[e = _COM_stat ( _spi_master_receive (1 . `E1099 1 ]
+[; ;OBC1_app.c: 37: if(COM_stat == 0x00 || COM_stat == 0xFF)
 "37
-[e ( _MCLR_reset (1 -> -> 5 `i `uc ]
+[e $ ! || == -> _COM_stat `i -> 0 `i == -> _COM_stat `i -> 255 `i 98  ]
+[; ;OBC1_app.c: 38: {
 "38
+{
+[; ;OBC1_app.c: 39: MCLR_reset(0x05);
+"39
+[e ( _MCLR_reset (1 -> -> 5 `i `uc ]
+"40
 }
 [e :U 98 ]
-[; ;OBC1_app.c: 38: }
-[; ;OBC1_app.c: 39: }
-"39
+[; ;OBC1_app.c: 40: }
+[; ;OBC1_app.c: 41: return COM_stat;
+"41
+[e ) _COM_stat ]
+[e $UE 97  ]
+[; ;OBC1_app.c: 42: }
+"42
 [e :UE 97 ]
 }
-"41
+"44
 [v _POW_status `(v ~T0 @X0 1 ef ]
-"42
+"45
 {
-[; ;OBC1_app.c: 41: void POW_status(void)
-[; ;OBC1_app.c: 42: {
+[; ;OBC1_app.c: 44: void POW_status(void)
+[; ;OBC1_app.c: 45: {
 [e :U _POW_status ]
 [f ]
-[; ;OBC1_app.c: 43: spi_master_send(POW, 0x01);
-"43
+[; ;OBC1_app.c: 46: spi_master_send(POW, 0x01);
+"46
 [e ( _spi_master_send (2 , . `E1099 2 -> -> 1 `i `uc ]
-[; ;OBC1_app.c: 44: if(PORTDbits.RD1==0) MCLR_reset(0x06);
-"44
+[; ;OBC1_app.c: 47: if(PORTDbits.RD1==0) MCLR_reset(0x06);
+"47
 [e $ ! == -> . . _PORTDbits 0 1 `i -> 0 `i 100  ]
 [e ( _MCLR_reset (1 -> -> 6 `i `uc ]
 [e :U 100 ]
-[; ;OBC1_app.c: 45: }
-"45
+[; ;OBC1_app.c: 48: }
+"48
 [e :UE 99 ]
 }
-"47
-[v _command `(v ~T0 @X0 1 ef1`uc ]
-"48
-{
-[; ;OBC1_app.c: 47: void command(uint8_t data)
-[; ;OBC1_app.c: 48: {
-[e :U _command ]
-"47
-[v _data `uc ~T0 @X0 1 r1 ]
-"48
-[f ]
-[; ;OBC1_app.c: 49: switch(data)
-"49
-[e $U 103  ]
-[; ;OBC1_app.c: 50: {
 "50
-{
-[; ;OBC1_app.c: 51: case (0x03):
+[v _command `(v ~T0 @X0 1 ef1`uc ]
 "51
-[e :U 104 ]
-[; ;OBC1_app.c: 52: get_cw_data();
+{
+[; ;OBC1_app.c: 50: void command(uint8_t data)
+[; ;OBC1_app.c: 51: {
+[e :U _command ]
+"50
+[v _data `uc ~T0 @X0 1 r1 ]
+"51
+[f ]
+[; ;OBC1_app.c: 52: switch(data)
 "52
-[e ( _get_cw_data ..  ]
-[; ;OBC1_app.c: 53: cw_data_set(&cw);
+[e $U 103  ]
+[; ;OBC1_app.c: 53: {
 "53
-[e ( _cw_data_set (1 &U _cw ]
-[; ;OBC1_app.c: 54: spi_master_send(COM, 0x11);
+{
+[; ;OBC1_app.c: 54: case (0x03):
 "54
-[e ( _spi_master_send (2 , . `E1099 1 -> -> 17 `i `uc ]
-[; ;OBC1_app.c: 55: send_data_master(COM, 0x01, DATA_END);
+[e :U 104 ]
+[; ;OBC1_app.c: 55: get_cw_data();
 "55
-[e ( _send_data_master (3 , , . `E1099 1 -> -> 1 `i `E1104 . `E1108 0 ]
-[; ;OBC1_app.c: 56: break;
+[e ( _get_cw_data ..  ]
+[; ;OBC1_app.c: 56: cw_data_set(&cw);
 "56
-[e $U 102  ]
-[; ;OBC1_app.c: 58: case (0x01):
+[e ( _cw_data_set (1 &U _cw ]
+[; ;OBC1_app.c: 57: spi_master_send(COM, 0x11);
+"57
+[e ( _spi_master_send (2 , . `E1099 1 -> -> 17 `i `uc ]
+[; ;OBC1_app.c: 58: send_data_master(COM, 0x01, DATA_END);
 "58
-[e :U 105 ]
-[; ;OBC1_app.c: 59: PORTDbits.RD6 = 1;
-"59
-[e = . . _PORTDbits 0 6 -> -> 1 `i `uc ]
-[; ;OBC1_app.c: 60: _delay((unsigned long)((100)*(20000000/4000.0)));
-"60
-[e ( __delay (1 -> * -> -> 100 `i `d / -> -> 20000000 `l `d .4000.0 `ul ]
-[; ;OBC1_app.c: 61: PORTDbits.RD6 = 0;
-"61
-[e = . . _PORTDbits 0 6 -> -> 0 `i `uc ]
-[; ;OBC1_app.c: 62: _delay((unsigned long)((100)*(20000000/4000.0)));
-"62
-[e ( __delay (1 -> * -> -> 100 `i `d / -> -> 20000000 `l `d .4000.0 `ul ]
-[; ;OBC1_app.c: 63: LED_data_set();
-"63
-[e ( _LED_data_set ..  ]
-[; ;OBC1_app.c: 64: spi_master_send(COM, 0x11);
-"64
-[e ( _spi_master_send (2 , . `E1099 1 -> -> 17 `i `uc ]
-[; ;OBC1_app.c: 65: send_data_master(COM, (0x01), DATA_END);
-"65
 [e ( _send_data_master (3 , , . `E1099 1 -> -> 1 `i `E1104 . `E1108 0 ]
-[; ;OBC1_app.c: 66: break;
+[; ;OBC1_app.c: 59: break;
+"59
+[e $U 102  ]
+[; ;OBC1_app.c: 61: case (0x01):
+"61
+[e :U 105 ]
+[; ;OBC1_app.c: 62: PORTDbits.RD6 = 1;
+"62
+[e = . . _PORTDbits 0 6 -> -> 1 `i `uc ]
+[; ;OBC1_app.c: 63: _delay((unsigned long)((100)*(20000000/4000.0)));
+"63
+[e ( __delay (1 -> * -> -> 100 `i `d / -> -> 20000000 `l `d .4000.0 `ul ]
+[; ;OBC1_app.c: 64: PORTDbits.RD6 = 0;
+"64
+[e = . . _PORTDbits 0 6 -> -> 0 `i `uc ]
+[; ;OBC1_app.c: 65: _delay((unsigned long)((100)*(20000000/4000.0)));
+"65
+[e ( __delay (1 -> * -> -> 100 `i `d / -> -> 20000000 `l `d .4000.0 `ul ]
+[; ;OBC1_app.c: 66: LED_data_set();
 "66
-[e $U 102  ]
-[; ;OBC1_app.c: 68: case (0x02):
-"68
-[e :U 106 ]
-[; ;OBC1_app.c: 69: spi_master_send(OBC2, 0x01);
-"69
-[e ( _spi_master_send (2 , . `E1099 0 -> -> 1 `i `uc ]
-[; ;OBC1_app.c: 70: I2Ctemp_data_set();
-"70
-[e ( _I2Ctemp_data_set ..  ]
-[; ;OBC1_app.c: 71: spi_master_send(COM, 0x11);
-"71
+[e ( _LED_data_set ..  ]
+[; ;OBC1_app.c: 67: spi_master_send(COM, 0x11);
+"67
 [e ( _spi_master_send (2 , . `E1099 1 -> -> 17 `i `uc ]
-[; ;OBC1_app.c: 72: send_data_master(COM, 0x02, DATA_END);
+[; ;OBC1_app.c: 68: send_data_master(COM, (0x01), DATA_END);
+"68
+[e ( _send_data_master (3 , , . `E1099 1 -> -> 1 `i `E1104 . `E1108 0 ]
+[; ;OBC1_app.c: 69: break;
+"69
+[e $U 102  ]
+[; ;OBC1_app.c: 71: case (0x02):
+"71
+[e :U 106 ]
+[; ;OBC1_app.c: 72: putch(0x01);
 "72
-[e ( _send_data_master (3 , , . `E1099 1 -> -> 2 `i `E1104 . `E1108 0 ]
-[; ;OBC1_app.c: 73: break;
+[e ( _putch (1 -> -> 1 `i `uc ]
+[; ;OBC1_app.c: 73: I2Ctemp_data_set();
 "73
-[e $U 102  ]
+[e ( _I2Ctemp_data_set ..  ]
+[; ;OBC1_app.c: 74: send_data_master(COM, (0x02), DATA_END);
 "74
-}
-[; ;OBC1_app.c: 74: }
+[e ( _send_data_master (3 , , . `E1099 1 -> -> 2 `i `E1104 . `E1108 0 ]
+[; ;OBC1_app.c: 75: break;
+"75
 [e $U 102  ]
-"49
+"76
+}
+[; ;OBC1_app.c: 76: }
+[e $U 102  ]
+"52
 [e :U 103 ]
 [e [\ _data , $ -> -> 3 `i `uc 104
  , $ -> -> 1 `i `uc 105
  , $ -> -> 2 `i `uc 106
  102 ]
-"74
+"76
 [e :U 102 ]
-[; ;OBC1_app.c: 75: }
-"75
+[; ;OBC1_app.c: 77: }
+"77
 [e :UE 101 ]
 }
-"78
+"80
 [v _LED_data_set `(v ~T0 @X0 1 sf ]
-"79
+"81
 {
-[; ;OBC1_app.c: 78: static void LED_data_set(void)
-[; ;OBC1_app.c: 79: {
+[; ;OBC1_app.c: 80: static void LED_data_set(void)
+[; ;OBC1_app.c: 81: {
 [e :U _LED_data_set ]
 [f ]
-[; ;OBC1_app.c: 80: sent_data_set(0x01, 1, 1);
-"80
+[; ;OBC1_app.c: 82: sent_data_set(0x01, 1, 1);
+"82
 [e ( _sent_data_set (3 , , -> -> 1 `i `*v -> -> 1 `i `uc -> -> 1 `i `uc ]
-[; ;OBC1_app.c: 81: }
-"81
+[; ;OBC1_app.c: 83: }
+"83
 [e :UE 107 ]
 }
-"83
+"86
 [v _I2Ctemp_data_set `(v ~T0 @X0 1 sf ]
-"84
+"87
 {
-[; ;OBC1_app.c: 83: static void I2Ctemp_data_set(void)
-[; ;OBC1_app.c: 84: {
+[; ;OBC1_app.c: 86: static void I2Ctemp_data_set(void)
+[; ;OBC1_app.c: 87: {
 [e :U _I2Ctemp_data_set ]
 [f ]
-[; ;OBC1_app.c: 85: receive_data_master(OBC2);
-"85
-[e ( _receive_data_master (1 . `E1099 0 ]
-[; ;OBC1_app.c: 86: }
-"86
+"88
+[v _I2CTEMP_data `uc ~T0 @X0 -> 2 `i a ]
+[; ;OBC1_app.c: 88: uint8_t I2CTEMP_data[2];
+[; ;OBC1_app.c: 89: I2CTEMP_data[0] = getch();
+"89
+[e = *U + &U _I2CTEMP_data * -> -> -> 0 `i `ui `ux -> -> # *U &U _I2CTEMP_data `ui `ux ( _getch ..  ]
+[; ;OBC1_app.c: 90: I2CTEMP_data[1] = getch();
+"90
+[e = *U + &U _I2CTEMP_data * -> -> -> 1 `i `ui `ux -> -> # *U &U _I2CTEMP_data `ui `ux ( _getch ..  ]
+[; ;OBC1_app.c: 91: sent_data_set(I2CTEMP_data, 2, 1);
+"91
+[e ( _sent_data_set (3 , , -> &U _I2CTEMP_data `*v -> -> 2 `i `uc -> -> 1 `i `uc ]
+[; ;OBC1_app.c: 92: }
+"92
 [e :UE 108 ]
 }

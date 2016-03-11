@@ -1,5 +1,13 @@
 Version 3.2 HI-TECH Software Intermediate Code
-"1526 C:\Program Files (x86)\Microchip\xc8\v1.35\include\pic16f877a.h
+"1465 C:\Program Files (x86)\Microchip\xc8\v1.35\include\pic16f877a.h
+[s S61 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S61 . TRISD0 TRISD1 TRISD2 TRISD3 TRISD4 TRISD5 TRISD6 TRISD7 ]
+"1464
+[u S60 `S61 1 ]
+[n S60 . . ]
+"1476
+[v _TRISDbits `VS60 ~T0 @X0 0 e@136 ]
+"1526
 [s S63 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
 [n S63 . TRISE0 TRISE1 TRISE2 . PSPMODE IBOV OBF IBF ]
 "1525
@@ -11,6 +19,43 @@ Version 3.2 HI-TECH Software Intermediate Code
 "150 C:\Program Files (x86)\Microchip\xc8\v1.35\include\pic.h
 [v __delay `JF1091 ~T0 @X0 0 e ]
 [p i __delay ]
+"448 C:\Program Files (x86)\Microchip\xc8\v1.35\include\pic16f877a.h
+[s S19 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S19 . RBIF INTF TMR0IF RBIE INTE TMR0IE PEIE GIE ]
+"458
+[s S20 :2 `uc 1 :1 `uc 1 :2 `uc 1 :1 `uc 1 ]
+[n S20 . . T0IF . T0IE ]
+"447
+[u S18 `S19 1 `S20 1 ]
+[n S18 . . . ]
+"465
+[v _INTCONbits `VS18 ~T0 @X0 0 e@11 ]
+"122 OBC2_app.c
+[v _MCLR_init `(i ~T0 @X0 0 ef ]
+"104 system_protocol.h
+[v _sysprot_init `(v ~T0 @X0 0 ef ]
+"49 spi_master.h
+[v _spi_master_start `(v ~T0 @X0 0 ef ]
+"65 uart_serial.h
+[v _uart_init `(v ~T0 @X0 0 ef ]
+"337 C:\Program Files (x86)\Microchip\xc8\v1.35\include\pic16f877a.h
+[s S13 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S13 . RD0 RD1 RD2 RD3 RD4 RD5 RD6 RD7 ]
+"336
+[u S12 `S13 1 ]
+[n S12 . . ]
+"348
+[v _PORTDbits `VS12 ~T0 @X0 0 e@8 ]
+"16 OBC1_app.h
+[v _COM_status `(uc ~T0 @X0 0 ef ]
+"17
+[v _POW_status `(v ~T0 @X0 0 ef ]
+"18
+[v _command `(v ~T0 @X0 0 ef1`uc ]
+"43 tempADT.h
+[v _ADT_Read `(v ~T0 @X0 0 ef1`*uc ]
+"92 uart_serial.h
+[v _put_string `(v ~T0 @X0 0 ef1`*uc ]
 [; ;htc.h: 26: extern const char __xc8_OPTIM_SPEED;
 [; ;htc.h: 28: extern double __fpnormalize(double);
 [; ;xc8debug.h: 14: extern void __builtin_software_breakpoint(void);
@@ -1061,65 +1106,270 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;system_protocol.h: 61: } cw_t;
 [; ;system_protocol.h: 63: extern cw_t cw;
 [; ;system_protocol.h: 104: void sysprot_init(void);
-[; ;system_protocol.h: 106: void cw_set(void);
-[; ;system_protocol.h: 132: uint8_t sent_data_set(void *p_data, uint8_t data_len, uint8_t byte_of_data);
-[; ;system_protocol.h: 145: void cw_data_set(cw_t *p_cw_data);
-[; ;system_protocol.h: 160: void send_data_master(destination_t destination, data_type_t data_type, data_end_command_t data_end_command);
-[; ;system_protocol.h: 163: void receive_data_master(destination_t destination);
-[; ;spi_master.h: 51: void spi_master_start(void);
-[; ;spi_master.h: 64: uint8_t spi_master_receive(destination_t destination);
-[; ;spi_master.h: 79: void spi_master_send(destination_t destination, uint8_t data);
-[; ;spi_master.h: 92: void spi_master_stop(void);
-[; ;OBC2_app.h: 35: void OBC1_RESET_init(void);
-[; ;OBC2_app.h: 48: void OBC1_reset(void);
-"34 OBC2_app.c
+[; ;system_protocol.h: 130: uint8_t sent_data_set(void *p_data, uint8_t data_len, uint8_t byte_of_data);
+[; ;system_protocol.h: 143: void cw_data_set(cw_t *p_cw_data);
+[; ;system_protocol.h: 155: void get_cw_data(void);
+[; ;system_protocol.h: 169: void send_data_master(destination_t destination, data_type_t data_type, data_end_command_t data_end_command);
+[; ;system_protocol.h: 172: void receive_data_master(destination_t destination);
+[; ;math.h: 30: extern double fabs(double);
+[; ;math.h: 31: extern double floor(double);
+[; ;math.h: 32: extern double ceil(double);
+[; ;math.h: 33: extern double modf(double, double *);
+[; ;math.h: 34: extern double sqrt(double);
+[; ;math.h: 35: extern double atof(const char *);
+[; ;math.h: 36: extern double sin(double) ;
+[; ;math.h: 37: extern double cos(double) ;
+[; ;math.h: 38: extern double tan(double) ;
+[; ;math.h: 39: extern double asin(double) ;
+[; ;math.h: 40: extern double acos(double) ;
+[; ;math.h: 41: extern double atan(double);
+[; ;math.h: 42: extern double atan2(double, double) ;
+[; ;math.h: 43: extern double log(double);
+[; ;math.h: 44: extern double log10(double);
+[; ;math.h: 45: extern double pow(double, double) ;
+[; ;math.h: 46: extern double exp(double) ;
+[; ;math.h: 47: extern double sinh(double) ;
+[; ;math.h: 48: extern double cosh(double) ;
+[; ;math.h: 49: extern double tanh(double);
+[; ;math.h: 50: extern double eval_poly(double, const double *, int);
+[; ;math.h: 51: extern double frexp(double, int *);
+[; ;math.h: 52: extern double ldexp(double, int);
+[; ;math.h: 53: extern double fmod(double, double);
+[; ;math.h: 54: extern double trunc(double);
+[; ;math.h: 55: extern double round(double);
+[; ;__size_t.h: 4: typedef unsigned size_t;
+[; ;stdarg.h: 7: typedef void * va_list[1];
+[; ;stdarg.h: 10: extern void * __va_start(void);
+[; ;stdarg.h: 13: extern void * __va_arg(void *, ...);
+[; ;stdio.h: 43: struct __prbuf
+[; ;stdio.h: 44: {
+[; ;stdio.h: 45: char * ptr;
+[; ;stdio.h: 46: void (* func)(char);
+[; ;stdio.h: 47: };
+[; ;errno.h: 25: extern int errno;
+[; ;conio.h: 12: extern void init_uart(void);
+[; ;conio.h: 14: extern char getch(void);
+[; ;conio.h: 15: extern char getche(void);
+[; ;conio.h: 16: extern void putch(char);
+[; ;conio.h: 17: extern void ungetch(char);
+[; ;conio.h: 19: extern __bit kbhit(void);
+[; ;conio.h: 23: extern char * cgets(char *);
+[; ;conio.h: 24: extern void cputs(const char *);
+[; ;stdio.h: 88: extern int cprintf(char *, ...);
+[; ;stdio.h: 93: extern int _doprnt(struct __prbuf *, const register char *, register va_list);
+[; ;stdio.h: 183: extern char * gets(char *);
+[; ;stdio.h: 184: extern int puts(const char *);
+[; ;stdio.h: 185: extern int scanf(const char *, ...) __attribute__((unsupported("scanf() is not supported by this compiler")));
+[; ;stdio.h: 186: extern int sscanf(const char *, const char *, ...) __attribute__((unsupported("sscanf() is not supported by this compiler")));
+[; ;stdio.h: 187: extern int vprintf(const char *, va_list) __attribute__((unsupported("vprintf() is not supported by this compiler")));
+[; ;stdio.h: 188: extern int vsprintf(char *, const char *, va_list) __attribute__((unsupported("vsprintf() is not supported by this compiler")));
+[; ;stdio.h: 189: extern int vscanf(const char *, va_list ap) __attribute__((unsupported("vscanf() is not supported by this compiler")));
+[; ;stdio.h: 190: extern int vsscanf(const char *, const char *, va_list) __attribute__((unsupported("vsscanf() is not supported by this compiler")));
+[; ;stdio.h: 194: extern int sprintf(char *, const char *, ...);
+[; ;stdio.h: 195: extern int printf(const char *, ...);
+[; ;i2c.h: 27: void I2C_init(void);
+[; ;i2c.h: 28: void I2C_Start(void);
+[; ;i2c.h: 29: void I2C_Stop(void);
+[; ;i2c.h: 30: unsigned char I2C_Out(unsigned char data);
+[; ;i2c.h: 31: void I2C_Send(unsigned char slave_adr, unsigned char data);
+[; ;i2c.h: 32: unsigned char I2C_Rcv(unsigned char Ack);
+[; ;i2c.h: 33: void I2C_GetData(unsigned char slave_adr, unsigned char *Buffer, unsigned char CNT);
+[; ;tempADT.h: 39: unsigned char ADT_Begin(void);
+[; ;tempADT.h: 40: unsigned char ADT_ActionMode(unsigned char mode);
+[; ;tempADT.h: 41: unsigned char ADT_Receive(char reg_adrs, unsigned char *data, unsigned char kosu);
+[; ;tempADT.h: 42: unsigned char ADT_Send(char reg_adrs, unsigned char *data, unsigned char kosu);
+[; ;tempADT.h: 43: void ADT_Read(uint8_t *temp);
+[; ;uint8_to_string.h: 23: void uint8_to_string(uint8_t num, uint8_t *p_str_buf, uint8_t buf_size);
+[; ;uart_serial.h: 65: void uart_init(void);
+[; ;uart_serial.h: 78: void putch(uint8_t byte);
+[; ;uart_serial.h: 92: void put_string(uint8_t *str);
+[; ;uart_serial.h: 107: uint8_t getch(void);
+[; ;spi_master.h: 49: void spi_master_start(void);
+[; ;spi_master.h: 62: uint8_t spi_master_receive(destination_t destination);
+[; ;spi_master.h: 77: void spi_master_send(destination_t destination, uint8_t data);
+[; ;spi_master.h: 90: void spi_master_stop(void);
+[; ;OBC2_app.h: 33: void OBC1_RESET_init(void);
+[; ;OBC2_app.h: 46: void OBC1_reset(void);
+[; ;OBC2_app.h: 59: void OBC1(void);
+[; ;OBC2_app.h: 71: void interrupt I2Ctemp(void);
+[; ;OBC2_app.h: 85: void interrupt_able(void);
+[; ;OBC2_app.h: 98: void interrupt_disable(void);
+[; ;OBC2_app.h: 110: void trans_I2Ctemp(void);
+[; ;OBC1_app.h: 16: uint8_t COM_status(void);
+[; ;OBC1_app.h: 17: void POW_status(void);
+[; ;OBC1_app.h: 18: void command(uint8_t data);
+"37 OBC2_app.c
 [v _OBC1_RESET_init `(v ~T0 @X0 1 ef ]
-"35
+"38
 {
-[; ;OBC2_app.c: 34: void OBC1_RESET_init(void)
-[; ;OBC2_app.c: 35: {
+[; ;OBC2_app.c: 37: void OBC1_RESET_init(void)
+[; ;OBC2_app.c: 38: {
 [e :U _OBC1_RESET_init ]
 [f ]
-"36
-[v _nin `*uc ~T0 @X0 1 a ]
-[; ;OBC2_app.c: 36: uint8_t *nin;
-[; ;OBC2_app.c: 37: nin = 0x09;
-"37
-[e = _nin -> -> 9 `i `*uc ]
-[; ;OBC2_app.c: 40: TRISEbits.TRISE0 = 0;
+[; ;OBC2_app.c: 39: TRISDbits.TRISD2 = 1;
+"39
+[e = . . _TRISDbits 0 2 -> -> 1 `i `uc ]
 "40
-[e = . . _TRISEbits 0 0 -> -> 0 `i `uc ]
-[; ;OBC2_app.c: 43: *nin = 0x01;
-"43
-[e = *U _nin -> -> 1 `i `uc ]
-[; ;OBC2_app.c: 44: }
+[v _nin `*uc ~T0 @X0 1 a ]
+[; ;OBC2_app.c: 40: uint8_t *nin;
+[; ;OBC2_app.c: 41: nin = 0x09;
+"41
+[e = _nin -> -> 9 `i `*uc ]
+[; ;OBC2_app.c: 44: TRISEbits.TRISE0 = 0;
 "44
-[e :UE 97 ]
+[e = . . _TRISEbits 0 0 -> -> 0 `i `uc ]
+[; ;OBC2_app.c: 47: *nin = 0x01;
+"47
+[e = *U _nin -> -> 1 `i `uc ]
+[; ;OBC2_app.c: 48: }
+"48
+[e :UE 98 ]
 }
-"56
+"60
 [v _OBC1_reset `(v ~T0 @X0 1 ef ]
-"57
+"61
 {
-[; ;OBC2_app.c: 56: void OBC1_reset(void)
-[; ;OBC2_app.c: 57: {
+[; ;OBC2_app.c: 60: void OBC1_reset(void)
+[; ;OBC2_app.c: 61: {
 [e :U _OBC1_reset ]
 [f ]
-"58
-[v _nin `*uc ~T0 @X0 1 a ]
-[; ;OBC2_app.c: 58: uint8_t *nin;
-[; ;OBC2_app.c: 59: nin = 0x09;
-"59
-[e = _nin -> -> 9 `i `*uc ]
-[; ;OBC2_app.c: 62: *nin = 0;
 "62
-[e = *U _nin -> -> 0 `i `uc ]
-[; ;OBC2_app.c: 63: _delay((unsigned long)((10)*(20000000/4000.0)));
+[v _nin `*uc ~T0 @X0 1 a ]
+[; ;OBC2_app.c: 62: uint8_t *nin;
+[; ;OBC2_app.c: 63: nin = 0x09;
 "63
+[e = _nin -> -> 9 `i `*uc ]
+[; ;OBC2_app.c: 66: *nin = 0;
+"66
+[e = *U _nin -> -> 0 `i `uc ]
+[; ;OBC2_app.c: 67: _delay((unsigned long)((10)*(20000000/4000.0)));
+"67
 [e ( __delay (1 -> * -> -> 10 `i `d / -> -> 20000000 `l `d .4000.0 `ul ]
-[; ;OBC2_app.c: 64: *nin = 0x01;
-"64
+[; ;OBC2_app.c: 68: *nin = 0x01;
+"68
 [e = *U _nin -> -> 1 `i `uc ]
-[; ;OBC2_app.c: 65: }
-"65
-[e :UE 98 ]
+[; ;OBC2_app.c: 69: }
+"69
+[e :UE 99 ]
+}
+"82
+[v _interrupt_able `(v ~T0 @X0 1 ef ]
+"83
+{
+[; ;OBC2_app.c: 82: void interrupt_able(void)
+[; ;OBC2_app.c: 83: {
+[e :U _interrupt_able ]
+[f ]
+[; ;OBC2_app.c: 85: INTCONbits.PEIE = 1;
+"85
+[e = . . _INTCONbits 0 6 -> -> 1 `i `uc ]
+[; ;OBC2_app.c: 86: INTCONbits.GIE = 1;
+"86
+[e = . . _INTCONbits 0 7 -> -> 1 `i `uc ]
+[; ;OBC2_app.c: 87: }
+"87
+[e :UE 100 ]
+}
+"101
+[v _interrupt_disable `(v ~T0 @X0 1 ef ]
+"102
+{
+[; ;OBC2_app.c: 101: void interrupt_disable(void)
+[; ;OBC2_app.c: 102: {
+[e :U _interrupt_disable ]
+[f ]
+[; ;OBC2_app.c: 104: INTCONbits.PEIE = 0;
+"104
+[e = . . _INTCONbits 0 6 -> -> 0 `i `uc ]
+[; ;OBC2_app.c: 105: INTCONbits.GIE = 0;
+"105
+[e = . . _INTCONbits 0 7 -> -> 0 `i `uc ]
+[; ;OBC2_app.c: 106: }
+"106
+[e :UE 101 ]
+}
+"120
+[v _OBC1 `(v ~T0 @X0 1 ef ]
+"121
+{
+[; ;OBC2_app.c: 120: void OBC1(void)
+[; ;OBC2_app.c: 121: {
+[e :U _OBC1 ]
+[f ]
+[; ;OBC2_app.c: 122: MCLR_init();
+"122
+[e ( _MCLR_init ..  ]
+[; ;OBC2_app.c: 123: sysprot_init();
+"123
+[e ( _sysprot_init ..  ]
+[; ;OBC2_app.c: 124: spi_master_start();
+"124
+[e ( _spi_master_start ..  ]
+[; ;OBC2_app.c: 125: uart_init();
+"125
+[e ( _uart_init ..  ]
+"126
+[v _COM_s `uc ~T0 @X0 1 a ]
+[; ;OBC2_app.c: 126: uint8_t COM_s;
+[; ;OBC2_app.c: 128: while(1)
+"128
+[e :U 104 ]
+[; ;OBC2_app.c: 129: {
+"129
+{
+[; ;OBC2_app.c: 130: PORTDbits.RD7 = 1;
+"130
+[e = . . _PORTDbits 0 7 -> -> 1 `i `uc ]
+[; ;OBC2_app.c: 131: _delay((unsigned long)((1000)*(20000000/4000.0)));
+"131
+[e ( __delay (1 -> * -> -> 1000 `i `d / -> -> 20000000 `l `d .4000.0 `ul ]
+[; ;OBC2_app.c: 134: COM_s = COM_status();
+"134
+[e = _COM_s ( _COM_status ..  ]
+[; ;OBC2_app.c: 137: POW_status();
+"137
+[e ( _POW_status ..  ]
+[; ;OBC2_app.c: 140: command(COM_s);
+"140
+[e ( _command (1 _COM_s ]
+[; ;OBC2_app.c: 142: PORTDbits.RD7 = 0;
+"142
+[e = . . _PORTDbits 0 7 -> -> 0 `i `uc ]
+[; ;OBC2_app.c: 143: _delay((unsigned long)((1000)*(20000000/4000.0)));
+"143
+[e ( __delay (1 -> * -> -> 1000 `i `d / -> -> 20000000 `l `d .4000.0 `ul ]
+"144
+}
+[e :U 103 ]
+"128
+[e $U 104  ]
+[e :U 105 ]
+[; ;OBC2_app.c: 144: }
+[; ;OBC2_app.c: 145: }
+"145
+[e :UE 102 ]
+}
+"148
+[v _trans_I2Ctemp `(v ~T0 @X0 1 ef ]
+"149
+{
+[; ;OBC2_app.c: 148: void trans_I2Ctemp()
+[; ;OBC2_app.c: 149: {
+[e :U _trans_I2Ctemp ]
+[f ]
+"150
+[v _data `uc ~T0 @X0 -> 2 `i a ]
+[; ;OBC2_app.c: 150: uint8_t data[2];
+[; ;OBC2_app.c: 151: ADT_Read(data);
+"151
+[e ( _ADT_Read (1 &U _data ]
+[; ;OBC2_app.c: 152: put_string(data[0]);
+"152
+[e ( _put_string (1 -> *U + &U _data * -> -> -> 0 `i `ui `ux -> -> # *U &U _data `ui `ux `*uc ]
+[; ;OBC2_app.c: 153: put_string(data[1]);
+"153
+[e ( _put_string (1 -> *U + &U _data * -> -> -> 1 `i `ui `ux -> -> # *U &U _data `ui `ux `*uc ]
+[; ;OBC2_app.c: 154: }
+"154
+[e :UE 106 ]
 }

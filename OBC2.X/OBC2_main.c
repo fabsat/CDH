@@ -9,77 +9,70 @@
 #include <stdio.h>
 #include "pic_clock.h"
 #include "uart_serial.h"
-#include "spi.h"
 #include "i2c.h"
 #include "tempADT.h"
+#include "OBC1_app.h"
 #include "OBC2_app.h"
 #include "spi_master.h"
-//#include "spi_slave.h"
 
 //コンフィグ設定
 #pragma config FOSC = HS, WDTE = OFF, PWRTE = ON,  BOREN = ON,  LVP = OFF
 #pragma config CPD = OFF, WRT = OFF, CP = OFF
 
-/*OBC1になる関数*/
-void OBC1(void);
+void interrupt I2Ctemp(void);
+
+cw_t cw = CW_DATA_INIT;
 
 int main(void){
 
     LED0TRIS = 0;
+    LED0 = 0;
     OBC1_RESET_init();
-    if(OBC1_STATUS) OBC1_reset();       // OBC1の状態によってOBC1をリセットする
     I2C_init();
-//    spi_slave_init(SPI_ISR_ENABLE);
     uart_init();
+    interrupt_able();
+    __delay_ms(1000);
     
     while(1)
     {
         LED0 = 1;
         __delay_ms(100);
         
-        while(!OBC1_ACK_TRIS)
+        /*OBC1生存確認＆リセット*/
+        while(!OBC1_ACK)
         {
             int count = 0;
             if(count < 100){
                 OBC1_reset();       // OBC1の状態によってOBC1をリセットする
                 count++;
             }else{
-                OBC1();
+                interrupt_disable();        // 全割り込み禁止
+                OBC1();                     // OBC2がOBC1になる
             }
         }
-        
-        //OBC2();
-        
                
         LED0 = 0;
         __delay_ms(100);
     }
-    
     return 0;
 }
 
-void OBC1(void)
+
+/*=====================================================
+ * @brief
+ *     OBC2の割り込み関数
+ * @param
+ *     void:
+ * @return
+ *     void:
+ * @note
+ *     OBC1からの割り込み(I2C温度センサデータ要求)
+ *===================================================*/
+void interrupt I2Ctemp(void)
 {
-    MCLR_init();            // MCLR_reset 初期設定
-    sysprot_init();         // system_protocol 初期設定
-    spi_master_start();
-    uart_init();
-    
-    while(1)
+    if(PIR1bits.RCIF == 1)
     {
-        LED0 = 1;
-        __delay_ms(1000);
-
-        /*COMのステータス確認*/
-        COM_status();
-
-        /*POWのステータス確認*/
-        POW_status();
-        
-        /*OBC1作業関数*/
-        command(COM_status);
-
-        LED0 = 0;
-        __delay_ms(1000);   
+        PIR1bits.RCIF == 0;         // UART割り込みフラグ解除
+        trans_I2Ctemp();            // OBC1に温度データ送信
     }
 }

@@ -4,8 +4,9 @@
 OBC2_app.h  \
 tempADT.h  \
 uart_serial.h  \
-spi.h  \
 i2c.h  \
 system_protocol.h  \
 pic_clock.h  \
-spi_master.h 
+uint8_to_string.h  \
+spi_master.h  \
+OBC1_app.h 
