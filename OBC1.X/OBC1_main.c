@@ -29,6 +29,9 @@ int main(void){
     LED0 = 0;
     LED1TRIS = 0;
     LED1 = 0;
+    OBC1_ACK_TRIS = 0;
+    OBC1_ACK = 1;
+
     
     MCLR_init();            // MCLR_reset 初期設定
     sysprot_init();         // system_protocol 初期設定
@@ -40,7 +43,7 @@ int main(void){
     while(1)
     {
         LED0 = 1;
-        __delay_ms(1000);
+        __delay_ms(100);
 
         /*COMのステータス確認*/
         uint8_t COM_stat = COM_status();
@@ -52,7 +55,7 @@ int main(void){
         command(COM_stat);
 
         LED0 = 0;
-        __delay_ms(1000);   
+        __delay_ms(100);   
     }
     
     return 0;

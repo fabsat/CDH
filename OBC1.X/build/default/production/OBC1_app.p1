@@ -1105,9 +1105,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;spi_master.h: 62: uint8_t spi_master_receive(destination_t destination);
 [; ;spi_master.h: 77: void spi_master_send(destination_t destination, uint8_t data);
 [; ;spi_master.h: 90: void spi_master_stop(void);
-[; ;OBC1_app.h: 16: uint8_t COM_status(void);
-[; ;OBC1_app.h: 17: void POW_status(void);
-[; ;OBC1_app.h: 18: void command(uint8_t data);
+[; ;OBC1_app.h: 18: uint8_t COM_status(void);
+[; ;OBC1_app.h: 19: void POW_status(void);
+[; ;OBC1_app.h: 20: void command(uint8_t data);
 [; ;MCLR_reset.h: 41: void MCLR_init(void);
 [; ;MCLR_reset.h: 55: void MCLR_reset(uint8_t resetted_mcu);
 [; ;uint8_to_string.h: 23: void uint8_to_string(uint8_t num, uint8_t *p_str_buf, uint8_t buf_size);

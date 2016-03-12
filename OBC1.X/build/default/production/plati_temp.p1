@@ -1047,9 +1047,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _b `d ~T0 @X0 1 a ]
 [; ;plati_temp.c: 39: double b = -0.0000005775;
 [e = _b -U .0.0000005775 ]
-[; ;plati_temp.c: 42: r1 = (get_adcon() / (5.0 - get_adcon())) * 2400.0;
+[; ;plati_temp.c: 42: r1 = (get_adcon() / (5.0 - get_adcon())) * 4700.0;
 "42
-[e = _r1 * / -> ( _get_adcon ..  `d - .5.0 -> ( _get_adcon ..  `d .2400.0 ]
+[e = _r1 * / -> ( _get_adcon ..  `d - .5.0 -> ( _get_adcon ..  `d .4700.0 ]
 [; ;plati_temp.c: 43: t1 = (r1 / 100.0 - 1.0) / a;
 "43
 [e = _t1 / - / _r1 .100.0 .1.0 _a ]

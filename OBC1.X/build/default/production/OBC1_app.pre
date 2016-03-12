@@ -1506,7 +1506,7 @@ void spi_master_send(destination_t destination, uint8_t data);
 # 90
 void spi_master_stop(void);
 
-# 16 "OBC1_app.h"
+# 18 "OBC1_app.h"
 uint8_t COM_status(void);
 void POW_status(void);
 void command(uint8_t data);

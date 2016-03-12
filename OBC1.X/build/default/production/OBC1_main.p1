@@ -33,11 +33,11 @@ Version 3.2 HI-TECH Software Intermediate Code
 "150 C:\Program Files (x86)\Microchip\xc8\v1.35\include\pic.h
 [v __delay `JF1091 ~T0 @X0 0 e ]
 [p i __delay ]
-"16 OBC1_app.h
+"18 OBC1_app.h
 [v _COM_status `(uc ~T0 @X0 0 ef ]
-"17
+"19
 [v _POW_status `(v ~T0 @X0 0 ef ]
-"18
+"20
 [v _command `(v ~T0 @X0 0 ef1`uc ]
 [; ;htc.h: 26: extern const char __xc8_OPTIM_SPEED;
 [; ;htc.h: 28: extern double __fpnormalize(double);
@@ -1138,9 +1138,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;spi_master.h: 62: uint8_t spi_master_receive(destination_t destination);
 [; ;spi_master.h: 77: void spi_master_send(destination_t destination, uint8_t data);
 [; ;spi_master.h: 90: void spi_master_stop(void);
-[; ;OBC1_app.h: 16: uint8_t COM_status(void);
-[; ;OBC1_app.h: 17: void POW_status(void);
-[; ;OBC1_app.h: 18: void command(uint8_t data);
+[; ;OBC1_app.h: 18: uint8_t COM_status(void);
+[; ;OBC1_app.h: 19: void POW_status(void);
+[; ;OBC1_app.h: 20: void command(uint8_t data);
 "21 OBC1_main.c
 [p x FOSC=HS ]
 [p x WDTE=OFF ]
@@ -1204,64 +1204,70 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;OBC1_main.c: 31: PORTDbits.RD6 = 0;
 "31
 [e = . . _PORTDbits 0 6 -> -> 0 `i `uc ]
-[; ;OBC1_main.c: 33: MCLR_init();
+[; ;OBC1_main.c: 32: TRISDbits.TRISD2 = 0;
+"32
+[e = . . _TRISDbits 0 2 -> -> 0 `i `uc ]
+[; ;OBC1_main.c: 33: PORTDbits.RD2 = 1;
 "33
-[e ( _MCLR_init ..  ]
-[; ;OBC1_main.c: 34: sysprot_init();
-"34
-[e ( _sysprot_init ..  ]
-[; ;OBC1_main.c: 35: ad_con_init();
-"35
-[e ( _ad_con_init ..  ]
-[; ;OBC1_main.c: 36: spi_master_start();
+[e = . . _PORTDbits 0 2 -> -> 1 `i `uc ]
+[; ;OBC1_main.c: 36: MCLR_init();
 "36
-[e ( _spi_master_start ..  ]
-[; ;OBC1_main.c: 37: uart_init();
+[e ( _MCLR_init ..  ]
+[; ;OBC1_main.c: 37: sysprot_init();
 "37
-[e ( _uart_init ..  ]
-[; ;OBC1_main.c: 38: _delay((unsigned long)((1000)*(20000000/4000.0)));
+[e ( _sysprot_init ..  ]
+[; ;OBC1_main.c: 38: ad_con_init();
 "38
-[e ( __delay (1 -> * -> -> 1000 `i `d / -> -> 20000000 `l `d .4000.0 `ul ]
-[; ;OBC1_main.c: 40: while(1)
+[e ( _ad_con_init ..  ]
+[; ;OBC1_main.c: 39: spi_master_start();
+"39
+[e ( _spi_master_start ..  ]
+[; ;OBC1_main.c: 40: uart_init();
 "40
-[e :U 100 ]
-[; ;OBC1_main.c: 41: {
+[e ( _uart_init ..  ]
+[; ;OBC1_main.c: 41: _delay((unsigned long)((1000)*(20000000/4000.0)));
 "41
-{
-[; ;OBC1_main.c: 42: PORTDbits.RD7 = 1;
-"42
-[e = . . _PORTDbits 0 7 -> -> 1 `i `uc ]
-[; ;OBC1_main.c: 43: _delay((unsigned long)((1000)*(20000000/4000.0)));
+[e ( __delay (1 -> * -> -> 1000 `i `d / -> -> 20000000 `l `d .4000.0 `ul ]
+[; ;OBC1_main.c: 43: while(1)
 "43
-[e ( __delay (1 -> * -> -> 1000 `i `d / -> -> 20000000 `l `d .4000.0 `ul ]
+[e :U 100 ]
+[; ;OBC1_main.c: 44: {
+"44
+{
+[; ;OBC1_main.c: 45: PORTDbits.RD7 = 1;
+"45
+[e = . . _PORTDbits 0 7 -> -> 1 `i `uc ]
+[; ;OBC1_main.c: 46: _delay((unsigned long)((100)*(20000000/4000.0)));
 "46
-[v _COM_stat `uc ~T0 @X0 1 a ]
-[; ;OBC1_main.c: 46: uint8_t COM_stat = COM_status();
-[e = _COM_stat ( _COM_status ..  ]
-[; ;OBC1_main.c: 49: POW_status();
+[e ( __delay (1 -> * -> -> 100 `i `d / -> -> 20000000 `l `d .4000.0 `ul ]
 "49
-[e ( _POW_status ..  ]
-[; ;OBC1_main.c: 52: command(COM_stat);
+[v _COM_stat `uc ~T0 @X0 1 a ]
+[; ;OBC1_main.c: 49: uint8_t COM_stat = COM_status();
+[e = _COM_stat ( _COM_status ..  ]
+[; ;OBC1_main.c: 52: POW_status();
 "52
-[e ( _command (1 _COM_stat ]
-[; ;OBC1_main.c: 54: PORTDbits.RD7 = 0;
-"54
-[e = . . _PORTDbits 0 7 -> -> 0 `i `uc ]
-[; ;OBC1_main.c: 55: _delay((unsigned long)((1000)*(20000000/4000.0)));
+[e ( _POW_status ..  ]
+[; ;OBC1_main.c: 55: command(COM_stat);
 "55
-[e ( __delay (1 -> * -> -> 1000 `i `d / -> -> 20000000 `l `d .4000.0 `ul ]
-"56
+[e ( _command (1 _COM_stat ]
+[; ;OBC1_main.c: 57: PORTDbits.RD7 = 0;
+"57
+[e = . . _PORTDbits 0 7 -> -> 0 `i `uc ]
+[; ;OBC1_main.c: 58: _delay((unsigned long)((100)*(20000000/4000.0)));
+"58
+[e ( __delay (1 -> * -> -> 100 `i `d / -> -> 20000000 `l `d .4000.0 `ul ]
+"59
 }
 [e :U 99 ]
-"40
+"43
 [e $U 100  ]
 [e :U 101 ]
-[; ;OBC1_main.c: 56: }
-[; ;OBC1_main.c: 58: return 0;
-"58
+[; ;OBC1_main.c: 59: }
+[; ;OBC1_main.c: 61: return 0;
+"61
 [e ) -> 0 `i ]
 [e $UE 98  ]
-[; ;OBC1_main.c: 59: }
-"59
+[; ;OBC1_main.c: 62: }
+"62
 [e :UE 98 ]
 }

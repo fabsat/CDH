@@ -1599,7 +1599,7 @@ void spi_master_send(destination_t destination, uint8_t data);
 # 90
 void spi_master_stop(void);
 
-# 16 "OBC1_app.h"
+# 18 "OBC1_app.h"
 uint8_t COM_status(void);
 void POW_status(void);
 void command(uint8_t data);
@@ -1617,6 +1617,9 @@ TRISDbits.TRISD7 = 0;
 PORTDbits.RD7 = 0;
 TRISDbits.TRISD6 = 0;
 PORTDbits.RD6 = 0;
+TRISDbits.TRISD2 = 0;
+PORTDbits.RD2 = 1;
+
 
 MCLR_init();
 sysprot_init();
@@ -1628,7 +1631,7 @@ _delay((unsigned long)((1000)*(20000000/4000.0)));
 while(1)
 {
 PORTDbits.RD7 = 1;
-_delay((unsigned long)((1000)*(20000000/4000.0)));
+_delay((unsigned long)((100)*(20000000/4000.0)));
 
 
 uint8_t COM_stat = COM_status();
@@ -1640,7 +1643,7 @@ POW_status();
 command(COM_stat);
 
 PORTDbits.RD7 = 0;
-_delay((unsigned long)((1000)*(20000000/4000.0)));
+_delay((unsigned long)((100)*(20000000/4000.0)));
 }
 
 return 0;
