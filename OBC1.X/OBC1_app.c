@@ -23,9 +23,11 @@
 #include "MCLR_reset.h"
 #include "uart_serial.h"
 
+int uart_interrupt;
+uint8_t I2CTEMP_data[2];
 
 static void LED_data_set(void);
-static void I2Ctemp_data_set(void);
+void I2Ctemp_data_set(void);
 
     
 
@@ -70,8 +72,24 @@ void command(uint8_t data)
 
         case GET_I2C_TEMP:
             putch(0x01);                                        // OBC2へUART割り込み
-            I2Ctemp_data_set();                                 // I2C温度データセット
-            send_data_master(COM, GET_I2C_TEMP, DATA_END);
+            PIE1bits.RCIE = 1;
+            INTCONbits.GIE = 1;
+            INTCONbits.PEIE = 1;
+            
+            while(uart_interrupt!=2){
+                LED1 = 1;
+                __delay_ms(40);
+                LED1 = 0;
+                __delay_ms(40);
+            }
+            uart_interrupt = 0;
+            PIE1bits.RCIE = 0;         // UART割り込みフラグ解除
+            INTCONbits.GIE = 0;
+            INTCONbits.PEIE = 0;
+            sent_data_set(I2CTEMP_data, 2, 1);          // 温度データをパケットに格納
+        
+            //I2Ctemp_data_set();                                 // I2C温度データセット
+            //send_data_master(COM, GET_I2C_TEMP, DATA_END);
             break;
     }
 }
@@ -83,11 +101,8 @@ static void LED_data_set(void)
 }
 
 /*I2C温度センサデータをパケット格納*/
-static void I2Ctemp_data_set(void)
-{
-    uint8_t I2CTEMP_data[2];
-    I2CTEMP_data[0] = getch();                  // 温度データをOBC2から取得
-    I2CTEMP_data[1] = getch();                  // 温度データをOBC2から取得
-    sent_data_set(I2CTEMP_data, 2, 1);          // 温度データをパケットに格納
+void I2Ctemp_data_set(void)
+{       
+    //sent_data_set(I2CTEMP_data, 2, 1);          // 温度データをパケットに格納
 }
 

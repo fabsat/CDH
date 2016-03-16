@@ -1477,21 +1477,21 @@ uint8_t powmcu:1;
 
 extern cw_t cw;
 
-# 104
+# 101
 void sysprot_init(void);
 
 void cw_set(void);
 
-# 132
+# 129
 uint8_t sent_data_set(void *p_data, uint8_t data_len, uint8_t byte_of_data);
 
-# 145
+# 142
 void cw_data_set(cw_t *p_cw_data);
 
-# 160
+# 157
 void send_data_master(destination_t destination, data_type_t data_type, data_end_command_t data_end_command);
 
-
+# 170
 void receive_data_master(destination_t destination);
 
 # 49 "spi_master.h"
@@ -1507,6 +1507,10 @@ void spi_master_send(destination_t destination, uint8_t data);
 void spi_master_stop(void);
 
 # 18 "OBC1_app.h"
+extern int uart_interrupt;
+extern uint8_t I2CTEMP_data[2];
+
+
 uint8_t COM_status(void);
 void POW_status(void);
 void command(uint8_t data);
@@ -1532,9 +1536,12 @@ void put_string(uint8_t *str);
 # 107
 uint8_t getch(void);
 
-# 27 "OBC1_app.c"
+# 26 "OBC1_app.c"
+int uart_interrupt;
+uint8_t I2CTEMP_data[2];
+
 static void LED_data_set(void);
-static void I2Ctemp_data_set(void);
+void I2Ctemp_data_set(void);
 
 
 
@@ -1579,8 +1586,24 @@ break;
 
 case (0x02):
 putch(0x01);
-I2Ctemp_data_set();
-send_data_master(COM, (0x02), DATA_END);
+PIE1bits.RCIE = 1;
+INTCONbits.GIE = 1;
+INTCONbits.PEIE = 1;
+
+while(uart_interrupt!=2){
+PORTDbits.RD6 = 1;
+_delay((unsigned long)((40)*(20000000/4000.0)));
+PORTDbits.RD6 = 0;
+_delay((unsigned long)((40)*(20000000/4000.0)));
+}
+uart_interrupt = 0;
+PIE1bits.RCIE = 0;
+INTCONbits.GIE = 0;
+INTCONbits.PEIE = 0;
+sent_data_set(I2CTEMP_data, 2, 1);
+
+
+
 break;
 }
 }
@@ -1592,11 +1615,8 @@ sent_data_set(0x01, 1, 1);
 }
 
 
-static void I2Ctemp_data_set(void)
+void I2Ctemp_data_set(void)
 {
-uint8_t I2CTEMP_data[2];
-I2CTEMP_data[0] = getch();
-I2CTEMP_data[1] = getch();
-sent_data_set(I2CTEMP_data, 2, 1);
+
 }
 

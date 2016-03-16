@@ -78,13 +78,10 @@ extern cw_t cw;
 
 /* Peripheral MCU Notification Pin and I/O Setting Register */
 #define PORTD_REG_ADR         0x08
-#define OBC2_READY            PORTDbits.RD2  // ここを消したのは何か意図ある？
-#define COM_READY             PORTDbits.RD0
-#define POW_READY             PORTDbits.RD1
-#define OBC2_READY_PIN_TRIS   TRISDbits.TRISD2 // OBC2の設定が消えてたね！
 #define COM_READY_PIN_TRIS    TRISDbits.TRISD0
 #define POW_READY_PIN_TRIS    TRISDbits.TRISD1
-
+#define COM_READY             PORTDbits.RD0
+#define POW_READY             PORTDbits.RD1
 
 
 /********************************************************************************
@@ -160,6 +157,16 @@ void cw_data_set(cw_t *p_cw_data);
 void send_data_master(destination_t destination,  data_type_t data_type, data_end_command_t data_end_command);
 
 
+/*=====================================================
+ * @brief
+ *     指定したサブシステムからデータを受信する(Master用)
+ * @param
+ *     destination     :送信の相手先
+ * @return
+ *     void:
+ * @note
+ *     この関数実行後にsetしたデータ内容は初期化される
+ *===================================================*/
 void receive_data_master(destination_t destination);
 
 #endif	/* _DATA_SEND_RECEIVE_PROTOCOL_H */

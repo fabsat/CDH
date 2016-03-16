@@ -1304,20 +1304,14 @@ Version 3.2 HI-TECH Software Intermediate Code
 "142
 [e $ ! == -> _ans `i -> 0 `i 109  ]
 {
-[; ;tempADT.c: 147: *temp = data[0];
-"147
+[; ;tempADT.c: 146: *temp = data[0];
+"146
 [e = *U _temp *U + &U _data * -> -> -> 0 `i `ui `ux -> -> # *U &U _data `ui `ux ]
-[; ;tempADT.c: 148: temp++;
-"148
-[e ++ _temp * -> -> 1 `i `x -> -> # *U _temp `i `x ]
-[; ;tempADT.c: 149: *temp = data[1];
-"149
-[e = *U _temp *U + &U _data * -> -> -> 1 `i `ui `ux -> -> # *U &U _data `ui `ux ]
-"150
+"147
 }
 [e :U 109 ]
+[; ;tempADT.c: 147: }
 [; ;tempADT.c: 150: }
-[; ;tempADT.c: 153: }
-"153
+"150
 [e :UE 108 ]
 }

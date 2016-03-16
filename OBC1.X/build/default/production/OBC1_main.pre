@@ -1570,21 +1570,21 @@ uint8_t powmcu:1;
 
 extern cw_t cw;
 
-# 104
+# 101
 void sysprot_init(void);
 
 void cw_set(void);
 
-# 132
+# 129
 uint8_t sent_data_set(void *p_data, uint8_t data_len, uint8_t byte_of_data);
 
-# 145
+# 142
 void cw_data_set(cw_t *p_cw_data);
 
-# 160
+# 157
 void send_data_master(destination_t destination, data_type_t data_type, data_end_command_t data_end_command);
 
-
+# 170
 void receive_data_master(destination_t destination);
 
 # 49 "spi_master.h"
@@ -1600,6 +1600,10 @@ void spi_master_send(destination_t destination, uint8_t data);
 void spi_master_stop(void);
 
 # 18 "OBC1_app.h"
+extern int uart_interrupt;
+extern uint8_t I2CTEMP_data[2];
+
+
 uint8_t COM_status(void);
 void POW_status(void);
 void command(uint8_t data);
@@ -1611,12 +1615,21 @@ void command(uint8_t data);
 
 cw_t cw = { {0x00, 0x00}, {0x00, 0x00}, {0x00, 0x00}, {0x00, 0x00}, {0x00, 0x00}, {0x00, 0x00}, 0, 0 };
 
+
+void interrupt get_uart(void);
+void check_bit(uint8_t data);
+
+
 int main(void){
+
+
 
 TRISDbits.TRISD7 = 0;
 PORTDbits.RD7 = 0;
 TRISDbits.TRISD6 = 0;
 PORTDbits.RD6 = 0;
+
+
 TRISDbits.TRISD2 = 0;
 PORTDbits.RD2 = 1;
 
@@ -1626,25 +1639,97 @@ sysprot_init();
 ad_con_init();
 spi_master_start();
 uart_init();
+uart_interrupt = 0;
 _delay((unsigned long)((1000)*(20000000/4000.0)));
+
+
 
 while(1)
 {
 PORTDbits.RD7 = 1;
 _delay((unsigned long)((100)*(20000000/4000.0)));
 
+# 68
+command(0x02);
 
-uint8_t COM_stat = COM_status();
+PORTDbits.RD7 = 1;
+PORTDbits.RD6 = 1;
+_delay((unsigned long)((1000)*(20000000/4000.0)));
+PORTDbits.RD7 = 0;
+PORTDbits.RD6 = 0;
+_delay((unsigned long)((1000)*(20000000/4000.0)));
+check_bit(I2CTEMP_data[0]);
+PORTDbits.RD7 = 1;
+PORTDbits.RD6 = 1;
+_delay((unsigned long)((1000)*(20000000/4000.0)));
+PORTDbits.RD7 = 0;
+PORTDbits.RD6 = 0;
+_delay((unsigned long)((1000)*(20000000/4000.0)));
+check_bit(I2CTEMP_data[1]);
 
+long t;
+double temp = 0.0;
+t = (cw.temp[0] << 8) | cw.temp[1];
+if (t < 0) t = t - 65536;
+temp = (double)t / 128.0;
 
-POW_status();
-
-
-command(COM_stat);
+if(temp >= 10.0){
+PORTDbits.RD6 = 1;
+_delay((unsigned long)((100)*(20000000/4000.0)));
+PORTDbits.RD6 = 0;
+_delay((unsigned long)((00)*(20000000/4000.0)));
+}
 
 PORTDbits.RD7 = 0;
 _delay((unsigned long)((100)*(20000000/4000.0)));
 }
 
 return 0;
+}
+
+void interrupt get_uart(void)
+{
+if(PIR1bits.RCIF == 1)
+{
+PORTDbits.RD6 = 1;
+_delay((unsigned long)((500)*(20000000/4000.0)));
+PIR1bits.RCIF = 0;
+I2CTEMP_data[uart_interrupt] = getch();
+uart_interrupt++;
+PORTDbits.RD6 = 0;
+_delay((unsigned long)((500)*(20000000/4000.0)));
+}
+}
+
+
+void check_bit(uint8_t data)
+{
+const uint8_t bit_mask = 0b10000000;
+uint8_t check_bit;
+uint8_t i;
+
+for(i = 0; i < 8; i++)
+{
+check_bit = bit_mask & data;
+
+PORTDbits.RD7 = 1;
+_delay((unsigned long)((100)*(20000000/4000.0)));
+PORTDbits.RD7 = 0;
+_delay((unsigned long)((100)*(20000000/4000.0)));
+
+if(check_bit)
+{
+PORTDbits.RD6 = 1;
+_delay((unsigned long)((1000)*(20000000/4000.0)));
+PORTDbits.RD6 = 0;
+_delay((unsigned long)((1000)*(20000000/4000.0)));
+}
+else
+{
+_delay((unsigned long)((2000)*(20000000/4000.0)));
+}
+data <<= 1;
+}
+
+# 153
 }

@@ -16,6 +16,7 @@
  * Created by fabsat Project(Tokai university Satellite Project[TSP])
  *****************************************************************************************/
 #include <xc.h>
+#include <stdio.h>
 #include "pic_clock.h"
 #include "system_protocol.h"
 #include "tempADT.h"
@@ -82,10 +83,11 @@ void OBC1_reset(void)
 void interrupt_able(void)
 {
     /*割り込み許可*/
-    INTCONbits.PEIE = 1;
+    PIE1bits.TXIE = 1;
+    PIE1bits.RCIE = 1;
     INTCONbits.GIE = 1;
+    INTCONbits.PEIE = 1;
 }
-
 
 
 /*=====================================================
@@ -101,8 +103,9 @@ void interrupt_able(void)
 void interrupt_disable(void)
 {
     /*割り込み禁止*/
-    INTCONbits.PEIE = 0;
+    PIE1bits.RCIE = 0;
     INTCONbits.GIE = 0;
+    INTCONbits.PEIE = 0;
 }
 
 
@@ -148,8 +151,10 @@ void OBC1(void)
 void trans_I2Ctemp()
 {
     uint8_t data[2];
-    ADT_Read(data);
-    put_string(data[0]);
-    put_string(data[1]);
+    ADT_Receive(TEMP_DATA_ADRS, &data[0], 2);
+    __delay_ms(3000);
+    putch(data[0]);
+    __delay_ms(1000);
+    putch(data[1]);
 }
 

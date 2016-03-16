@@ -1627,10 +1627,7 @@ if(ans == 0){
 
 
 
-
 *temp = data[0];
-temp++;
-*temp = data[1];
 }
 
 

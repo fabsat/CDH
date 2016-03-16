@@ -23,14 +23,14 @@
 #include "system_protocol.h"
 
 
-/* Slave Selectピン */
-#define SS_COM         PORTCbits.RC0
-#define SS_POW         PORTCbits.RC1
 
 
 /* SS pinのTRISレジスタ */
 #define SS_COM_TRIS    TRISCbits.TRISC0
 #define SS_POW_TRIS    TRISCbits.TRISC1
+/* Slave Selectピン */
+#define SS_COM         PORTCbits.RC0
+#define SS_POW         PORTCbits.RC1
 
 
 /* Prototype of Function */

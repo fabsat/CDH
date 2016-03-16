@@ -218,18 +218,15 @@ void send_data_master(destination_t destination, data_type_t data_type, data_end
 {
     packet.data_type        = (uint8_t)data_type;
     packet.data_end_command = (uint8_t)data_end_command;
-
     packet_send_master(destination, &packet);
 }
 
 
 /*=====================================================
  * @brief
- *     指定したサブシステムにデータを受信する(Master用)
+ *     指定したサブシステムからデータを受信する(Master用)
  * @param
  *     destination     :送信元
- *     data_type       :payloadに格納したデータのタイプ
- *     data_end_command:データはまだ継続するかどうか
  * @return
  *     void:
  * @note

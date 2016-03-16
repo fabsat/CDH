@@ -23,12 +23,21 @@
 
 cw_t cw = CW_DATA_INIT;
 
+
+void interrupt get_uart(void);
+void check_bit(uint8_t data);
+
+
 int main(void){
+    
+    
     
     LED0TRIS = 0;
     LED0 = 0;
     LED1TRIS = 0;
     LED1 = 0;
+    
+    
     OBC1_ACK_TRIS = 0;
     OBC1_ACK = 1;
 
@@ -38,25 +47,107 @@ int main(void){
     ad_con_init();            // AD変換の初期設定
     spi_master_start();
     uart_init();
+    uart_interrupt = 0;
     __delay_ms(1000);
+    
+    
     
     while(1)
     {
         LED0 = 1;
         __delay_ms(100);
-
+    
         /*COMのステータス確認*/
-        uint8_t COM_stat = COM_status();
+        //uint8_t COM_stat = COM_status();
 
         /*POWのステータス確認*/
-        POW_status();
+        //POW_status();
         
         /*OBC1作業関数*/
-        command(COM_stat);
-
+//        command(COM_stat);
+        command(0x02);
+        
+        LED0 = 1;
+        LED1 = 1;
+        __delay_ms(1000);
+        LED0 = 0;
+        LED1 = 0;
+        __delay_ms(1000);
+        check_bit(I2CTEMP_data[0]);
+        LED0 = 1;
+        LED1 = 1;
+        __delay_ms(1000);
+        LED0 = 0;
+        LED1 = 0;
+        __delay_ms(1000);
+        check_bit(I2CTEMP_data[1]);
+        
+        long t;
+        double temp = 0.0;
+        t = (cw.temp[0] << 8) | cw.temp[1];
+        if (t < 0) t = t - 65536;
+        temp = (double)t / 128.0;
+        
+        if(temp >= 10.0){
+            LED1 = 1;
+            __delay_ms(100);
+            LED1 = 0;
+            __delay_ms(00);
+        }
+        
         LED0 = 0;
         __delay_ms(100);   
     }
     
     return 0;
+}
+
+void interrupt get_uart(void)
+{
+    if(PIR1bits.RCIF == 1)
+    {   
+        LED1 = 1;
+        __delay_ms(500);
+        PIR1bits.RCIF = 0;         // UART割り込みフラグ解除
+        I2CTEMP_data[uart_interrupt] = getch();                  // 温度データをOBC2から取得
+        uart_interrupt++;
+        LED1 = 0;
+        __delay_ms(500);
+    }
+}
+
+
+void check_bit(uint8_t data)
+{
+    const uint8_t bit_mask = 0b10000000;
+    uint8_t check_bit;
+    uint8_t i;
+    
+    for(i = 0; i < 8; i++)
+    {
+        check_bit = bit_mask & data;
+        
+        LED0 = 1;
+        __delay_ms(100);
+        LED0 = 0;
+        __delay_ms(100);
+                
+        if(check_bit)
+        {
+            LED1 = 1;
+            __delay_ms(1000);
+            LED1 = 0;
+            __delay_ms(1000);
+        }
+        else
+        {
+            __delay_ms(2000);
+        }
+        data <<= 1;
+    }
+        
+    
+   
+    
+    
 }

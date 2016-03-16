@@ -136,20 +136,17 @@ void ADT_Read(uint8_t *temp){
     long t;
     unsigned char ans;
     unsigned char data[2];
-
+    
     ans = ADT_Receive(TEMP_DATA_ADRS, &data[0], 2);
     
     if(ans == 0){
         //t = (data[0] << 8) | data[1];
         //if (t < 0) t = t - 65536;
-        //*temp = (double)t / 128.0;
-        
+        //te = (double)t / 128.0;
         *temp = data[0];
-        temp++;
-        *temp = data[1];
-    }
+    }        
     //return ans;
-//    return t;
+    //return te;
 }
 
 

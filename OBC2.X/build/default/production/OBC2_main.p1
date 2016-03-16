@@ -25,18 +25,10 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _I2C_init `(v ~T0 @X0 0 ef ]
 "65 uart_serial.h
 [v _uart_init `(v ~T0 @X0 0 ef ]
-"85 OBC2_app.h
-[v _interrupt_able `(v ~T0 @X0 0 ef ]
 [v F1091 `(v ~T0 @X0 1 tf1`ul ]
 "150 C:\Program Files (x86)\Microchip\xc8\v1.35\include\pic.h
 [v __delay `JF1091 ~T0 @X0 0 e ]
 [p i __delay ]
-"46 OBC2_app.h
-[v _OBC1_reset `(v ~T0 @X0 0 ef ]
-"98
-[v _interrupt_disable `(v ~T0 @X0 0 ef ]
-"59
-[v _OBC1 `(v ~T0 @X0 0 ef ]
 "525 C:\Program Files (x86)\Microchip\xc8\v1.35\include\pic16f877a.h
 [s S22 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
 [n S22 . TMR1IF TMR2IF CCP1IF SSPIF TXIF RCIF ADIF PSPIF ]
@@ -45,7 +37,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [n S21 . . ]
 "536
 [v _PIR1bits `VS21 ~T0 @X0 0 e@12 ]
-"110 OBC2_app.h
+"98 OBC2_app.h
+[v _interrupt_disable `(v ~T0 @X0 0 ef ]
+"110
 [v _trans_I2Ctemp `(v ~T0 @X0 0 ef ]
 [; ;htc.h: 26: extern const char __xc8_OPTIM_SPEED;
 [; ;htc.h: 28: extern double __fpnormalize(double);
@@ -1256,115 +1250,80 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;OBC2_main.c: 32: uart_init();
 "32
 [e ( _uart_init ..  ]
-[; ;OBC2_main.c: 33: interrupt_able();
+[; ;OBC2_main.c: 33: PORTDbits.RD7 = 1;
 "33
-[e ( _interrupt_able ..  ]
+[e = . . _PORTDbits 0 7 -> -> 1 `i `uc ]
 [; ;OBC2_main.c: 34: _delay((unsigned long)((1000)*(20000000/4000.0)));
 "34
 [e ( __delay (1 -> * -> -> 1000 `i `d / -> -> 20000000 `l `d .4000.0 `ul ]
-[; ;OBC2_main.c: 36: while(1)
-"36
-[e :U 100 ]
-[; ;OBC2_main.c: 37: {
-"37
-{
-[; ;OBC2_main.c: 38: PORTDbits.RD7 = 1;
-"38
-[e = . . _PORTDbits 0 7 -> -> 1 `i `uc ]
-[; ;OBC2_main.c: 39: _delay((unsigned long)((100)*(20000000/4000.0)));
-"39
-[e ( __delay (1 -> * -> -> 100 `i `d / -> -> 20000000 `l `d .4000.0 `ul ]
-[; ;OBC2_main.c: 42: while(!PORTDbits.RD2)
-"42
-[e $U 102  ]
-[e :U 103 ]
-[; ;OBC2_main.c: 43: {
-"43
-{
-"44
-[v _count `i ~T0 @X0 1 a ]
-[; ;OBC2_main.c: 44: int count = 0;
-[e = _count -> 0 `i ]
-[; ;OBC2_main.c: 45: if(count < 100){
-"45
-[e $ ! < _count -> 100 `i 105  ]
-{
-[; ;OBC2_main.c: 46: OBC1_reset();
-"46
-[e ( _OBC1_reset ..  ]
-[; ;OBC2_main.c: 47: count++;
-"47
-[e ++ _count -> 1 `i ]
-"48
-}
-[; ;OBC2_main.c: 48: }else{
-[e $U 106  ]
-[e :U 105 ]
-{
-[; ;OBC2_main.c: 49: interrupt_disable();
-"49
-[e ( _interrupt_disable ..  ]
-[; ;OBC2_main.c: 50: OBC1();
-"50
-[e ( _OBC1 ..  ]
-"51
-}
-[e :U 106 ]
-"52
-}
-[e :U 102 ]
-"42
-[e $ ! != -> . . _PORTDbits 0 2 `i -> -> -> 0 `i `Vuc `i 103  ]
-[e :U 104 ]
-[; ;OBC2_main.c: 51: }
-[; ;OBC2_main.c: 52: }
-[; ;OBC2_main.c: 54: PORTDbits.RD7 = 0;
-"54
+[; ;OBC2_main.c: 35: PORTDbits.RD7 = 0;
+"35
 [e = . . _PORTDbits 0 7 -> -> 0 `i `uc ]
-[; ;OBC2_main.c: 55: _delay((unsigned long)((100)*(20000000/4000.0)));
-"55
+[; ;OBC2_main.c: 36: _delay((unsigned long)((1000)*(20000000/4000.0)));
+"36
+[e ( __delay (1 -> * -> -> 1000 `i `d / -> -> 20000000 `l `d .4000.0 `ul ]
+[; ;OBC2_main.c: 39: while(1)
+"39
+[e :U 100 ]
+[; ;OBC2_main.c: 40: {
+"40
+{
+[; ;OBC2_main.c: 41: PORTDbits.RD7 = 1;
+"41
+[e = . . _PORTDbits 0 7 -> -> 1 `i `uc ]
+[; ;OBC2_main.c: 42: _delay((unsigned long)((100)*(20000000/4000.0)));
+"42
 [e ( __delay (1 -> * -> -> 100 `i `d / -> -> 20000000 `l `d .4000.0 `ul ]
-"56
+[; ;OBC2_main.c: 57: PORTDbits.RD7 = 0;
+"57
+[e = . . _PORTDbits 0 7 -> -> 0 `i `uc ]
+[; ;OBC2_main.c: 58: _delay((unsigned long)((100)*(20000000/4000.0)));
+"58
+[e ( __delay (1 -> * -> -> 100 `i `d / -> -> 20000000 `l `d .4000.0 `ul ]
+"59
 }
 [e :U 99 ]
-"36
+"39
 [e $U 100  ]
 [e :U 101 ]
-[; ;OBC2_main.c: 56: }
-[; ;OBC2_main.c: 57: return 0;
-"57
+[; ;OBC2_main.c: 59: }
+[; ;OBC2_main.c: 60: return 0;
+"60
 [e ) -> 0 `i ]
 [e $UE 98  ]
-[; ;OBC2_main.c: 58: }
-"58
+[; ;OBC2_main.c: 61: }
+"61
 [e :UE 98 ]
 }
 [v F1276 `(v ~T0 @X0 1 tf ]
-"71
+"74
 [v _I2Ctemp `IF1276 ~T0 @X0 1 e ]
-"72
+"75
 {
-[; ;OBC2_main.c: 71: void interrupt I2Ctemp(void)
-[; ;OBC2_main.c: 72: {
+[; ;OBC2_main.c: 74: void interrupt I2Ctemp(void)
+[; ;OBC2_main.c: 75: {
 [e :U _I2Ctemp ]
 [f ]
-[; ;OBC2_main.c: 73: if(PIR1bits.RCIF == 1)
-"73
-[e $ ! == -> . . _PIR1bits 0 5 `i -> 1 `i 108  ]
-[; ;OBC2_main.c: 74: {
-"74
-{
-[; ;OBC2_main.c: 75: PIR1bits.RCIF == 0;
-"75
-[e == -> . . _PIR1bits 0 5 `i -> 0 `i ]
-[; ;OBC2_main.c: 76: trans_I2Ctemp();
+[; ;OBC2_main.c: 76: if(PIR1bits.RCIF == 1)
 "76
-[e ( _trans_I2Ctemp ..  ]
+[e $ ! == -> . . _PIR1bits 0 5 `i -> 1 `i 103  ]
+[; ;OBC2_main.c: 77: {
 "77
-}
-[e :U 108 ]
-[; ;OBC2_main.c: 77: }
-[; ;OBC2_main.c: 78: }
+{
+[; ;OBC2_main.c: 78: PIR1bits.RCIF == 0;
 "78
-[e :UE 107 ]
+[e == -> . . _PIR1bits 0 5 `i -> 0 `i ]
+[; ;OBC2_main.c: 79: interrupt_disable();
+"79
+[e ( _interrupt_disable ..  ]
+[; ;OBC2_main.c: 80: trans_I2Ctemp();
+"80
+[e ( _trans_I2Ctemp ..  ]
+"81
+}
+[e :U 103 ]
+[; ;OBC2_main.c: 81: }
+[; ;OBC2_main.c: 82: }
+"82
+[e :UE 102 ]
 }

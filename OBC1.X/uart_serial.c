@@ -90,8 +90,11 @@ void put_string(uint8_t *str)
 uint8_t getch(void)
 {
     int count = 0;
-    while(!RCIF && count <= 100) count++;       // カウントが100まで受信待ち
-   
+    while(!RCIF && count <= 100) 
+    {
+        count++;       // カウントが100まで受信待ち
+        __delay_us(1);
+    }
     return RCREG;
 }
 

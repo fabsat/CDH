@@ -30,27 +30,30 @@ int main(void){
     OBC1_RESET_init();
     I2C_init();
     uart_init();
-    interrupt_able();
+    LED0 = 1;
     __delay_ms(1000);
+    LED0 = 0;
+    __delay_ms(1000);
+    //interrupt_able();
     
     while(1)
     {
         LED0 = 1;
         __delay_ms(100);
-        
+        //interrupt_able();
+        //trans_I2Ctemp();
         /*OBC1生存確認＆リセット*/
-        while(!OBC1_ACK)
-        {
-            int count = 0;
-            if(count < 100){
-                OBC1_reset();       // OBC1の状態によってOBC1をリセットする
-                count++;
-            }else{
-                interrupt_disable();        // 全割り込み禁止
-                OBC1();                     // OBC2がOBC1になる
-            }
-        }
-               
+        //while(!OBC1_ACK)
+        //{
+        //    int count = 0;
+        //    if(count < 100){
+        //        OBC1_reset();       // OBC1の状態によってOBC1をリセットする
+        //        count++;
+        //   }else{
+        //        interrupt_disable();        // 全割り込み禁止
+        //        OBC1();                     // OBC2がOBC1になる
+        //    }
+        //}
         LED0 = 0;
         __delay_ms(100);
     }
@@ -73,6 +76,7 @@ void interrupt I2Ctemp(void)
     if(PIR1bits.RCIF == 1)
     {
         PIR1bits.RCIF == 0;         // UART割り込みフラグ解除
+        interrupt_disable();
         trans_I2Ctemp();            // OBC1に温度データ送信
     }
 }

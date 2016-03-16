@@ -1,0 +1,674 @@
+[p LITE_MODE AUTOSTATIC PIC14 PICREGULAR PICMID ]
+[d version 1.1 ]
+[d edition pro ]
+[d chip 16F877A ]
+[d frameptr 6 ]
+"81 C:\Users\Tetsuya\Documents\GitHub\CDH\OBC1.X\spi_master.c
+[e E1099 . `uc
+OBC2 2
+COM 3
+POW 4
+]
+"99 C:\Users\Tetsuya\Documents\GitHub\CDH\OBC1.X\system_protocol.c
+[e E1099 . `uc
+OBC2 2
+COM 3
+POW 4
+]
+"218
+[e E1104 . `uc
+CW_TYPE 1
+DATA_TYPE 2
+]
+[e E1108 . `uc
+DATA_END 16
+DATA_CONTINUE 17
+]
+"37 C:\Users\Tetsuya\Documents\GitHub\CDH\OBC1.X\OBC1_app.c
+[e E1099 . `uc
+OBC2 2
+COM 3
+POW 4
+]
+"60
+[e E1104 . `uc
+CW_TYPE 1
+DATA_TYPE 2
+]
+[e E1108 . `uc
+DATA_END 16
+DATA_CONTINUE 17
+]
+"49 C:\Users\Tetsuya\Documents\GitHub\CDH\OBC1.X\AD_value.c
+[v _ad_con_init ad_con_init `(v  1 e 0 0 ]
+"71
+[v _bit_shift bit_shift `(v  1 s 0 bit_shift ]
+"91
+[v _get_adcon get_adcon `(ui  1 e 2 0 ]
+"42 C:\Program Files (x86)\Microchip\xc8\v1.35\sources\common\altoft.c
+[v ___altoft __altoft `(f  1 e 3 0 ]
+"6 C:\Program Files (x86)\Microchip\xc8\v1.35\sources\common\awdiv.c
+[v ___awdiv __awdiv `(i  1 e 2 0 ]
+"6 C:\Program Files (x86)\Microchip\xc8\v1.35\sources\common\awmod.c
+[v ___awmod __awmod `(i  1 e 2 0 ]
+"62 C:\Program Files (x86)\Microchip\xc8\v1.35\sources\common\float.c
+[v ___ftpack __ftpack `(f  1 e 3 0 ]
+"86 C:\Program Files (x86)\Microchip\xc8\v1.35\sources\common\ftadd.c
+[v ___ftadd __ftadd `(f  1 e 3 0 ]
+"56 C:\Program Files (x86)\Microchip\xc8\v1.35\sources\common\ftdiv.c
+[v ___ftdiv __ftdiv `(f  1 e 3 0 ]
+"4 C:\Program Files (x86)\Microchip\xc8\v1.35\sources\common\ftge.c
+[v ___ftge __ftge `(b  1 e 0 0 ]
+"62 C:\Program Files (x86)\Microchip\xc8\v1.35\sources\common\ftmul.c
+[v ___ftmul __ftmul `(f  1 e 3 0 ]
+"15 C:\Program Files (x86)\Microchip\xc8\v1.35\sources\common\ftneg.c
+[v ___ftneg __ftneg `(f  1 e 3 0 ]
+"28 C:\Program Files (x86)\Microchip\xc8\v1.35\sources\common\lwtoft.c
+[v ___lwtoft __lwtoft `(f  1 e 3 0 ]
+"15 C:\Program Files (x86)\Microchip\xc8\v1.35\sources\common\Umul16.c
+[v ___wmul __wmul `(ui  1 e 2 0 ]
+"6 C:\Program Files (x86)\Microchip\xc8\v1.35\sources\pic\eeprom.c
+[v _eecpymem eecpymem `(v  1 e 0 0 ]
+"24
+[v _memcpyee memcpyee `(v  1 e 0 0 ]
+"35 C:\Users\Tetsuya\Documents\GitHub\CDH\OBC1.X\MCLR_reset.c
+[v _MCLR_init MCLR_init `(v  1 e 0 0 ]
+"60
+[v _MCLR_reset MCLR_reset `(v  1 e 0 0 ]
+"52 C:\Users\Tetsuya\Documents\GitHub\CDH\OBC1.X\OBC1_app.c
+[v _command command `(v  1 e 0 0 ]
+"119
+[v _LED_data_set LED_data_set `(v  1 s 0 LED_data_set ]
+"125
+[v _I2Ctemp_data_set I2Ctemp_data_set `(v  1 e 0 0 ]
+"29 C:\Users\Tetsuya\Documents\GitHub\CDH\OBC1.X\OBC1_main.c
+[v _main main `(i  1 e 2 0 ]
+"81
+[v _get_uart get_uart `II(v  1 e 0 0 ]
+"35 C:\Users\Tetsuya\Documents\GitHub\CDH\OBC1.X\plati_temp.c
+[v _get_pt get_pt `(d  1 s 3 get_pt ]
+"36 C:\Users\Tetsuya\Documents\GitHub\CDH\OBC1.X\spi_master.c
+[v _spi_master_start spi_master_start `(v  1 e 0 0 ]
+"80
+[v _spi_master_receive spi_master_receive `(uc  1 e 1 0 ]
+"154
+[v _spi_master_send spi_master_send `(v  1 e 0 0 ]
+"85 C:\Users\Tetsuya\Documents\GitHub\CDH\OBC1.X\system_protocol.c
+[v _sysprot_init sysprot_init `(v  1 e 0 0 ]
+"94
+[v _get_cw_data get_cw_data `(v  1 e 0 0 ]
+"141
+[v _sent_data_set sent_data_set `(uc  1 e 1 0 ]
+"180
+[v _cw_data_set cw_data_set `(v  1 e 0 0 ]
+"217
+[v _send_data_master send_data_master `(v  1 e 0 0 ]
+"257
+[v _uint8_data_set uint8_data_set `(v  1 s 0 uint8_data_set ]
+"279
+[v _uint16_data_set uint16_data_set `(v  1 s 0 uint16_data_set ]
+"308
+[v _double_data_set double_data_set `(v  1 s 0 double_data_set ]
+"337
+[v _uint16_to_byte_array uint16_to_byte_array `(v  1 s 0 uint16_to_byte_array ]
+"359
+[v _double_to_byte_array double_to_byte_array `(v  1 s 0 double_to_byte_array ]
+"394
+[v _send_payload send_payload `(uc  1 s 1 send_payload ]
+"429
+[v _receive_payload receive_payload `(v  1 s 0 receive_payload ]
+"462
+[v _packet_send_master packet_send_master `(v  1 s 0 packet_send_master ]
+"489
+[v _packet_receive_master packet_receive_master `(v  1 s 0 packet_receive_master ]
+"34 C:\Users\Tetsuya\Documents\GitHub\CDH\OBC1.X\uart_serial.c
+[v _uart_init uart_init `(v  1 e 0 0 ]
+"53
+[v _putch putch `(v  1 e 0 0 ]
+"90
+[v _getch getch `(uc  1 e 1 0 ]
+"64 C:\Users\Tetsuya\Documents\GitHub\CDH\OBC1.X\uint8_to_string.c
+[v _process_100 process_100 `(v  1 s 0 process_100 ]
+"86
+[v _process_10 process_10 `(v  1 s 0 process_10 ]
+"108
+[v _process_1 process_1 `(v  1 s 0 process_1 ]
+[s S250 . 1 `uc 1 RA0 1 0 :1:0 
+`uc 1 RA1 1 0 :1:1 
+`uc 1 RA2 1 0 :1:2 
+`uc 1 RA3 1 0 :1:3 
+`uc 1 RA4 1 0 :1:4 
+`uc 1 RA5 1 0 :1:5 
+]
+"175 C:\Program Files (x86)\Microchip\xc8\v1.35\include\pic16f877a.h
+[u S257 . 1 `S250 1 . 1 0 ]
+[v _PORTAbits PORTAbits `VES257  1 e 1 @5 ]
+[s S501 . 1 `uc 1 RC0 1 0 :1:0 
+`uc 1 RC1 1 0 :1:1 
+`uc 1 RC2 1 0 :1:2 
+`uc 1 RC3 1 0 :1:3 
+`uc 1 RC4 1 0 :1:4 
+`uc 1 RC5 1 0 :1:5 
+`uc 1 RC6 1 0 :1:6 
+`uc 1 RC7 1 0 :1:7 
+]
+"287
+[u S510 . 1 `S501 1 . 1 0 ]
+[v _PORTCbits PORTCbits `VES510  1 e 1 @7 ]
+[s S49 . 1 `uc 1 RD0 1 0 :1:0 
+`uc 1 RD1 1 0 :1:1 
+`uc 1 RD2 1 0 :1:2 
+`uc 1 RD3 1 0 :1:3 
+`uc 1 RD4 1 0 :1:4 
+`uc 1 RD5 1 0 :1:5 
+`uc 1 RD6 1 0 :1:6 
+`uc 1 RD7 1 0 :1:7 
+]
+"348
+[u S58 . 1 `S49 1 . 1 0 ]
+[v _PORTDbits PORTDbits `VES58  1 e 1 @8 ]
+[s S123 . 1 `uc 1 RBIF 1 0 :1:0 
+`uc 1 INTF 1 0 :1:1 
+`uc 1 TMR0IF 1 0 :1:2 
+`uc 1 RBIE 1 0 :1:3 
+`uc 1 INTE 1 0 :1:4 
+`uc 1 TMR0IE 1 0 :1:5 
+`uc 1 PEIE 1 0 :1:6 
+`uc 1 GIE 1 0 :1:7 
+]
+"465
+[s S132 . 1 `uc 1 . 1 0 :2:0 
+`uc 1 T0IF 1 0 :1:2 
+`uc 1 . 1 0 :2:3 
+`uc 1 T0IE 1 0 :1:5 
+]
+[u S137 . 1 `S123 1 . 1 0 `S132 1 . 1 0 ]
+[v _INTCONbits INTCONbits `VES137  1 e 1 @11 ]
+[s S102 . 1 `uc 1 TMR1IF 1 0 :1:0 
+`uc 1 TMR2IF 1 0 :1:1 
+`uc 1 CCP1IF 1 0 :1:2 
+`uc 1 SSPIF 1 0 :1:3 
+`uc 1 TXIF 1 0 :1:4 
+`uc 1 RCIF 1 0 :1:5 
+`uc 1 ADIF 1 0 :1:6 
+`uc 1 PSPIF 1 0 :1:7 
+]
+"536
+[u S111 . 1 `S102 1 . 1 0 ]
+[v _PIR1bits PIR1bits `VES111  1 e 1 @12 ]
+"787
+[v _SSPBUF SSPBUF `VEuc  1 e 1 @19 ]
+[s S386 . 1 `uc 1 SSPM 1 0 :4:0 
+`uc 1 CKP 1 0 :1:4 
+`uc 1 SSPEN 1 0 :1:5 
+`uc 1 SSPOV 1 0 :1:6 
+`uc 1 WCOL 1 0 :1:7 
+]
+"813
+[s S392 . 1 `uc 1 SSPM0 1 0 :1:0 
+`uc 1 SSPM1 1 0 :1:1 
+`uc 1 SSPM2 1 0 :1:2 
+`uc 1 SSPM3 1 0 :1:3 
+]
+[u S397 . 1 `S386 1 . 1 0 `S392 1 . 1 0 ]
+[v _SSPCONbits SSPCONbits `VES397  1 e 1 @20 ]
+"937
+[v _RCSTA RCSTA `VEuc  1 e 1 @24 ]
+"1031
+[v _TXREG TXREG `VEuc  1 e 1 @25 ]
+"1037
+[v _RCREG RCREG `VEuc  1 e 1 @26 ]
+"1118
+[v _ADRESH ADRESH `VEuc  1 e 1 @30 ]
+"1124
+[v _ADCON0 ADCON0 `VEuc  1 e 1 @31 ]
+[s S289 . 1 `uc 1 ADON 1 0 :1:0 
+`uc 1 . 1 0 :1:1 
+`uc 1 GO_nDONE 1 0 :1:2 
+`uc 1 CHS 1 0 :3:3 
+`uc 1 ADCS 1 0 :2:6 
+]
+"1155
+[s S295 . 1 `uc 1 . 1 0 :2:0 
+`uc 1 GO 1 0 :1:2 
+`uc 1 CHS0 1 0 :1:3 
+`uc 1 CHS1 1 0 :1:4 
+`uc 1 CHS2 1 0 :1:5 
+`uc 1 ADCS0 1 0 :1:6 
+`uc 1 ADCS1 1 0 :1:7 
+]
+[s S303 . 1 `uc 1 . 1 0 :2:0 
+`uc 1 nDONE 1 0 :1:2 
+]
+[s S306 . 1 `uc 1 . 1 0 :2:0 
+`uc 1 GO_DONE 1 0 :1:2 
+]
+[u S309 . 1 `S289 1 . 1 0 `S295 1 . 1 0 `S303 1 . 1 0 `S306 1 . 1 0 ]
+[v _ADCON0bits ADCON0bits `VES309  1 e 1 @31 ]
+[s S267 . 1 `uc 1 TRISA0 1 0 :1:0 
+`uc 1 TRISA1 1 0 :1:1 
+`uc 1 TRISA2 1 0 :1:2 
+`uc 1 TRISA3 1 0 :1:3 
+`uc 1 TRISA4 1 0 :1:4 
+`uc 1 TRISA5 1 0 :1:5 
+]
+"1303
+[u S274 . 1 `S267 1 . 1 0 ]
+[v _TRISAbits TRISAbits `VES274  1 e 1 @133 ]
+[s S365 . 1 `uc 1 TRISC0 1 0 :1:0 
+`uc 1 TRISC1 1 0 :1:1 
+`uc 1 TRISC2 1 0 :1:2 
+`uc 1 TRISC3 1 0 :1:3 
+`uc 1 TRISC4 1 0 :1:4 
+`uc 1 TRISC5 1 0 :1:5 
+`uc 1 TRISC6 1 0 :1:6 
+`uc 1 TRISC7 1 0 :1:7 
+]
+"1415
+[u S374 . 1 `S365 1 . 1 0 ]
+[v _TRISCbits TRISCbits `VES374  1 e 1 @135 ]
+[s S28 . 1 `uc 1 TRISD0 1 0 :1:0 
+`uc 1 TRISD1 1 0 :1:1 
+`uc 1 TRISD2 1 0 :1:2 
+`uc 1 TRISD3 1 0 :1:3 
+`uc 1 TRISD4 1 0 :1:4 
+`uc 1 TRISD5 1 0 :1:5 
+`uc 1 TRISD6 1 0 :1:6 
+`uc 1 TRISD7 1 0 :1:7 
+]
+"1476
+[u S37 . 1 `S28 1 . 1 0 ]
+[v _TRISDbits TRISDbits `VES37  1 e 1 @136 ]
+[s S585 . 1 `uc 1 TRISE0 1 0 :1:0 
+`uc 1 TRISE1 1 0 :1:1 
+`uc 1 TRISE2 1 0 :1:2 
+`uc 1 . 1 0 :1:3 
+`uc 1 PSPMODE 1 0 :1:4 
+`uc 1 IBOV 1 0 :1:5 
+`uc 1 OBF 1 0 :1:6 
+`uc 1 IBF 1 0 :1:7 
+]
+"1537
+[u S594 . 1 `S585 1 . 1 0 ]
+[v _TRISEbits TRISEbits `VES594  1 e 1 @137 ]
+[s S160 . 1 `uc 1 TMR1IE 1 0 :1:0 
+`uc 1 TMR2IE 1 0 :1:1 
+`uc 1 CCP1IE 1 0 :1:2 
+`uc 1 SSPIE 1 0 :1:3 
+`uc 1 TXIE 1 0 :1:4 
+`uc 1 RCIE 1 0 :1:5 
+`uc 1 ADIE 1 0 :1:6 
+`uc 1 PSPIE 1 0 :1:7 
+]
+"1593
+[u S169 . 1 `S160 1 . 1 0 ]
+[v _PIE1bits PIE1bits `VES169  1 e 1 @140 ]
+[s S412 . 1 `uc 1 BF 1 0 :1:0 
+`uc 1 UA 1 0 :1:1 
+`uc 1 R_nW 1 0 :1:2 
+`uc 1 S 1 0 :1:3 
+`uc 1 P 1 0 :1:4 
+`uc 1 D_nA 1 0 :1:5 
+`uc 1 CKE 1 0 :1:6 
+`uc 1 SMP 1 0 :1:7 
+]
+"1836
+[s S421 . 1 `uc 1 . 1 0 :2:0 
+`uc 1 R 1 0 :1:2 
+`uc 1 . 1 0 :2:3 
+`uc 1 D 1 0 :1:5 
+]
+[s S426 . 1 `uc 1 . 1 0 :2:0 
+`uc 1 I2C_READ 1 0 :1:2 
+`uc 1 I2C_START 1 0 :1:3 
+`uc 1 I2C_STOP 1 0 :1:4 
+`uc 1 I2C_DATA 1 0 :1:5 
+]
+[s S432 . 1 `uc 1 . 1 0 :2:0 
+`uc 1 nW 1 0 :1:2 
+`uc 1 . 1 0 :2:3 
+`uc 1 nA 1 0 :1:5 
+]
+[s S437 . 1 `uc 1 . 1 0 :2:0 
+`uc 1 nWRITE 1 0 :1:2 
+`uc 1 . 1 0 :2:3 
+`uc 1 nADDRESS 1 0 :1:5 
+]
+[s S442 . 1 `uc 1 . 1 0 :2:0 
+`uc 1 R_W 1 0 :1:2 
+`uc 1 . 1 0 :2:3 
+`uc 1 D_A 1 0 :1:5 
+]
+[s S447 . 1 `uc 1 . 1 0 :2:0 
+`uc 1 READ_WRITE 1 0 :1:2 
+`uc 1 . 1 0 :2:3 
+`uc 1 DATA_ADDRESS 1 0 :1:5 
+]
+[u S452 . 1 `S412 1 . 1 0 `S421 1 . 1 0 `S426 1 . 1 0 `S432 1 . 1 0 `S437 1 . 1 0 `S442 1 . 1 0 `S447 1 . 1 0 ]
+[v _SSPSTATbits SSPSTATbits `VES452  1 e 1 @148 ]
+"1950
+[v _TXSTA TXSTA `VEuc  1 e 1 @152 ]
+"2030
+[v _SPBRG SPBRG `VEuc  1 e 1 @153 ]
+"2169
+[v _ADRESL ADRESL `VEuc  1 e 1 @158 ]
+"2175
+[v _ADCON1 ADCON1 `VEuc  1 e 1 @159 ]
+"2559
+[v _RCIF RCIF `VEb  1 e 0 @101 ]
+"2755
+[v _TXIF TXIF `VEb  1 e 0 @100 ]
+"26 C:\Users\Tetsuya\Documents\GitHub\CDH\OBC1.X\OBC1_app.c
+[v _uart_interrupt uart_interrupt `i  1 e 2 0 ]
+"27
+[v _I2CTEMP_data I2CTEMP_data `[2]uc  1 e 2 0 ]
+[s S19 . 13 `[2]uc 1 power1 2 0 `[2]uc 1 power2 2 2 `[2]uc 1 power3 2 4 `[2]uc 1 power4 2 6 `[2]uc 1 power5 2 8 `[2]uc 1 temp 2 10 `uc 1 obc2 1 12 :1:0 
+`uc 1 powmcu 1 12 :1:1 
+]
+"24 C:\Users\Tetsuya\Documents\GitHub\CDH\OBC1.X\OBC1_main.c
+[v _cw cw `S19  1 e 13 0 ]
+[s S651 . 32 `uc 1 data_type 1 0 `[30]uc 1 payload 30 1 `uc 1 data_end_command 1 31 ]
+"72 C:\Users\Tetsuya\Documents\GitHub\CDH\OBC1.X\system_protocol.c
+[v _packet packet `S651  1 s 32 packet ]
+"75
+[v _index_pos index_pos `uc  1 s 1 index_pos ]
+"29 C:\Users\Tetsuya\Documents\GitHub\CDH\OBC1.X\OBC1_main.c
+[v _main main `(i  1 e 2 0 ]
+{
+"68
+[v main@t t `l  1 a 4 51 ]
+"69
+[v main@temp temp `d  1 a 3 48 ]
+"79
+} 0
+"34 C:\Users\Tetsuya\Documents\GitHub\CDH\OBC1.X\uart_serial.c
+[v _uart_init uart_init `(v  1 e 0 0 ]
+{
+"40
+} 0
+"85 C:\Users\Tetsuya\Documents\GitHub\CDH\OBC1.X\system_protocol.c
+[v _sysprot_init sysprot_init `(v  1 e 0 0 ]
+{
+"91
+} 0
+"52 C:\Users\Tetsuya\Documents\GitHub\CDH\OBC1.X\OBC1_app.c
+[v _command command `(v  1 e 0 0 ]
+{
+[v command@data data `uc  1 a 1 wreg ]
+"97
+[v command@t t `l  1 a 4 40 ]
+"98
+[v command@temp temp `d  1 a 3 37 ]
+"52
+[v command@data data `uc  1 a 1 wreg ]
+[v command@data data `uc  1 a 1 36 ]
+"116
+} 0
+"217 C:\Users\Tetsuya\Documents\GitHub\CDH\OBC1.X\system_protocol.c
+[v _send_data_master send_data_master `(v  1 e 0 0 ]
+{
+[v send_data_master@destination destination `E1099  1 a 1 wreg ]
+[v send_data_master@destination destination `E1099  1 a 1 wreg ]
+[v send_data_master@data_type data_type `E1104  1 p 1 15 ]
+[v send_data_master@data_end_command data_end_command `E1108  1 p 1 16 ]
+"219
+[v send_data_master@destination destination `E1099  1 a 1 18 ]
+"222
+} 0
+"462
+[v _packet_send_master packet_send_master `(v  1 s 0 packet_send_master ]
+{
+[v packet_send_master@destination destination `E1099  1 a 1 wreg ]
+[v packet_send_master@destination destination `E1099  1 a 1 wreg ]
+[s S651 . 32 `uc 1 data_type 1 0 `[30]uc 1 payload 30 1 `uc 1 data_end_command 1 31 ]
+[v packet_send_master@p_packet p_packet `*.4S651  1 p 1 12 ]
+"465
+[v packet_send_master@destination destination `E1099  1 a 1 14 ]
+"475
+} 0
+"394
+[v _send_payload send_payload `(uc  1 s 1 send_payload ]
+{
+[v send_payload@destination destination `E1099  1 a 1 wreg ]
+"397
+[v send_payload@index_pos index_pos `uc  1 a 1 10 ]
+"396
+[v send_payload@i i `uc  1 a 1 9 ]
+"397
+[v send_payload@data_len data_len `uc  1 a 1 8 ]
+"394
+[v send_payload@destination destination `E1099  1 a 1 wreg ]
+[v send_payload@p_payload p_payload `*.4uc  1 p 1 6 ]
+"398
+[v send_payload@destination destination `E1099  1 a 1 11 ]
+"414
+} 0
+"154 C:\Users\Tetsuya\Documents\GitHub\CDH\OBC1.X\spi_master.c
+[v _spi_master_send spi_master_send `(v  1 e 0 0 ]
+{
+[v spi_master_send@destination destination `E1099  1 a 1 wreg ]
+"157
+[v spi_master_send@timeout_counter timeout_counter `ui  1 a 2 3 ]
+"156
+[v spi_master_send@dummy dummy `uc  1 a 1 2 ]
+"154
+[v spi_master_send@destination destination `E1099  1 a 1 wreg ]
+[v spi_master_send@data data `uc  1 p 1 0 ]
+"157
+[v spi_master_send@destination destination `E1099  1 a 1 5 ]
+"215
+} 0
+"53 C:\Users\Tetsuya\Documents\GitHub\CDH\OBC1.X\uart_serial.c
+[v _putch putch `(v  1 e 0 0 ]
+{
+[v putch@byte byte `uc  1 a 1 wreg ]
+[v putch@byte byte `uc  1 a 1 wreg ]
+[v putch@byte byte `uc  1 a 1 0 ]
+"60
+} 0
+"94 C:\Users\Tetsuya\Documents\GitHub\CDH\OBC1.X\system_protocol.c
+[v _get_cw_data get_cw_data `(v  1 e 0 0 ]
+{
+"96
+[v get_cw_data@buf buf `ui  1 a 2 14 ]
+"114
+} 0
+"36 C:\Users\Tetsuya\Documents\GitHub\CDH\OBC1.X\spi_master.c
+[v _spi_master_start spi_master_start `(v  1 e 0 0 ]
+{
+"67
+} 0
+"80
+[v _spi_master_receive spi_master_receive `(uc  1 e 1 0 ]
+{
+[v spi_master_receive@destination destination `E1099  1 a 1 wreg ]
+"83
+[v spi_master_receive@timeout_counter timeout_counter `ui  1 a 2 2 ]
+"82
+[v spi_master_receive@dummy dummy `uc  1 a 1 1 ]
+"80
+[v spi_master_receive@destination destination `E1099  1 a 1 wreg ]
+"83
+[v spi_master_receive@destination destination `E1099  1 a 1 4 ]
+"140
+} 0
+"91 C:\Users\Tetsuya\Documents\GitHub\CDH\OBC1.X\AD_value.c
+[v _get_adcon get_adcon `(ui  1 e 2 0 ]
+{
+"94
+[v get_adcon@ad_value ad_value `ui  1 a 2 11 ]
+[s S285 . 2 `uc 1 my_adres_h 1 0 `uc 1 my_adres_l 1 1 ]
+"96
+[v get_adcon@my_adres my_adres `S285  1 a 2 9 ]
+"111
+} 0
+"71
+[v _bit_shift bit_shift `(v  1 s 0 bit_shift ]
+{
+[v bit_shift@p_ad_value p_ad_value `*.4ui  1 a 1 wreg ]
+[v bit_shift@p_ad_value p_ad_value `*.4ui  1 a 1 wreg ]
+[s S285 . 2 `uc 1 my_adres_h 1 0 `uc 1 my_adres_l 1 1 ]
+[v bit_shift@p_adres p_adres `*.4S285  1 p 1 0 ]
+"73
+[v bit_shift@bit_mask_for_l bit_mask_for_l `DCCuc  1 s 1 bit_mask_for_l ]
+"75
+[v bit_shift@p_ad_value p_ad_value `*.4ui  1 a 1 5 ]
+"78
+} 0
+"180 C:\Users\Tetsuya\Documents\GitHub\CDH\OBC1.X\system_protocol.c
+[v _cw_data_set cw_data_set `(v  1 e 0 0 ]
+{
+[s S19 . 13 `[2]uc 1 power1 2 0 `[2]uc 1 power2 2 2 `[2]uc 1 power3 2 4 `[2]uc 1 power4 2 6 `[2]uc 1 power5 2 8 `[2]uc 1 temp 2 10 `uc 1 obc2 1 12 :1:0 
+`uc 1 powmcu 1 12 :1:1 
+]
+[v cw_data_set@p_cw_data p_cw_data `*.4S19  1 a 1 wreg ]
+[v cw_data_set@p_cw_data p_cw_data `*.4S19  1 a 1 wreg ]
+"185
+"180
+[v cw_data_set@p_cw_data p_cw_data `*.4S19  1 a 1 5 ]
+"202
+} 0
+"4 C:\Program Files (x86)\Microchip\xc8\v1.35\sources\common\ftge.c
+[v ___ftge __ftge `(b  1 e 0 0 ]
+{
+[v ___ftge@ff1 ff1 `f  1 p 3 0 ]
+[v ___ftge@ff2 ff2 `f  1 p 3 3 ]
+"13
+} 0
+"56 C:\Program Files (x86)\Microchip\xc8\v1.35\sources\common\ftdiv.c
+[v ___ftdiv __ftdiv `(f  1 e 3 0 ]
+{
+"60
+[v ___ftdiv@f3 f3 `f  1 a 3 27 ]
+"59
+[v ___ftdiv@sign sign `uc  1 a 1 31 ]
+[v ___ftdiv@exp exp `uc  1 a 1 30 ]
+[v ___ftdiv@cntr cntr `uc  1 a 1 26 ]
+"56
+[v ___ftdiv@f2 f2 `f  1 p 3 16 ]
+[v ___ftdiv@f1 f1 `f  1 p 3 19 ]
+"86
+} 0
+"42 C:\Program Files (x86)\Microchip\xc8\v1.35\sources\common\altoft.c
+[v ___altoft __altoft `(f  1 e 3 0 ]
+{
+"44
+[v ___altoft@sign sign `uc  1 a 1 15 ]
+[v ___altoft@exp exp `uc  1 a 1 14 ]
+"42
+[v ___altoft@c c `l  1 p 4 8 ]
+"57
+} 0
+"62 C:\Program Files (x86)\Microchip\xc8\v1.35\sources\common\float.c
+[v ___ftpack __ftpack `(f  1 e 3 0 ]
+{
+[v ___ftpack@arg arg `um  1 p 3 0 ]
+[v ___ftpack@exp exp `uc  1 p 1 3 ]
+[v ___ftpack@sign sign `uc  1 p 1 4 ]
+"86
+} 0
+"119 C:\Users\Tetsuya\Documents\GitHub\CDH\OBC1.X\OBC1_app.c
+[v _LED_data_set LED_data_set `(v  1 s 0 LED_data_set ]
+{
+"122
+} 0
+"141 C:\Users\Tetsuya\Documents\GitHub\CDH\OBC1.X\system_protocol.c
+[v _sent_data_set sent_data_set `(uc  1 e 1 0 ]
+{
+[v sent_data_set@p_data p_data `*.39v  1 p 2 20 ]
+[v sent_data_set@data_len data_len `uc  1 p 1 22 ]
+[v sent_data_set@byte_of_data byte_of_data `uc  1 p 1 23 ]
+"167
+} 0
+"257
+[v _uint8_data_set uint8_data_set `(v  1 s 0 uint8_data_set ]
+{
+[v uint8_data_set@p_data p_data `*.39uc  1 p 2 0 ]
+[v uint8_data_set@data_len data_len `uc  1 p 1 2 ]
+"265
+} 0
+"279
+[v _uint16_data_set uint16_data_set `(v  1 s 0 uint16_data_set ]
+{
+"281
+[v uint16_data_set@buf buf `[3]uc  1 a 3 10 ]
+"282
+[v uint16_data_set@i i `uc  1 a 1 13 ]
+"279
+[v uint16_data_set@p_data p_data `*.39ui  1 p 2 6 ]
+[v uint16_data_set@data_len data_len `uc  1 p 1 8 ]
+"294
+} 0
+"337
+[v _uint16_to_byte_array uint16_to_byte_array `(v  1 s 0 uint16_to_byte_array ]
+{
+[v uint16_to_byte_array@p_data p_data `*.39ui  1 p 2 0 ]
+[v uint16_to_byte_array@p_data_array p_data_array `*.4uc  1 p 1 2 ]
+"339
+[v uint16_to_byte_array@bit_mask bit_mask `DCCui  1 s 2 bit_mask ]
+"345
+} 0
+"308
+[v _double_data_set double_data_set `(v  1 s 0 double_data_set ]
+{
+"310
+[v double_data_set@buf buf `[5]uc  1 a 5 14 ]
+"311
+[v double_data_set@i i `uc  1 a 1 19 ]
+"308
+[v double_data_set@p_data p_data `*.39d  1 p 2 10 ]
+[v double_data_set@data_len data_len `uc  1 p 1 12 ]
+"323
+} 0
+"359
+[v _double_to_byte_array double_to_byte_array `(v  1 s 0 double_to_byte_array ]
+{
+[u S784 . 4 `d 1 data 3 0 `[4]uc 1 array 4 0 ]
+"366
+[v double_to_byte_array@converter converter `S784  1 a 4 5 ]
+"361
+[v double_to_byte_array@i i `uc  1 a 1 9 ]
+"359
+[v double_to_byte_array@p_data p_data `*.39d  1 p 2 0 ]
+[v double_to_byte_array@p_data_array p_data_array `*.4uc  1 p 1 2 ]
+"379
+} 0
+"15 C:\Program Files (x86)\Microchip\xc8\v1.35\sources\common\Umul16.c
+[v ___wmul __wmul `(ui  1 e 2 0 ]
+{
+"17
+[v ___wmul@product product `ui  1 a 2 4 ]
+"15
+[v ___wmul@multiplier multiplier `ui  1 p 2 0 ]
+[v ___wmul@multiplicand multiplicand `ui  1 p 2 2 ]
+"53
+} 0
+"125 C:\Users\Tetsuya\Documents\GitHub\CDH\OBC1.X\OBC1_app.c
+[v _I2Ctemp_data_set I2Ctemp_data_set `(v  1 e 0 0 ]
+{
+"128
+} 0
+"49 C:\Users\Tetsuya\Documents\GitHub\CDH\OBC1.X\AD_value.c
+[v _ad_con_init ad_con_init `(v  1 e 0 0 ]
+{
+"57
+} 0
+"35 C:\Users\Tetsuya\Documents\GitHub\CDH\OBC1.X\MCLR_reset.c
+[v _MCLR_init MCLR_init `(v  1 e 0 0 ]
+{
+"37
+[v MCLR_init@nin nin `*.39uc  1 a 2 0 ]
+"46
+} 0
+"81 C:\Users\Tetsuya\Documents\GitHub\CDH\OBC1.X\OBC1_main.c
+[v _get_uart get_uart `II(v  1 e 0 0 ]
+{
+"100
+} 0
+"90 C:\Users\Tetsuya\Documents\GitHub\CDH\OBC1.X\uart_serial.c
+[v _getch getch `(uc  1 e 1 0 ]
+{
+"92
+[v getch@count count `i  1 a 2 0 ]
+"99
+} 0

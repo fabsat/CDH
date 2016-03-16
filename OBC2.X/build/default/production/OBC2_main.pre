@@ -1671,39 +1671,31 @@ PORTDbits.RD7 = 0;
 OBC1_RESET_init();
 I2C_init();
 uart_init();
-interrupt_able();
+PORTDbits.RD7 = 1;
 _delay((unsigned long)((1000)*(20000000/4000.0)));
+PORTDbits.RD7 = 0;
+_delay((unsigned long)((1000)*(20000000/4000.0)));
+
 
 while(1)
 {
 PORTDbits.RD7 = 1;
 _delay((unsigned long)((100)*(20000000/4000.0)));
 
-
-while(!PORTDbits.RD2)
-{
-int count = 0;
-if(count < 100){
-OBC1_reset();
-count++;
-}else{
-interrupt_disable();
-OBC1();
-}
-}
-
+# 57
 PORTDbits.RD7 = 0;
 _delay((unsigned long)((100)*(20000000/4000.0)));
 }
 return 0;
 }
 
-# 71
+# 74
 void interrupt I2Ctemp(void)
 {
 if(PIR1bits.RCIF == 1)
 {
 PIR1bits.RCIF == 0;
+interrupt_disable();
 trans_I2Ctemp();
 }
 }

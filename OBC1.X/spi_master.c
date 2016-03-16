@@ -166,6 +166,7 @@ void spi_master_send(destination_t destination, uint8_t data)
             while(COM_READY == 0){;}  // COM_READYピンがセットされるまで待つ
             break;
         case POW:
+            
             while(POW_READY == 0){;}  // POW_READYピンがリセットされるまで待つ
             break;
     }
