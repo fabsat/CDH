@@ -1501,9 +1501,12 @@ void spi_master_start(void);
 uint8_t spi_master_receive(destination_t destination);
 
 # 77
-void spi_master_send(destination_t destination, uint8_t data);
+void spi_master_send_int(destination_t destination, uint8_t data);
 
 # 90
+void spi_master_send(destination_t destination, uint8_t data);
+
+# 103
 void spi_master_stop(void);
 
 # 18 "OBC1_app.h"
@@ -1592,39 +1595,18 @@ INTCONbits.PEIE = 1;
 
 while(uart_interrupt!=2){
 PORTDbits.RD6 = 1;
-_delay((unsigned long)((10)*(20000000/4000.0)));
+_delay((unsigned long)((40)*(20000000/4000.0)));
 PORTDbits.RD6 = 0;
-_delay((unsigned long)((90)*(20000000/4000.0)));
+_delay((unsigned long)((40)*(20000000/4000.0)));
 }
-
-PIR1bits.RCIF = 0;
-INTCONbits.PEIE = 0;
+uart_interrupt = 0;
+PIE1bits.RCIE = 0;
 INTCONbits.GIE = 0;
-
-PORTDbits.RD7 = 1;
-_delay((unsigned long)((1000)*(20000000/4000.0)));
-PORTDbits.RD7 = 0;
-_delay((unsigned long)((1000)*(20000000/4000.0)));
-
+INTCONbits.PEIE = 0;
 sent_data_set(I2CTEMP_data, 2, 1);
 
-long t;
-double temp = 0.0;
-t = (I2CTEMP_data[0] << 8) | I2CTEMP_data[1];
-if (t < 0) t = t - 65536;
-temp = (double)t / 128.0;
 
-
-
-if(temp >= 10.0){
-PORTDbits.RD6 = 1;
-_delay((unsigned long)((1000)*(20000000/4000.0)));
-PORTDbits.RD6 = 0;
-_delay((unsigned long)((1000)*(20000000/4000.0)));
-}
-
-I2Ctemp_data_set();
-
+send_data_master(COM, (0x02), DATA_END);
 break;
 }
 }

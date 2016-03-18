@@ -43,7 +43,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _uint16_to_byte_array `(v ~T0 @X0 0 sf2`*ui`*uc ]
 "61
 [v _double_to_byte_array `(v ~T0 @X0 0 sf2`*d`*uc ]
-"77 spi_master.h
+"90 spi_master.h
 [v _spi_master_send `(v ~T0 @X0 0 ef2`E1099`uc ]
 [; ;htc.h: 26: extern const char __xc8_OPTIM_SPEED;
 [; ;htc.h: 28: extern double __fpnormalize(double);
@@ -1102,8 +1102,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;system_protocol.h: 170: void receive_data_master(destination_t destination);
 [; ;spi_master.h: 49: void spi_master_start(void);
 [; ;spi_master.h: 62: uint8_t spi_master_receive(destination_t destination);
-[; ;spi_master.h: 77: void spi_master_send(destination_t destination, uint8_t data);
-[; ;spi_master.h: 90: void spi_master_stop(void);
+[; ;spi_master.h: 77: void spi_master_send_int(destination_t destination, uint8_t data);
+[; ;spi_master.h: 90: void spi_master_send(destination_t destination, uint8_t data);
+[; ;spi_master.h: 103: void spi_master_stop(void);
 [; ;AD_value.h: 35: void ad_con_init(void);
 [; ;AD_value.h: 48: uint16_t get_adcon(void);
 [; ;plati_temp.h: 34: double get_temp(void);
@@ -1608,8 +1609,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 "338
 [f ]
 "339
-[v F1220 `Cui ~T0 @X0 1 s bit_mask ]
-[i F1220
+[v F1223 `Cui ~T0 @X0 1 s bit_mask ]
+[i F1223
 -> -> 255 `i `ui
 ]
 [; ;system_protocol.c: 339: const uint16_t bit_mask = 0b0000000011111111;
@@ -1621,7 +1622,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e = *U + _p_data_array * -> -> 1 `i `x -> -> # *U _p_data_array `i `x -> >> *U _p_data -> 8 `i `uc ]
 [; ;system_protocol.c: 344: p_data_array[2] = (uint8_t)(*p_data & bit_mask);
 "344
-[e = *U + _p_data_array * -> -> 2 `i `x -> -> # *U _p_data_array `i `x -> & *U _p_data F1220 `uc ]
+[e = *U + _p_data_array * -> -> 2 `i `x -> -> # *U _p_data_array `i `x -> & *U _p_data F1223 `uc ]
 [; ;system_protocol.c: 345: }
 "345
 [e :UE 129 ]
@@ -1850,9 +1851,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _p_packet `*S97 ~T0 @X0 1 r2 ]
 "463
 [f ]
-[; ;system_protocol.c: 465: spi_master_send(destination, 0x01);
+[; ;system_protocol.c: 465: spi_master_send(destination, 0x11);
 "465
-[e ( _spi_master_send (2 , _destination -> -> 1 `i `uc ]
+[e ( _spi_master_send (2 , _destination -> -> 17 `i `uc ]
 [; ;system_protocol.c: 468: spi_master_send(destination, &p_packet->data_type);
 "468
 [e ( _spi_master_send (2 , _destination -> &U . *U _p_packet 0 `uc ]

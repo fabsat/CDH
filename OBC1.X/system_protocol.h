@@ -14,7 +14,7 @@ typedef enum
     POW,
 } destination_t;
 
-#define USE_MCU 0x01        // 使用しているマイコンがOBC1=0x01, OBC2=0x02, COM=0x03, POW=0x04
+#define USE_MCU 0x11        // 使用しているマイコンがOBC1=0x01, OBC2=0x02, COM=0x03, POW=0x04
 
 /********************************************************************************
  *                          パケット関連の各種定義                                *

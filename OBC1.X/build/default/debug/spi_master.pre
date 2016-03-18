@@ -1501,9 +1501,12 @@ void spi_master_start(void);
 uint8_t spi_master_receive(destination_t destination);
 
 # 77
-void spi_master_send(destination_t destination, uint8_t data);
+void spi_master_send_int(destination_t destination, uint8_t data);
 
 # 90
+void spi_master_send(destination_t destination, uint8_t data);
+
+# 103
 void spi_master_stop(void);
 
 # 36 "spi_master.c"
@@ -1604,7 +1607,7 @@ return SSPBUF;
 }
 
 # 154
-void spi_master_send(destination_t destination, uint8_t data)
+void spi_master_send_int(destination_t destination, uint8_t data)
 {
 uint8_t dummy;
 uint16_t timeout_counter = 1000;
@@ -1612,17 +1615,6 @@ uint16_t timeout_counter = 1000;
 
 dummy = SSPBUF;
 
-
-switch(destination)
-{
-case COM:
-while(PORTDbits.RD0 == 0){;}
-break;
-case POW:
-
-while(PORTDbits.RD1 == 0){;}
-break;
-}
 
 
 switch(destination)
@@ -1636,7 +1628,73 @@ break;
 }
 
 
+
 SSPBUF = data;
+
+# 192
+while(SSPSTATbits.BF == 0)
+{
+
+if(timeout_counter == 0)
+{
+return;
+}
+
+
+_delay((unsigned long)((1)*(20000000/4000000.0)));
+timeout_counter--;
+}
+
+
+switch(destination)
+{
+case COM:
+PORTCbits.RC0 = 1;
+break;
+case POW:
+PORTCbits.RC1 = 1;
+break;
+}
+
+
+dummy = SSPBUF;
+}
+
+# 232
+void spi_master_send(destination_t destination, uint8_t data)
+{
+uint8_t dummy;
+uint16_t timeout_counter = 1000;
+
+
+dummy = SSPBUF;
+
+
+
+switch(destination)
+{
+case COM:
+PORTCbits.RC0 = 0;
+break;
+case POW:
+PORTCbits.RC1 = 0;
+break;
+}
+
+
+
+SSPBUF = data;
+
+
+switch(destination)
+{
+case COM:
+while(PORTDbits.RD0 == 0){;}
+break;
+case POW:
+while(PORTDbits.RD1 == 0){;}
+break;
+}
 
 
 while(SSPSTATbits.BF == 0)
@@ -1667,7 +1725,7 @@ break;
 dummy = SSPBUF;
 }
 
-# 228
+# 306
 void spi_master_stop(void)
 {
 

@@ -1594,9 +1594,12 @@ void spi_master_start(void);
 uint8_t spi_master_receive(destination_t destination);
 
 # 77
-void spi_master_send(destination_t destination, uint8_t data);
+void spi_master_send_int(destination_t destination, uint8_t data);
 
 # 90
+void spi_master_send(destination_t destination, uint8_t data);
+
+# 103
 void spi_master_stop(void);
 
 # 18 "OBC1_app.h"
@@ -1616,21 +1619,20 @@ void command(uint8_t data);
 cw_t cw = { {0x00, 0x00}, {0x00, 0x00}, {0x00, 0x00}, {0x00, 0x00}, {0x00, 0x00}, {0x00, 0x00}, 0, 0 };
 
 
+void interrupt get_uart(void);
+void check_bit(uint8_t data);
 
 
 int main(void){
-
-
 
 TRISDbits.TRISD7 = 0;
 PORTDbits.RD7 = 0;
 TRISDbits.TRISD6 = 0;
 PORTDbits.RD6 = 0;
 
-
 TRISDbits.TRISD2 = 0;
-PORTDbits.RD2 = 1;
 
+PORTDbits.RD2 = 1;
 
 MCLR_init();
 sysprot_init();
@@ -1638,24 +1640,19 @@ ad_con_init();
 spi_master_start();
 uart_init();
 uart_interrupt = 0;
-_delay((unsigned long)((1000)*(20000000/4000.0)));
-
 
 
 while(1)
 {
 PORTDbits.RD7 = 1;
 _delay((unsigned long)((100)*(20000000/4000.0)));
+spi_master_send_int(COM, 0x12);
+_delay((unsigned long)((1000)*(20000000/4000.0)));
+spi_master_send_int(COM, 0x34);
+_delay((unsigned long)((1000)*(20000000/4000.0)));
+spi_master_send(COM, 0x55);
 
-# 66
-command(0x02);
-
-long t;
-double temp = 0.0;
-t = (cw.temp[0] << 8) | cw.temp[1];
-if (t < 0) t = t - 65536;
-temp = (double)t / 128.0;
-
+# 114
 PORTDbits.RD7 = 0;
 _delay((unsigned long)((100)*(20000000/4000.0)));
 }
@@ -1668,18 +1665,44 @@ void interrupt get_uart(void)
 if(PIR1bits.RCIF == 1)
 {
 PORTDbits.RD6 = 1;
-_delay((unsigned long)((90)*(20000000/4000.0)));
+_delay((unsigned long)((500)*(20000000/4000.0)));
 PIR1bits.RCIF = 0;
-INTCONbits.GIE = 0;
-INTCONbits.PEIE = 0;
 I2CTEMP_data[uart_interrupt] = getch();
+spi_master_send(COM, I2CTEMP_data[uart_interrupt]);
 uart_interrupt++;
 PORTDbits.RD6 = 0;
-_delay((unsigned long)((90)*(20000000/4000.0)));
-
-PIE1bits.TXIE = 1;
-PIE1bits.RCIE = 1;
-INTCONbits.GIE = 1;
-INTCONbits.PEIE = 1;
+_delay((unsigned long)((1000)*(20000000/4000.0)));
 }
+}
+
+
+void check_bit(uint8_t data)
+{
+const uint8_t bit_mask = 0b10000000;
+uint8_t check_bit;
+uint8_t i;
+
+for(i = 0; i < 8; i++)
+{
+check_bit = bit_mask & data;
+
+PORTDbits.RD7 = 1;
+_delay((unsigned long)((100)*(20000000/4000.0)));
+PORTDbits.RD7 = 0;
+_delay((unsigned long)((100)*(20000000/4000.0)));
+
+if(check_bit)
+{
+PORTDbits.RD6 = 1;
+_delay((unsigned long)((1000)*(20000000/4000.0)));
+PORTDbits.RD6 = 0;
+_delay((unsigned long)((1000)*(20000000/4000.0)));
+}
+else
+{
+_delay((unsigned long)((2000)*(20000000/4000.0)));
+}
+data <<= 1;
+}
+
 }

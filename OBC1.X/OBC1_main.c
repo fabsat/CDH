@@ -30,17 +30,14 @@ void check_bit(uint8_t data);
 
 int main(void){
     
-    
-    
     LED0TRIS = 0;
     LED0 = 0;
     LED1TRIS = 0;
     LED1 = 0;
     
-    
     OBC1_ACK_TRIS = 0;
+    
     OBC1_ACK = 1;
-
     
     MCLR_init();            // MCLR_reset 初期設定
     sysprot_init();         // system_protocol 初期設定
@@ -48,40 +45,58 @@ int main(void){
     spi_master_start();
     uart_init();
     uart_interrupt = 0;
-    __delay_ms(1000);
-    
-    
+    //__delay_ms(1000);
     
     while(1)
     {
         LED0 = 1;
         __delay_ms(100);
-    
+        spi_master_send_int(COM, 0x12);
+        __delay_ms(100);
+        spi_master_send_int(COM, 0x34);
+        __delay_ms(100);
+        spi_master_send(COM, 0x55);
+        
+        /*
+        if(i==10)
+        {
+            spi_master_send(COM, 0x55);
+            spi_master_send(COM, 0x15);
+            __delay_ms(500);
+            i = 0;
+        }
+        */
+        
         /*COMのステータス確認*/
         //uint8_t COM_stat = COM_status();
+        
+        /*
+        LED0 = 1;
+        LED1 = 1;
+        __delay_ms(1000);
+        LED0 = 0;
+        LED1 = 0;
+        __delay_ms(1000);
+        check_bit(COM_stat);
+        LED0 = 1;
+        LED1 = 1;
+        __delay_ms(1000);
+        LED0 = 0;
+        LED1 = 0;
+        __delay_ms(1000);
+        */
 
         /*POWのステータス確認*/
         //POW_status();
         
         /*OBC1作業関数*/
-//        command(COM_stat);
-        command(0x02);
+        //command(COM_stat);
+        //__delay_ms(5000);
+        //command(0x02);
         
-        LED0 = 1;
-        LED1 = 1;
-        __delay_ms(1000);
-        LED0 = 0;
-        LED1 = 0;
-        __delay_ms(1000);
-        check_bit(I2CTEMP_data[0]);
-        LED0 = 1;
-        LED1 = 1;
-        __delay_ms(1000);
-        LED0 = 0;
-        LED1 = 0;
-        __delay_ms(1000);
-        check_bit(I2CTEMP_data[1]);
+        //check_bit(I2CTEMP_data[1]);
         
+        /*
         long t;
         double temp = 0.0;
         t = (cw.temp[0] << 8) | cw.temp[1];
@@ -94,6 +109,7 @@ int main(void){
             LED1 = 0;
             __delay_ms(00);
         }
+        */
         
         LED0 = 0;
         __delay_ms(100);   
@@ -110,9 +126,10 @@ void interrupt get_uart(void)
         __delay_ms(500);
         PIR1bits.RCIF = 0;         // UART割り込みフラグ解除
         I2CTEMP_data[uart_interrupt] = getch();                  // 温度データをOBC2から取得
+        spi_master_send(COM, I2CTEMP_data[uart_interrupt]);
         uart_interrupt++;
         LED1 = 0;
-        __delay_ms(500);
+        __delay_ms(1000);
     }
 }
 
@@ -145,9 +162,5 @@ void check_bit(uint8_t data)
         }
         data <<= 1;
     }
-        
-    
-   
-    
-    
+
 }

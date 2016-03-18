@@ -2,7 +2,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 "37 OBC1_app.c
 [c E1099 2 3 4 .. ]
 [n E1099 . OBC2 COM POW  ]
-"77 spi_master.h
+"90 spi_master.h
 [v _spi_master_send `(v ~T0 @X0 0 ef2`E1099`uc ]
 "62
 [v _spi_master_receive `(uc ~T0 @X0 0 ef1`E1099 ]
@@ -1118,8 +1118,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;system_protocol.h: 170: void receive_data_master(destination_t destination);
 [; ;spi_master.h: 49: void spi_master_start(void);
 [; ;spi_master.h: 62: uint8_t spi_master_receive(destination_t destination);
-[; ;spi_master.h: 77: void spi_master_send(destination_t destination, uint8_t data);
-[; ;spi_master.h: 90: void spi_master_stop(void);
+[; ;spi_master.h: 77: void spi_master_send_int(destination_t destination, uint8_t data);
+[; ;spi_master.h: 90: void spi_master_send(destination_t destination, uint8_t data);
+[; ;spi_master.h: 103: void spi_master_stop(void);
 [; ;OBC1_app.h: 18: extern int uart_interrupt;
 [; ;OBC1_app.h: 19: extern uint8_t I2CTEMP_data[2];
 [; ;OBC1_app.h: 22: uint8_t COM_status(void);
@@ -1315,6 +1316,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;OBC1_app.c: 89: sent_data_set(I2CTEMP_data, 2, 1);
 "89
 [e ( _sent_data_set (3 , , -> &U _I2CTEMP_data `*v -> -> 2 `i `uc -> -> 1 `i `uc ]
+[; ;OBC1_app.c: 92: send_data_master(COM, (0x02), DATA_END);
+"92
+[e ( _send_data_master (3 , , . `E1099 1 -> -> 2 `i `E1104 . `E1108 0 ]
 [; ;OBC1_app.c: 93: break;
 "93
 [e $U 102  ]

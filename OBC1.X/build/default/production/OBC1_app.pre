@@ -1501,9 +1501,12 @@ void spi_master_start(void);
 uint8_t spi_master_receive(destination_t destination);
 
 # 77
-void spi_master_send(destination_t destination, uint8_t data);
+void spi_master_send_int(destination_t destination, uint8_t data);
 
 # 90
+void spi_master_send(destination_t destination, uint8_t data);
+
+# 103
 void spi_master_stop(void);
 
 # 18 "OBC1_app.h"
@@ -1603,7 +1606,7 @@ INTCONbits.PEIE = 0;
 sent_data_set(I2CTEMP_data, 2, 1);
 
 
-
+send_data_master(COM, (0x02), DATA_END);
 break;
 }
 }

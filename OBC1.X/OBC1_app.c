@@ -89,7 +89,7 @@ void command(uint8_t data)
             sent_data_set(I2CTEMP_data, 2, 1);          // 温度データをパケットに格納
         
             //I2Ctemp_data_set();                                 // I2C温度データセット
-            //send_data_master(COM, GET_I2C_TEMP, DATA_END);
+            send_data_master(COM, GET_I2C_TEMP, DATA_END);
             break;
     }
 }

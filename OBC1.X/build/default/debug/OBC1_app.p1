@@ -2,7 +2,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 "37 OBC1_app.c
 [c E1099 2 3 4 .. ]
 [n E1099 . OBC2 COM POW  ]
-"77 spi_master.h
+"90 spi_master.h
 [v _spi_master_send `(v ~T0 @X0 0 ef2`E1099`uc ]
 "62
 [v _spi_master_receive `(uc ~T0 @X0 0 ef1`E1099 ]
@@ -59,18 +59,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 [n S18 . . . ]
 "465
 [v _INTCONbits `VS18 ~T0 @X0 0 e@11 ]
-"525
-[s S22 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
-[n S22 . TMR1IF TMR2IF CCP1IF SSPIF TXIF RCIF ADIF PSPIF ]
-"524
-[u S21 `S22 1 ]
-[n S21 . . ]
-"536
-[v _PIR1bits `VS21 ~T0 @X0 0 e@12 ]
 "129 system_protocol.h
 [v _sent_data_set `(uc ~T0 @X0 0 ef3`*v`uc`uc ]
-"30 OBC1_app.c
-[v _I2Ctemp_data_set `(v ~T0 @X0 0 ef ]
 [; ;htc.h: 26: extern const char __xc8_OPTIM_SPEED;
 [; ;htc.h: 28: extern double __fpnormalize(double);
 [; ;xc8debug.h: 14: extern void __builtin_software_breakpoint(void);
@@ -1128,8 +1118,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;system_protocol.h: 170: void receive_data_master(destination_t destination);
 [; ;spi_master.h: 49: void spi_master_start(void);
 [; ;spi_master.h: 62: uint8_t spi_master_receive(destination_t destination);
-[; ;spi_master.h: 77: void spi_master_send(destination_t destination, uint8_t data);
-[; ;spi_master.h: 90: void spi_master_stop(void);
+[; ;spi_master.h: 77: void spi_master_send_int(destination_t destination, uint8_t data);
+[; ;spi_master.h: 90: void spi_master_send(destination_t destination, uint8_t data);
+[; ;spi_master.h: 103: void spi_master_stop(void);
 [; ;OBC1_app.h: 18: extern int uart_interrupt;
 [; ;OBC1_app.h: 19: extern uint8_t I2CTEMP_data[2];
 [; ;OBC1_app.h: 22: uint8_t COM_status(void);
@@ -1294,15 +1285,15 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;OBC1_app.c: 80: PORTDbits.RD6 = 1;
 "80
 [e = . . _PORTDbits 0 6 -> -> 1 `i `uc ]
-[; ;OBC1_app.c: 81: _delay((unsigned long)((10)*(20000000/4000.0)));
+[; ;OBC1_app.c: 81: _delay((unsigned long)((40)*(20000000/4000.0)));
 "81
-[e ( __delay (1 -> * -> -> 10 `i `d / -> -> 20000000 `l `d .4000.0 `ul ]
+[e ( __delay (1 -> * -> -> 40 `i `d / -> -> 20000000 `l `d .4000.0 `ul ]
 [; ;OBC1_app.c: 82: PORTDbits.RD6 = 0;
 "82
 [e = . . _PORTDbits 0 6 -> -> 0 `i `uc ]
-[; ;OBC1_app.c: 83: _delay((unsigned long)((90)*(20000000/4000.0)));
+[; ;OBC1_app.c: 83: _delay((unsigned long)((40)*(20000000/4000.0)));
 "83
-[e ( __delay (1 -> * -> -> 90 `i `d / -> -> 20000000 `l `d .4000.0 `ul ]
+[e ( __delay (1 -> * -> -> 40 `i `d / -> -> 20000000 `l `d .4000.0 `ul ]
 "84
 }
 [e :U 107 ]
@@ -1310,77 +1301,30 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e $ != _uart_interrupt -> 2 `i 108  ]
 [e :U 109 ]
 [; ;OBC1_app.c: 84: }
-[; ;OBC1_app.c: 86: PIR1bits.RCIF = 0;
+[; ;OBC1_app.c: 85: uart_interrupt = 0;
+"85
+[e = _uart_interrupt -> 0 `i ]
+[; ;OBC1_app.c: 86: PIE1bits.RCIE = 0;
 "86
-[e = . . _PIR1bits 0 5 -> -> 0 `i `uc ]
-[; ;OBC1_app.c: 87: INTCONbits.PEIE = 0;
+[e = . . _PIE1bits 0 5 -> -> 0 `i `uc ]
+[; ;OBC1_app.c: 87: INTCONbits.GIE = 0;
 "87
-[e = . . _INTCONbits 0 6 -> -> 0 `i `uc ]
-[; ;OBC1_app.c: 88: INTCONbits.GIE = 0;
-"88
 [e = . . _INTCONbits 0 7 -> -> 0 `i `uc ]
-[; ;OBC1_app.c: 90: PORTDbits.RD7 = 1;
-"90
-[e = . . _PORTDbits 0 7 -> -> 1 `i `uc ]
-[; ;OBC1_app.c: 91: _delay((unsigned long)((1000)*(20000000/4000.0)));
-"91
-[e ( __delay (1 -> * -> -> 1000 `i `d / -> -> 20000000 `l `d .4000.0 `ul ]
-[; ;OBC1_app.c: 92: PORTDbits.RD7 = 0;
-"92
-[e = . . _PORTDbits 0 7 -> -> 0 `i `uc ]
-[; ;OBC1_app.c: 93: _delay((unsigned long)((1000)*(20000000/4000.0)));
-"93
-[e ( __delay (1 -> * -> -> 1000 `i `d / -> -> 20000000 `l `d .4000.0 `ul ]
-[; ;OBC1_app.c: 95: sent_data_set(I2CTEMP_data, 2, 1);
-"95
+[; ;OBC1_app.c: 88: INTCONbits.PEIE = 0;
+"88
+[e = . . _INTCONbits 0 6 -> -> 0 `i `uc ]
+[; ;OBC1_app.c: 89: sent_data_set(I2CTEMP_data, 2, 1);
+"89
 [e ( _sent_data_set (3 , , -> &U _I2CTEMP_data `*v -> -> 2 `i `uc -> -> 1 `i `uc ]
-"97
-[v _t `l ~T0 @X0 1 a ]
-"98
-[v _temp `d ~T0 @X0 1 a ]
-[; ;OBC1_app.c: 97: long t;
-[; ;OBC1_app.c: 98: double temp = 0.0;
-[e = _temp .0.0 ]
-[; ;OBC1_app.c: 99: t = (I2CTEMP_data[0] << 8) | I2CTEMP_data[1];
-"99
-[e = _t -> | << -> *U + &U _I2CTEMP_data * -> -> -> 0 `i `ui `ux -> -> # *U &U _I2CTEMP_data `ui `ux `i -> 8 `i -> *U + &U _I2CTEMP_data * -> -> -> 1 `i `ui `ux -> -> # *U &U _I2CTEMP_data `ui `ux `i `l ]
-[; ;OBC1_app.c: 100: if (t < 0) t = t - 65536;
-"100
-[e $ ! < _t -> -> 0 `i `l 110  ]
-[e = _t - _t -> 65536 `l ]
-[e :U 110 ]
-[; ;OBC1_app.c: 101: temp = (double)t / 128.0;
-"101
-[e = _temp / -> _t `d .128.0 ]
-[; ;OBC1_app.c: 105: if(temp >= 10.0){
-"105
-[e $ ! >= _temp .10.0 111  ]
-{
-[; ;OBC1_app.c: 106: PORTDbits.RD6 = 1;
-"106
-[e = . . _PORTDbits 0 6 -> -> 1 `i `uc ]
-[; ;OBC1_app.c: 107: _delay((unsigned long)((1000)*(20000000/4000.0)));
-"107
-[e ( __delay (1 -> * -> -> 1000 `i `d / -> -> 20000000 `l `d .4000.0 `ul ]
-[; ;OBC1_app.c: 108: PORTDbits.RD6 = 0;
-"108
-[e = . . _PORTDbits 0 6 -> -> 0 `i `uc ]
-[; ;OBC1_app.c: 109: _delay((unsigned long)((1000)*(20000000/4000.0)));
-"109
-[e ( __delay (1 -> * -> -> 1000 `i `d / -> -> 20000000 `l `d .4000.0 `ul ]
-"110
-}
-[e :U 111 ]
-[; ;OBC1_app.c: 110: }
-[; ;OBC1_app.c: 112: I2Ctemp_data_set();
-"112
-[e ( _I2Ctemp_data_set ..  ]
-[; ;OBC1_app.c: 114: break;
-"114
+[; ;OBC1_app.c: 92: send_data_master(COM, (0x02), DATA_END);
+"92
+[e ( _send_data_master (3 , , . `E1099 1 -> -> 2 `i `E1104 . `E1108 0 ]
+[; ;OBC1_app.c: 93: break;
+"93
 [e $U 102  ]
-"115
+"94
 }
-[; ;OBC1_app.c: 115: }
+[; ;OBC1_app.c: 94: }
 [e $U 102  ]
 "54
 [e :U 103 ]
@@ -1388,36 +1332,36 @@ Version 3.2 HI-TECH Software Intermediate Code
  , $ -> -> 1 `i `uc 105
  , $ -> -> 2 `i `uc 106
  102 ]
-"115
+"94
 [e :U 102 ]
-[; ;OBC1_app.c: 116: }
-"116
+[; ;OBC1_app.c: 95: }
+"95
 [e :UE 101 ]
 }
-"119
+"98
 [v _LED_data_set `(v ~T0 @X0 1 sf ]
-"120
+"99
 {
-[; ;OBC1_app.c: 119: static void LED_data_set(void)
-[; ;OBC1_app.c: 120: {
+[; ;OBC1_app.c: 98: static void LED_data_set(void)
+[; ;OBC1_app.c: 99: {
 [e :U _LED_data_set ]
 [f ]
-[; ;OBC1_app.c: 121: sent_data_set(0x01, 1, 1);
-"121
+[; ;OBC1_app.c: 100: sent_data_set(0x01, 1, 1);
+"100
 [e ( _sent_data_set (3 , , -> -> 1 `i `*v -> -> 1 `i `uc -> -> 1 `i `uc ]
-[; ;OBC1_app.c: 122: }
-"122
-[e :UE 112 ]
+[; ;OBC1_app.c: 101: }
+"101
+[e :UE 110 ]
 }
-"125
+"104
 [v _I2Ctemp_data_set `(v ~T0 @X0 1 ef ]
-"126
+"105
 {
-[; ;OBC1_app.c: 125: void I2Ctemp_data_set(void)
-[; ;OBC1_app.c: 126: {
+[; ;OBC1_app.c: 104: void I2Ctemp_data_set(void)
+[; ;OBC1_app.c: 105: {
 [e :U _I2Ctemp_data_set ]
 [f ]
-[; ;OBC1_app.c: 128: }
-"128
-[e :UE 113 ]
+[; ;OBC1_app.c: 107: }
+"107
+[e :UE 111 ]
 }

@@ -74,6 +74,19 @@ uint8_t spi_master_receive(destination_t destination);
  * @note
  *     1[ms]で送信完了しなければTIMEOUTとなる
  *===================================================*/
+void spi_master_send_int(destination_t destination, uint8_t data);
+
+/*=====================================================
+ * @brief
+ *     SPI Masterデータ送信関数(1Byte)
+ * @param
+ *     destination:通信の相手先を選択
+ *     data     :送信データ
+ * @return
+ *     void:
+ * @note
+ *     1[ms]で送信完了しなければTIMEOUTとなる
+ *===================================================*/
 void spi_master_send(destination_t destination, uint8_t data);
 
 

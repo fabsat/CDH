@@ -40,7 +40,7 @@ int main(void){
     {
         LED0 = 1;
         __delay_ms(100);
-        //interrupt_able();
+        interrupt_able();
         //trans_I2Ctemp();
         /*OBC1生存確認＆リセット*/
         //while(!OBC1_ACK)

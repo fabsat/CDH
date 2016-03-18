@@ -1594,9 +1594,12 @@ void spi_master_start(void);
 uint8_t spi_master_receive(destination_t destination);
 
 # 77
-void spi_master_send(destination_t destination, uint8_t data);
+void spi_master_send_int(destination_t destination, uint8_t data);
 
 # 90
+void spi_master_send(destination_t destination, uint8_t data);
+
+# 103
 void spi_master_stop(void);
 
 # 18 "OBC1_app.h"
@@ -1622,17 +1625,14 @@ void check_bit(uint8_t data);
 
 int main(void){
 
-
-
 TRISDbits.TRISD7 = 0;
 PORTDbits.RD7 = 0;
 TRISDbits.TRISD6 = 0;
 PORTDbits.RD6 = 0;
 
-
 TRISDbits.TRISD2 = 0;
-PORTDbits.RD2 = 1;
 
+PORTDbits.RD2 = 1;
 
 MCLR_init();
 sysprot_init();
@@ -1640,46 +1640,19 @@ ad_con_init();
 spi_master_start();
 uart_init();
 uart_interrupt = 0;
-_delay((unsigned long)((1000)*(20000000/4000.0)));
-
 
 
 while(1)
 {
 PORTDbits.RD7 = 1;
 _delay((unsigned long)((100)*(20000000/4000.0)));
-
-# 68
-command(0x02);
-
-PORTDbits.RD7 = 1;
-PORTDbits.RD6 = 1;
-_delay((unsigned long)((1000)*(20000000/4000.0)));
-PORTDbits.RD7 = 0;
-PORTDbits.RD6 = 0;
-_delay((unsigned long)((1000)*(20000000/4000.0)));
-check_bit(I2CTEMP_data[0]);
-PORTDbits.RD7 = 1;
-PORTDbits.RD6 = 1;
-_delay((unsigned long)((1000)*(20000000/4000.0)));
-PORTDbits.RD7 = 0;
-PORTDbits.RD6 = 0;
-_delay((unsigned long)((1000)*(20000000/4000.0)));
-check_bit(I2CTEMP_data[1]);
-
-long t;
-double temp = 0.0;
-t = (cw.temp[0] << 8) | cw.temp[1];
-if (t < 0) t = t - 65536;
-temp = (double)t / 128.0;
-
-if(temp >= 10.0){
-PORTDbits.RD6 = 1;
+spi_master_send_int(COM, 0x12);
 _delay((unsigned long)((100)*(20000000/4000.0)));
-PORTDbits.RD6 = 0;
-_delay((unsigned long)((00)*(20000000/4000.0)));
-}
+spi_master_send_int(COM, 0x34);
+_delay((unsigned long)((100)*(20000000/4000.0)));
+spi_master_send(COM, 0x55);
 
+# 114
 PORTDbits.RD7 = 0;
 _delay((unsigned long)((100)*(20000000/4000.0)));
 }
@@ -1695,9 +1668,10 @@ PORTDbits.RD6 = 1;
 _delay((unsigned long)((500)*(20000000/4000.0)));
 PIR1bits.RCIF = 0;
 I2CTEMP_data[uart_interrupt] = getch();
+spi_master_send(COM, I2CTEMP_data[uart_interrupt]);
 uart_interrupt++;
 PORTDbits.RD6 = 0;
-_delay((unsigned long)((500)*(20000000/4000.0)));
+_delay((unsigned long)((1000)*(20000000/4000.0)));
 }
 }
 
@@ -1731,5 +1705,4 @@ _delay((unsigned long)((2000)*(20000000/4000.0)));
 data <<= 1;
 }
 
-# 153
 }
